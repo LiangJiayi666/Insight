@@ -1,0 +1,9 @@
+{
+  "cliPath": "",
+  "model": "aliyun-custom/gpt-6-astra",
+  "timeoutMinutes": 90,
+  "smokeTimeoutMinutes": 10,
+  "maxAttemptsPerDay": 3,
+  "projectTrust": "ignore",
+  "tools": ["read", "write", "tool_search", "mcp__exa__web_search_exa", "mcp__exa__web_fetch_exa"]
+}

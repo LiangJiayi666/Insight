@@ -1,0 +1,10 @@
+{
+  "provider": "exa",
+  "topics": [
+    {"category":"经济","query":"中国 宏观经济 统计局 人民银行 财政部 最新政策 数据发布","domains":["stats.gov.cn","pbc.gov.cn","mof.gov.cn","gov.cn","news.cn"]},
+    {"category":"金融","query":"中国 证券 券商 银行 资本市场 最新公告 政策","domains":["csrc.gov.cn","sse.com.cn","szse.cn","cninfo.com.cn","stcn.com","cs.com.cn"]},
+    {"category":"社会","query":"中国 就业 医疗 教育 养老 社会公共服务 最新政策 新闻","domains":["nhc.gov.cn","nhsa.gov.cn","mohrss.gov.cn","news.cn","cctv.com","thepaper.cn"]},
+    {"category":"政治","query":"国际 政治 外交 贸易 政策 最新新闻","domains":["reuters.com","apnews.com","news.cn","mfa.gov.cn","mofcom.gov.cn"]},
+    {"category":"全球经济","query":"latest central bank monetary policy inflation employment economy announcement","domains":["federalreserve.gov","ecb.europa.eu","bls.gov","imf.org","reuters.com"]}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "insight-daily",
+  "version": "0.1.0",
+  "private": true,
+  "description": "渐进展开的每日新闻认知简报原型",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "build": "node scripts/render.mjs",
+    "daily": "node scripts/daily.mjs",
+    "check": "node scripts/daily.mjs --check",
+    "unlock": "node scripts/unlock.mjs",
+    "daily:pi": "node scripts/pi-daily.mjs",
+    "pi:check": "node scripts/pi-daily.mjs --check",
+    "pi:smoke": "node scripts/pi-daily.mjs --smoke"
+  },
+  "engines": { "node": ">=20" }
+}

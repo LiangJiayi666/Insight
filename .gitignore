@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+node_modules/
+data/runtime/
+data/pi-runs/
+data/pi-smoke/
+data/runs/
+data/raw/
+data/evidence/
+data/costs/
+data/source-results/
+data/delivery-ledger/
+data/deliveries/
+backups/
+logs/
+.tmp/

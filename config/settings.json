@@ -1,0 +1,17 @@
+{
+  "targetStories": 12,
+  "timeZone": "Asia/Shanghai",
+  "scheduleLocalTime": "19:50",
+  "initialLookbackHours": 24,
+  "maxCatchupHours": 72,
+  "searchResultsPerTopic": 8,
+  "maxCandidates": 40,
+  "maxBackgroundQueries": 12,
+  "maxSearchRequests": 20,
+  "maxModelRequests": 27,
+  "maxInputCharacters": 110000,
+  "maxOutputTokens": 4500,
+  "maxSourceCharacters": 12000,
+  "requestTimeoutMs": 90000,
+  "maxAttempts": 2
+}
