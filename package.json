@@ -7,8 +7,6 @@
     "start": "node scripts/serve.mjs",
     "test": "node --test",
     "build": "node scripts/render.mjs",
-    "daily": "node scripts/daily.mjs",
-    "check": "node scripts/daily.mjs --check",
     "unlock": "node scripts/unlock.mjs",
     "daily:pi": "node scripts/pi-daily.mjs",
     "pi:check": "node scripts/pi-daily.mjs --check",

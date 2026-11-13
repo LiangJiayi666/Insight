@@ -56,9 +56,13 @@ async function main() {
           checkpoint.recoveredAfterProcessError = true;
         } catch (validationError) {
           checkpoint.status = 'failed';
+          checkpoint.providerError = error.message;
           checkpoint.validationError = validationError.message;
           await saveJson(checkpointFile, checkpoint);
-          throw new Error(`${error.message}；产物校验：${validationError.message}`);
+          const artifact = validationError.code === 'ENOENT'
+            ? `未生成产物 ${output}`
+            : `产物校验：${validationError.message}`;
+          throw new Error(`${error.message}；${artifact}`);
         }
       }
     }
