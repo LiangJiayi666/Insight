@@ -1,6 +1,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { access, mkdir, open } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export async function resolvePi(config) {
   const guesses = [process.env.INSIGHT_PI_CLI, config.cliPath,
@@ -9,7 +10,7 @@ export async function resolvePi(config) {
   throw new Error('未找到Pi CLI；在config/pi.json设置cliPath，或设置INSIGHT_PI_CLI。');
 }
 export function piArgs(cli, config, promptFile) {
-  return [cli, '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
+  return [cli, '--extension', fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)), '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
     '--tools', config.tools.join(','), ...(config.model ? ['--model', config.model] : []), '@' + promptFile];
 }
 export async function invokePi({ root, config, promptFile, logFile, timeoutMinutes }) {
@@ -18,8 +19,10 @@ export async function invokePi({ root, config, promptFile, logFile, timeoutMinut
   const log = await open(logFile, 'a');
   try {
     await new Promise((resolve, reject) => {
-      const child = spawn(process.execPath, piArgs(cli, config, promptFile), {
-        cwd: root, env: process.env, stdio: ['ignore', log.fd, log.fd], windowsHide: true,
+      const args = piArgs(cli, config, promptFile);
+      args[2] = path.join(root, 'scripts/pi-search-guard.ts');
+      const child = spawn(process.execPath, args, {
+        cwd: root, env: { ...process.env, INSIGHT_SEARCH_CACHE: path.join(path.dirname(logFile), 'search-cache') }, stdio: ['ignore', log.fd, log.fd], windowsHide: true,
       });
       let timedOut = false;
       const timer = setTimeout(() => {
