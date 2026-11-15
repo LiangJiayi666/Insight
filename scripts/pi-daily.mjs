@@ -12,7 +12,9 @@ import { syncGit } from '../src/git-sync.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 async function main() {
   const args = process.argv.slice(2);
-  if (args.some(arg => !['--check', '--smoke'].includes(arg))) throw new Error('仅支持 --check 或 --smoke');
+  if (args.some(arg => !['--check', '--smoke'].includes(arg) && !/^--resume-date=\d{4}-\d{2}-\d{2}$/.test(arg))) throw new Error('参数不合法');
+  const resumeDate = args.find(arg => arg.startsWith('--resume-date='))?.split('=')[1];
+  if (resumeDate && (args.length !== 1 || resumeDate > chinaDate())) throw new Error('恢复日期不合法');
   const config = await readJson(path.join(root, 'config/pi.json'));
   const settings = await readJson(path.join(root, 'config/settings.json'));
   await resolvePi(config);
@@ -20,12 +22,13 @@ async function main() {
   const smoke = args.includes('--smoke');
   const release = await acquireLock(path.join(root, 'data/runtime/daily.lock'));
   try {
-    const now = new Date(); const date = chinaDate(now); const dp = datePath(date);
+    const now = new Date(); const date = resumeDate || chinaDate(now); const dp = datePath(date);
     const stateFile = path.join(root, 'data/runtime/state.json');
     const state = await readJson(stateFile, { lastCutoff: null, published: {} });
     if (!smoke && state.published[date]) { console.log('本日已发布，不重复运行。'); return; }
     const folder = path.join(root, 'data', smoke ? 'pi-smoke' : 'pi-runs', smoke ? now.toISOString().replace(/[:.]/g, '-') : dp);
     const checkpointFile = path.join(folder, 'checkpoint.json');
+    if (resumeDate) await readJson(checkpointFile); // Resume existing window only, never invent historical coverage.
     const checkpoint = await readJson(checkpointFile, { date, window: computeWindow(now, smoke ? null : state.lastCutoff, settings), attempts: 0 });
     const target = smoke ? 1 : settings.targetStories;
     const guardState = await readJson(path.join(folder, 'search-cache/guard-state.json'), null);
