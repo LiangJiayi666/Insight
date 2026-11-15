@@ -102,9 +102,12 @@ export async function notifyDaily(root, date, request = fetch, deliveryKey = dat
   const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
   const file = path.join(root, 'data/delivery-ledger', `${deliveryKey}-daily.json`);
   const record = await readJson(file, { date, uuid: randomUUID(), status: 'pending', attempts: 0 });
-  if (record.status === 'sent') return 'already-sent';
   const yesterday = chinaDate(new Date(Date.parse(`${date}T12:00:00Z`) - 86400000));
   const editionDate = state.published[date] ? date : state.published[yesterday] ? yesterday : null;
+  if (record.status === 'sent' && record.editionDate === editionDate && (record.kind === 'file' || !editionDate)) return 'already-sent';
+  if (record.editionDate !== editionDate || (editionDate && record.kind === 'text')) {
+    record.uuid = randomUUID(); delete record.fileKey;
+  }
   const attachment = editionDate ? await prepareDailyAttachment(root, new Date(`${editionDate}T12:00:00Z`)) : null;
   if (attachment && attachment.date !== editionDate) throw new Error('日报刊期不匹配');
   record.editionDate = editionDate;
@@ -150,10 +153,12 @@ export async function deliverDailyReport(root, { requestId, now = new Date() } =
   const release = await acquireLock(path.join(root, 'data/runtime/report-delivery.lock'));
   try {
     const date = chinaDate(now);
+    const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
     const key = requestId ? `${date}-request-${createHash('sha256').update(requestId).digest('hex').slice(0, 24)}` : date;
+    const costKey = !requestId && state.published[date] ? `${date}-published` : key;
     const ledger = await updateLedger(root, date);
     const result = {}; const errors = [];
-    try { result.cost = await notifyCosts(root, ledger, key); } catch (e) { errors.push(e.message); }
+    try { result.cost = await notifyCosts(root, ledger, costKey); } catch (e) { errors.push(e.message); }
     try { result.daily = await notifyDaily(root, date, fetch, key); } catch (e) { errors.push(e.message); }
     if (errors.length) throw new Error(errors.join('；'));
     return result;

@@ -1,4 +1,6 @@
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { diagnoseRun } from '../src/run-diagnostics.mjs';
 import { fileURLToPath } from 'node:url';
 import { readJson, saveJson, atomicWrite, acquireLock, chinaDate, datePath, computeWindow } from '../src/runtime.mjs';
 import { invokePi, resolvePi } from '../src/pi-runner.mjs';
@@ -32,7 +34,7 @@ async function main() {
     let repair = '';
     try {
       bundle = await readJson(output, null);
-      if (bundle) validatePiBundle(bundle, { date, window: checkpoint.window, target });
+      if (bundle) validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke });
     } catch (error) {
       repair = `\n恢复任务：先读取已有 ${output}，上次校验错误：${error.message}。保留有来源支撑的内容，修复结构及缺失证据，再继续补充不同事件至目标。evidence必须与issue同级，正文每条至少200字符；不得通过重复填充来满足长度。重新读取来源取得正文。不要从零重复搜索已经有的事件。`;
       checkpoint.validationError = error.message;
@@ -46,16 +48,17 @@ async function main() {
       try {
         await invokePi({ root, config, promptFile, logFile: path.join(folder, `attempt-${checkpoint.attempts}.private.log`), timeoutMinutes: smoke ? config.smokeTimeoutMinutes : config.timeoutMinutes });
         bundle = await readJson(output);
-        validatePiBundle(bundle, { date, window: checkpoint.window, target });
+        validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke });
       } catch (error) {
         // A final model reply can fail after the completed file was written.
         // Only accept the artifact if every normal validation still passes.
         try {
           bundle = await readJson(output);
-          validatePiBundle(bundle, { date, window: checkpoint.window, target });
+          validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke });
           checkpoint.recoveredAfterProcessError = true;
         } catch (validationError) {
           checkpoint.status = 'failed';
+          checkpoint.diagnostics = diagnoseRun(await readFile(path.join(folder, `attempt-${checkpoint.attempts}.private.log`), 'utf8').catch(() => ''));
           checkpoint.providerError = error.message;
           checkpoint.validationError = validationError.message;
           await saveJson(checkpointFile, checkpoint);
@@ -70,6 +73,7 @@ async function main() {
       checkpoint.status = 'smoke-passed'; await saveJson(checkpointFile, checkpoint);
       console.log(`Pi真实调用测试通过：${bundle.issue.stories.length}条，保存在 ${folder}；未发布、未推送。`); return;
     }
+    await saveJson(path.join(root, 'data/evidence', dp, 'selection-audit.json'), bundle.selectionAudit);
     const issue = bundle.issue;
     issue.edition = 'Pi自动日报 / 12条目标';
     issue.banner = 'Pi自动制作 · 来源及引文检查通过，未经人工逐条核验';

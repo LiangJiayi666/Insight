@@ -9,7 +9,9 @@ try {
   release = await acquireLock(path.join(root, 'data/runtime/operations.lock'));
   const ledger = await updateLedger(root, chinaDate());
   let notificationError;
-  if (process.argv.includes('--notify')) {
+  // A missed scheduled run must not send yesterday's job as today's report before 22:00.
+  const chinaHour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Shanghai', hour: '2-digit', hourCycle: 'h23' }).format(new Date()));
+  if (process.argv.includes('--notify') && chinaHour >= 22) {
     try { console.log('daily-report:', await deliverDailyReport(root)); }
     catch (e) { notificationError = e; }
   }
