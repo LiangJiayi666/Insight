@@ -8,6 +8,6 @@ export default function(pi: any) {
     return guard.before(event.toolCallId, event.toolName, event.input);
   });
   pi.on('tool_result', async (event: any) => {
-    await guard.after(event.toolCallId, { content: event.content, details: event.details, isError: event.isError });
+    await guard.after(event.toolCallId, { content: event.content, details: event.details, structuredContent: event.structuredContent, isError: event.isError });
   });
 }

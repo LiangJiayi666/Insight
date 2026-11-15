@@ -2,6 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validatePiBundle, makePiPrompt } from '../src/pi-contract.mjs';
 import { piArgs } from '../src/pi-runner.mjs';
+import { mkdtemp, mkdir, cp, writeFile, readFile, rm, access } from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { saveJson } from '../src/runtime.mjs';
 const date = '2026-11-11';
 const window = { start: '2026-11-10T08:00:00Z', end: '2026-11-11T08:00:00Z' };
 function fixture() {
@@ -29,4 +35,36 @@ test('Pi CLI uses isolated session and no command shell or credential flags', ()
 test('prompt carries the exact window, target and output', () => {
   const prompt = makePiPrompt({ date, window, target: 12, output: 'output.json' });
   for (const value of [window.start, window.end, '目标12条', 'output.json', '不得读取或输出认证文件']) assert.ok(prompt.includes(value));
+});
+
+test('ready Pi artifact publishes during cooldown without another attempt or Git sync', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'pi-ready-'));
+  try {
+    await cp(new URL('../src/', import.meta.url), path.join(root, 'src'), { recursive: true });
+    await mkdir(path.join(root, 'scripts'));
+    for (const file of ['pi-daily.mjs', 'render.mjs']) await cp(new URL(`../scripts/${file}`, import.meta.url), path.join(root, 'scripts', file));
+    for (const file of ['styles.css', 'app.js']) await cp(new URL(`../${file}`, import.meta.url), path.join(root, file));
+    const sentinel = path.join(root, 'must-not-invoke.mjs');
+    await writeFile(sentinel, 'process.exit(99);');
+    await saveJson(path.join(root, 'config/pi.json'), { cliPath: sentinel, maxAttemptsPerDay: 3 });
+    await saveJson(path.join(root, 'config/settings.json'), { targetStories: 12, initialLookbackHours: 24, maxCatchupHours: 72 });
+    const folder = path.join(root, 'data/pi-runs/2026/11/11');
+    await saveJson(path.join(folder, 'checkpoint.json'), { date, window, attempts: 3, status: 'failed', providerError: 'old failure', validationError: 'old validation failure' });
+    await saveJson(path.join(folder, 'search-cache/guard-state.json'), { blockedUntil: Date.now() + 900000 });
+    const bundle = fixture();
+    bundle.selectionAudit = [{ event: 'fixture', importance: 'normal', leadUrls: [bundle.evidence[0].url], decision: 'included', reason: 'fixture', storyId: 'one' }];
+    await saveJson(path.join(folder, 'bundle.json'), bundle);
+    const { stdout } = await promisify(execFile)(process.execPath, [path.join(root, 'scripts/pi-daily.mjs'), `--resume-date=${date}`, '--no-sync'], {
+      cwd: root, env: { ...process.env, INSIGHT_PI_CLI: sentinel }, timeout: 15000, windowsHide: true,
+    });
+    assert.match(stdout, /已发布 1\/12/);
+    const checkpoint = JSON.parse(await readFile(path.join(folder, 'checkpoint.json'), 'utf8'));
+    assert.equal(checkpoint.status, 'published');
+    assert.equal(checkpoint.attempts, 3);
+    assert.equal(checkpoint.providerError, undefined);
+    assert.equal(checkpoint.validationError, undefined);
+    await access(path.join(root, 'public/index.html'));
+    await assert.rejects(access(path.join(root, 'data/runtime/daily.lock')), { code: 'ENOENT' });
+    await assert.rejects(access(path.join(root, 'data/runtime/git-sync.json')), { code: 'ENOENT' });
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

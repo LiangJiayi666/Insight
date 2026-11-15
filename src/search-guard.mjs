@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { readJson, saveJson } from './runtime.mjs';
+import { classifyToolFailure } from './tool-failure.mjs';
 export class SearchGuard {
   constructor(folder, { intervalMs = 8000, cooldownMs = 15 * 60000, maxCalls = 60, now = Date.now, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
     Object.assign(this, { folder, intervalMs, cooldownMs, maxCalls, now, sleep });
@@ -27,12 +28,13 @@ export class SearchGuard {
   async after(id, result) {
     const call = this.calls.get(id); if (!call) return;
     try {
-      const text = JSON.stringify(result);
-      if (/429|free MCP rate limit/i.test(text)) {
+      const failure = classifyToolFailure(result);
+      if (failure.rateLimited) {
         const state = await readJson(path.join(this.folder, 'guard-state.json'));
         state.blockedUntil = this.now() + this.cooldownMs;
+        state.blockReason = 'provider-rate-limit';
         await saveJson(path.join(this.folder, 'guard-state.json'), state);
-      } else if (!result.isError && !/fetch failed|CRAWL_TIMEOUT/.test(text)) {
+      } else if (!failure.failed) {
         await saveJson(call.file, { tool: call.tool, input: call.input, fetchedAt: new Date(this.now()).toISOString(), result });
         const indexFile = path.join(this.folder, 'index.json');
         const index = await readJson(indexFile, {});
