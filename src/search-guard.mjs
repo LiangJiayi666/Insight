@@ -34,6 +34,10 @@ export class SearchGuard {
         await saveJson(path.join(this.folder, 'guard-state.json'), state);
       } else if (!result.isError && !/fetch failed|CRAWL_TIMEOUT/.test(text)) {
         await saveJson(call.file, { tool: call.tool, input: call.input, fetchedAt: new Date(this.now()).toISOString(), result });
+        const indexFile = path.join(this.folder, 'index.json');
+        const index = await readJson(indexFile, {});
+        index[path.basename(call.file)] = { tool: call.tool, input: call.input, path: call.file };
+        await saveJson(indexFile, index);
       }
     } finally { this.calls.delete(id); call.release(); }
   }

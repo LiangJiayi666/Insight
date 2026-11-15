@@ -28,6 +28,8 @@ async function main() {
     const checkpointFile = path.join(folder, 'checkpoint.json');
     const checkpoint = await readJson(checkpointFile, { date, window: computeWindow(now, smoke ? null : state.lastCutoff, settings), attempts: 0 });
     const target = smoke ? 1 : settings.targetStories;
+    const guardState = await readJson(path.join(folder, 'search-cache/guard-state.json'), null);
+    if (guardState?.blockedUntil > Date.now()) throw new Error('搜索服务冷却中，本次不消耗制作尝试次数，等待稍后恢复。');
     const output = path.join(folder, 'bundle.json');
     const promptFile = path.join(folder, 'prompt.txt');
     let bundle;
@@ -44,7 +46,7 @@ async function main() {
       if (checkpoint.attempts >= config.maxAttemptsPerDay) throw new Error('本日Pi尝试次数已达上限，请检查私有日志；不会自动无限重跑。');
       checkpoint.attempts++; checkpoint.status = 'running';
       await saveJson(checkpointFile, checkpoint);
-      await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke }) + repair);
+      await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。` + repair);
       try {
         await invokePi({ root, config, promptFile, logFile: path.join(folder, `attempt-${checkpoint.attempts}.private.log`), timeoutMinutes: smoke ? config.smokeTimeoutMinutes : config.timeoutMinutes });
         bundle = await readJson(output);
