@@ -4,7 +4,7 @@ import path from 'node:path';
 import { acquireLock, saveJson, chinaDate } from './runtime.mjs';
 const exec = promisify(execFile);
 const remote = 'https://github.com/LiangJiayi666/Insight.git';
-const roots = ['.gitignore', '.env.example', 'README.md', 'package.json', 'index.html', 'styles.css', 'app.js', 'config/settings.json', 'config/sources.json', 'config/pi.json', 'scripts', 'src', 'tests', 'docs', 'archive', 'public', 'data/issues'];
+const roots = ['.gitignore', 'README.md', 'package.json', 'styles.css', 'app.js', 'config/settings.json', 'config/pi.json', 'scripts', 'src', 'tests', 'docs', 'archive', 'public', 'data/issues'];
 export function allowedGitPath(file) {
   return roots.some(root => file === root || file.startsWith(root + '/')) && !/(^|\/)(\.env|node_modules|backups|logs)(\/|$)/.test(file) && !/\.(private\.log|bak|tmp)$/.test(file);
 }
@@ -15,11 +15,14 @@ export async function syncGit(root) {
   try {
     if (await git('remote', 'get-url', 'origin') !== remote) throw new Error('Git远程地址不匹配');
     if (await git('branch', '--show-current') !== 'main') throw new Error('自动同步仅允许main分支');
+    // Deletions cannot upload contents, including retired paths removed from the allowlist.
+    const deleted = new Set((await git('diff', '--name-only', '--diff-filter=D', 'HEAD')).split('\n').filter(Boolean));
+    const allowed = file => allowedGitPath(file) || deleted.has(file);
     const staged = (await git('diff', '--cached', '--name-only')).split('\n').filter(Boolean);
-    if (staged.some(file => !allowedGitPath(file))) throw new Error('暂存区包含非公开文件，停止自动提交');
-    await git('add', '--', ...roots);
+    if (staged.some(file => !allowed(file))) throw new Error('暂存区包含非公开文件，停止自动提交');
+    await git('add', '--all', '--', ...roots, ...deleted);
     const files = (await git('diff', '--cached', '--name-only')).split('\n').filter(Boolean);
-    if (files.some(file => !allowedGitPath(file))) throw new Error('检测到不允许上传的路径');
+    if (files.some(file => !allowed(file))) throw new Error('检测到不允许上传的路径');
     if (files.length) await git('commit', '-m', `Daily update ${chinaDate()}`);
     // Never force-push or auto-merge remote edits. A conflict requires local review.
     await git('push', 'origin', 'main');

@@ -9,8 +9,9 @@ if ($LASTEXITCODE -ne 0) { throw 'Pi 配置检查未通过，不安装定时任�
 $Config = Get-Content (Join-Path $Root 'config/settings.json') -Raw | ConvertFrom-Json
 $Action = New-ScheduledTaskAction -Execute $Node -Argument ('"' + (Join-Path $PSScriptRoot 'pi-daily.mjs') + '"') -WorkingDirectory $Root
 $Trigger = New-ScheduledTaskTrigger -Daily -At $Config.scheduleLocalTime
-$Settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Hours 2) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+# A catch-up run may contain several editions; each Pi process has its own timeout.
+$Settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew -ExecutionTimeLimit ([TimeSpan]::Zero) -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 $User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 $Principal = New-ScheduledTaskPrincipal -UserId $User -LogonType Interactive -RunLevel Limited
-Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -Principal $Principal -Description 'Insight: daily 12-news HTML via Pi and Exa MCP; Feishu not enabled' -Force | Out-Null
+Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -Principal $Principal -Description 'Insight: daily news via Pi and Exa MCP; delivery uses Insight-Daily-Operations' -Force | Out-Null
 Write-Host "已安装 $TaskName。需要当前用户已登录、电脑运行且联网；关机/休眠时不保证按时制作。"

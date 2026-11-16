@@ -2,7 +2,7 @@
   "name": "insight-daily",
   "version": "0.1.0",
   "private": true,
-  "description": "渐进展开的每日新闻认知简报原型",
+  "description": "由 Pi 和 Exa MCP 制作的每日新闻简报",
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node --test",

@@ -1,8 +1,8 @@
 import http from 'node:http';
-import { readFile, access } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-const root = new URL('../', import.meta.url);
+const root = new URL('../public/', import.meta.url);
 const routes = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/index.html', ['index.html', 'text/html; charset=utf-8']],
@@ -22,9 +22,7 @@ const server = http.createServer(async (req, res) => {
   let route = routes.get(path);
   if (/^\/issues\/\d{4}\/\d{2}\/\d{2}\/(index\.html|styles\.css|app\.js)$/.test(path)) {
     const name = path.split('/').at(-1);
-    route = [`public${path}`, routes.get('/' + name)[1]];
-  } else if (route) {
-    try { await access(new URL('public/index.html', root)); route = ['public/' + route[0], route[1]]; } catch { /* Fall back to original trial until the first daily issue is published. */ }
+    route = [path.slice(1), routes.get('/' + name)[1]];
   }
   if (!route) { res.writeHead(404).end('Not found'); return; }
   try {

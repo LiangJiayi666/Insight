@@ -26,6 +26,14 @@ test('Pi bundle rejects reused primary sources', () => {
   const data = fixture(); data.issue.stories.push({ ...data.issue.stories[0], id: 'two' });
   assert.throws(() => validatePiBundle(data, { date, window, target: 12 }), /重复/);
 });
+
+test('source tracking parameters do not bypass evidence matching or duplicate detection', () => {
+  const bundle = fixture();
+  bundle.issue.sources[0].url += '?utm_source=newsletter#story';
+  assert.doesNotThrow(() => validatePiBundle(bundle, { date, window, target: 12 }));
+  bundle.issue.sources[0].url = 'file:///private.txt';
+  assert.throws(() => validatePiBundle(bundle, { date, window, target: 12 }));
+});
 test('Pi CLI uses isolated session and no command shell or credential flags', () => {
   const args = piArgs('cli.js', { tools: ['read', 'write'], projectTrust: 'ignore', model: '' }, 'C:/a b/prompt.txt');
   assert.ok(args.includes('--no-session')); assert.ok(args.includes('--no-approve'));
@@ -35,6 +43,8 @@ test('Pi CLI uses isolated session and no command shell or credential flags', ()
 test('prompt carries the exact window, target and output', () => {
   const prompt = makePiPrompt({ date, window, target: 12, output: 'output.json' });
   for (const value of [window.start, window.end, '目标12条', 'output.json', '不得读取或输出认证文件']) assert.ok(prompt.includes(value));
+  assert.ok(prompt.includes('标题必须写明当事人'));
+  assert.ok(makePiPrompt({ date, window, target: 12, output: 'output.json', backfill: true }).includes('这是历史补刊'));
 });
 
 test('ready Pi artifact publishes during cooldown without another attempt or Git sync', async () => {
@@ -42,7 +52,7 @@ test('ready Pi artifact publishes during cooldown without another attempt or Git
   try {
     await cp(new URL('../src/', import.meta.url), path.join(root, 'src'), { recursive: true });
     await mkdir(path.join(root, 'scripts'));
-    for (const file of ['pi-daily.mjs', 'render.mjs']) await cp(new URL(`../scripts/${file}`, import.meta.url), path.join(root, 'scripts', file));
+    for (const file of ['pi-daily.mjs']) await cp(new URL(`../scripts/${file}`, import.meta.url), path.join(root, 'scripts', file));
     for (const file of ['styles.css', 'app.js']) await cp(new URL(`../${file}`, import.meta.url), path.join(root, file));
     const sentinel = path.join(root, 'must-not-invoke.mjs');
     await writeFile(sentinel, 'process.exit(99);');

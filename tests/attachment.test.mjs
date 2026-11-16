@@ -13,19 +13,19 @@ test('single file embeds exact assets, preserves replacement tokens and rejects 
   assert.throws(() => inlineDailyAssets('bad', '', ''), /结构/);
   assert.throws(() => inlineDailyAssets(html, '</style>', ''), /结束标记/);
 });
-test('attachment selects latest published archive and labels stale editions', async () => {
+test('attachment packages the requested published edition without falling back to another date', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'insight-attachment-'));
   try {
-    await assert.rejects(prepareDailyAttachment(root), /还没有/);
+    await assert.rejects(prepareDailyAttachment(root, '2026-11-11'), /没有有效/);
     await mkdir(path.join(root, 'data/runtime'), { recursive: true });
     await writeFile(path.join(root, 'data/runtime/state.json'), JSON.stringify({ published: { '2026-11-11': { count: 12, path: '../../secret' } } }));
     const archive = path.join(root, 'public/issues/2026/11/11');
     await mkdir(archive, { recursive: true });
     for (const [name, text] of [['index.html', html], ['styles.css', 'body{}'], ['app.js', 'console.log(1)']]) await writeFile(path.join(archive, name), text);
-    const result = await prepareDailyAttachment(root, new Date('2026-11-12T00:00:00Z'));
-    assert.equal(result.count, 12); assert.ok(result.description.includes('今天尚未发布'));
+    const result = await prepareDailyAttachment(root, '2026-11-11');
+    assert.equal(result.count, 12); assert.equal(result.date, '2026-11-11');
     assert.ok((await readFile(result.filename, 'utf8')).includes('<style>body{}</style>'));
-    const today = await prepareDailyAttachment(root, new Date('2026-11-11T00:00:00Z'));
-    assert.ok(today.description.includes('今天已发布'));
+    await assert.rejects(prepareDailyAttachment(root, '2026-11-12'), /没有有效/);
+    await assert.rejects(prepareDailyAttachment(root, '../../secret'), /Invalid date/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

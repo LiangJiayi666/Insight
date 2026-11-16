@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile, rename, open, unlink, appendFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, rename, open, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 
@@ -15,16 +15,6 @@ export async function atomicWrite(file, text) {
 export async function saveJson(file, value) { await atomicWrite(file, JSON.stringify(value, null, 2) + '\n'); }
 export function chinaDate(now = new Date()) { return new Date(now.getTime() + 8 * 3600000).toISOString().slice(0, 10); }
 export function datePath(date) { if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('Invalid date'); return date.replaceAll('-', '/'); }
-export async function loadEnv(file) {
-  let text; try { text = await readFile(file, 'utf8'); } catch (error) { if (error.code === 'ENOENT') return; throw error; }
-  for (const line of text.split(/\r?\n/)) {
-    const match = line.match(/^\s*([A-Z][A-Z0-9_]*)\s*=\s*(.*?)\s*$/);
-    if (!match || process.env[match[1]] !== undefined) continue;
-    let value = match[2];
-    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) value = value.slice(1, -1);
-    process.env[match[1]] = value;
-  }
-}
 export async function acquireLock(file) {
   await mkdir(path.dirname(file), { recursive: true });
   let handle;
@@ -33,11 +23,6 @@ export async function acquireLock(file) {
   await handle.writeFile(JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }));
   await handle.close();
   return async () => { await unlink(file); };
-}
-export async function logEvent(file, event, fields = {}) {
-  await mkdir(path.dirname(file), { recursive: true });
-  // Callers pass structured counters/status only, never raw HTTP bodies or credentials.
-  await appendFile(file, JSON.stringify({ at: new Date().toISOString(), event, ...fields }) + '\n');
 }
 export function computeWindow(now, lastCutoff, settings) {
   const end = new Date(now).getTime();

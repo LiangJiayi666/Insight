@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { renderIssue, validateIssue, safeUrl, escapeHtml } from '../scripts/render.mjs';
-const issue = JSON.parse(await readFile(new URL('../data/issues/2026-11-11.json', import.meta.url), 'utf8'));
+import { renderIssue, validateIssue, safeUrl, escapeHtml } from '../src/render.mjs';
+const issue = JSON.parse(await readFile(new URL('../data/issues/2026/11/11/issue.json', import.meta.url), 'utf8'));
 
 test('issue facts have references, dates and source limits', () => {
   assert.doesNotThrow(() => validateIssue(issue));
-  assert.equal(issue.sources.length, 3);
-  assert.equal(issue.stories.length, 5);
+  assert.equal(issue.sources.length, 12);
+  assert.equal(issue.stories.length, 12);
 });
 test('external text is escaped and unsafe URLs rejected', () => {
   assert.equal(escapeHtml('<script>"&'), '&lt;script&gt;&quot;&amp;');
@@ -28,5 +28,20 @@ test('missing sources, duplicate ids and future articles fail closed', () => {
 });
 test('checked in page and archive match reproducible build', async () => {
   const rendered = renderIssue(issue);
-  for (const path of ['../index.html', '../archive/2026-11-11/index.html']) assert.equal(await readFile(new URL(path, import.meta.url), 'utf8'), rendered);
+  assert.equal(await readFile(new URL('../public/issues/2026/11/11/index.html', import.meta.url), 'utf8'), rendered);
+});
+
+test('current renderer produces closed, accessible, independently linked stories', () => {
+  const html = renderIssue(issue);
+  assert.equal((html.match(/class="story"/g) || []).length, issue.stories.length);
+  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.doesNotMatch(html, /<details\b[^>]*\bopen(?:\s|=|>)/i);
+  for (const [, anchor] of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(anchor));
+  const details = (html.match(/<details\b/g) || []).length;
+  assert.equal(details, (html.match(/<\/details>/g) || []).length);
+  assert.equal(details, (html.match(/<summary>/g) || []).length);
+  assert.ok(html.includes('name="viewport"'));
+  assert.ok(html.includes('lang="zh-CN"'));
+  assert.doesNotMatch(html, /<script[^>]+src="https?:/);
 });

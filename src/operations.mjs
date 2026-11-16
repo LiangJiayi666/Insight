@@ -72,25 +72,26 @@ export function costText(ledger, count) {
   const t = ledger.total; const n = x => x.toLocaleString('en-US');
   return `见微每日用量｜${ledger.date}\n日报：${count ? `已发布${count}条` : '尚未发布'}\nToken合计：${n(t.totalTokens)}${t.incomplete ? '（统计不完整，至少）' : ''}\n输入 ${n(t.input)} · 输出 ${n(t.output)}\n缓存读取 ${n(t.cacheRead)} · 缓存写入 ${n(t.cacheWrite)}\n搜索 ${t.search}次 · 网页读取 ${t.fetch}次\nCredits / 金额：未知（未接入供应商计费规则）\n含当日制作、测试和失败尝试；不含普通机器人聊天。${t.incomplete ? '\n部分旧日志无用量，不能视为零消耗。' : ''}\n发送“日报”获取附件。`;
 }
-export async function notifyCosts(root, ledger, deliveryKey = ledger.date) {
-  const directory = path.join(os.homedir(), '.pi/feishu-bridge');
+async function authorizeFeishu(directory, request) {
   const config = JSON.parse((await readFile(path.join(directory, 'config.json'), 'utf8')).replace(/^\uFEFF/, ''));
   const owner = await readJson(path.join(directory, 'owner.json'));
   if (!owner.chatId || !owner.openId) throw new Error('未绑定飞书收件人');
+  const response = await request('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ app_id: config.appId, app_secret: config.appSecret }), signal: AbortSignal.timeout(30000) });
+  const auth = await response.json();
+  if (!response.ok || auth.code !== 0 || !auth.tenant_access_token) throw new Error('飞书日报认证失败');
+  return { owner, request, headers: { Authorization: `Bearer ${auth.tenant_access_token}` } };
+}
+
+async function notifyCosts(root, ledger, deliveryKey, { editionDate, count, getClient }) {
   const file = path.join(root, 'data/delivery-ledger', `${deliveryKey}-cost.json`);
   const record = await readJson(file, { date: ledger.date, uuid: randomUUID(), status: 'pending', attempts: 0 });
   if (record.status === 'sent') return 'already-sent';
-  const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
-  const yesterday = chinaDate(new Date(Date.parse(`${ledger.date}T12:00:00Z`) - 86400000));
-  const attachmentDate = state.published[ledger.date] ? ledger.date : state.published[yesterday] ? yesterday : null;
-  const text = costText(ledger, state.published[ledger.date]?.count) + (attachmentDate && attachmentDate !== ledger.date ? `\n今天尚未出刊，本次附上昨天（${attachmentDate}）的日报。` : '');
-  const tokenResponse = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ app_id: config.appId, app_secret: config.appSecret }), signal: AbortSignal.timeout(30000) });
-  const auth = await tokenResponse.json();
-  if (!tokenResponse.ok || auth.code !== 0 || !auth.tenant_access_token) throw new Error('飞书日报用量认证失败');
+  const text = costText(ledger, count) + (editionDate && editionDate !== ledger.date ? `\n今天尚未出刊，本次附上昨天（${editionDate}）的日报。` : '');
+  const { owner, headers, request } = await getClient();
   record.attempts++; record.status = 'sending'; record.lastAttempt = new Date().toISOString();
   await saveJson(file, record);
   try {
-    const response = await fetch('https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id', { method: 'POST', headers: { Authorization: `Bearer ${auth.tenant_access_token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ receive_id: owner.chatId, msg_type: 'text', content: JSON.stringify({ text }), uuid: record.uuid }), signal: AbortSignal.timeout(30000) });
+    const response = await request('https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id', { method: 'POST', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ receive_id: owner.chatId, msg_type: 'text', content: JSON.stringify({ text }), uuid: record.uuid }), signal: AbortSignal.timeout(30000) });
     const data = await response.json();
     if (!response.ok || data.code !== 0) throw new Error('飞书用量通知未确认成功');
     record.status = 'sent'; record.messageId = data.data?.message_id; record.sentAt = new Date().toISOString();
@@ -98,27 +99,16 @@ export async function notifyCosts(root, ledger, deliveryKey = ledger.date) {
   finally { await saveJson(file, record); }
   return 'sent';
 }
-export async function notifyDaily(root, date, request = fetch, deliveryKey = date) {
-  const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
+async function notifyDaily(root, date, deliveryKey, { editionDate, getClient }) {
   const file = path.join(root, 'data/delivery-ledger', `${deliveryKey}-daily.json`);
   const record = await readJson(file, { date, uuid: randomUUID(), status: 'pending', attempts: 0 });
-  const yesterday = chinaDate(new Date(Date.parse(`${date}T12:00:00Z`) - 86400000));
-  const editionDate = state.published[date] ? date : state.published[yesterday] ? yesterday : null;
   if (record.status === 'sent' && record.editionDate === editionDate && (record.kind === 'file' || !editionDate)) return 'already-sent';
   if (record.editionDate !== editionDate || (editionDate && record.kind === 'text')) {
     record.uuid = randomUUID(); delete record.fileKey;
   }
-  const attachment = editionDate ? await prepareDailyAttachment(root, new Date(`${editionDate}T12:00:00Z`)) : null;
-  if (attachment && attachment.date !== editionDate) throw new Error('日报刊期不匹配');
+  const attachment = editionDate ? await prepareDailyAttachment(root, editionDate) : null;
   record.editionDate = editionDate;
-  const directory = path.join(os.homedir(), '.pi/feishu-bridge');
-  const config = JSON.parse((await readFile(path.join(directory, 'config.json'), 'utf8')).replace(/^\uFEFF/, ''));
-  const owner = await readJson(path.join(directory, 'owner.json'));
-  if (!owner.chatId || !owner.openId) throw new Error('未绑定飞书收件人');
-  const authResponse = await request('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ app_id: config.appId, app_secret: config.appSecret }), signal: AbortSignal.timeout(30000) });
-  const auth = await authResponse.json();
-  if (!authResponse.ok || auth.code !== 0 || !auth.tenant_access_token) throw new Error('飞书日报认证失败');
-  const headers = { Authorization: `Bearer ${auth.tenant_access_token}` };
+  const { owner, headers, request } = await getClient();
   record.attempts++; record.status = 'sending'; record.lastAttempt = new Date().toISOString();
   await saveJson(file, record);
   try {
@@ -149,17 +139,21 @@ export async function notifyDaily(root, date, request = fetch, deliveryKey = dat
 }
 
 // Both the 22:00 job and the bound user's 日报 command call this exact action.
-export async function deliverDailyReport(root, { requestId, now = new Date() } = {}) {
+export async function deliverDailyReport(root, { requestId, now = new Date(), request = fetch, bridgeDirectory = path.join(os.homedir(), '.pi/feishu-bridge') } = {}) {
   const release = await acquireLock(path.join(root, 'data/runtime/report-delivery.lock'));
   try {
     const date = chinaDate(now);
     const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
+    const yesterday = chinaDate(new Date(now.getTime() - 86400000));
+    const editionDate = state.published[date] ? date : state.published[yesterday] ? yesterday : null;
+    let client;
+    const delivery = { editionDate, count: state.published[date]?.count, getClient: () => client ||= authorizeFeishu(bridgeDirectory, request) };
     const key = requestId ? `${date}-request-${createHash('sha256').update(requestId).digest('hex').slice(0, 24)}` : date;
     const costKey = !requestId && state.published[date] ? `${date}-published` : key;
     const ledger = await updateLedger(root, date);
     const result = {}; const errors = [];
-    try { result.cost = await notifyCosts(root, ledger, costKey); } catch (e) { errors.push(e.message); }
-    try { result.daily = await notifyDaily(root, date, fetch, key); } catch (e) { errors.push(e.message); }
+    try { result.cost = await notifyCosts(root, ledger, costKey, delivery); } catch (e) { errors.push(e.message); }
+    try { result.daily = await notifyDaily(root, date, key, delivery); } catch (e) { errors.push(e.message); }
     if (errors.length) throw new Error(errors.join('；'));
     return result;
   } finally { await release(); }
