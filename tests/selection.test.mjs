@@ -10,6 +10,30 @@ test('major leads require follow-up and selected stories require decision record
   b.issue.stories.push({ id: 'two' });
   assert.throws(() => validateSelection(b), /没有选题/);
 });
+
+test('failed research can remain in the audit without blocking supported stories', () => {
+  const b = { issue: { notice: '重大候选追查失败，未收入正文。', stories: [{ id: 'one' }] }, selectionAudit: [
+    { event: 'published', importance: 'high', leadUrls: ['https://example.com/article'], followUpUrls: ['https://example.com/article'], decision: 'included', reason: 'verified', storyId: 'one' },
+    { event: 'unverified', importance: 'high', leadUrls: ['https://example.com/lead'], followUpUrls: [], decision: 'unverified', reason: 'search failed', followUpAttempts: [{ query: 'actual query', result: 'unavailable', detail: 'fetch failed' }] },
+  ] };
+  assert.doesNotThrow(() => validateSelection(b));
+  b.selectionAudit[1].decision = 'included'; b.selectionAudit[1].storyId = 'one';
+  assert.throws(() => validateSelection(b), /未追查独立来源/);
+  b.selectionAudit[1].decision = 'unverified'; delete b.selectionAudit[1].storyId;
+  b.selectionAudit[1].followUpAttempts[0].result = 'budget-exhausted';
+  assert.throws(() => validateSelection(b), /不能把未查询或预算估计/);
+  b.selectionAudit[1].followUpAttempts[0].result = 'no-independent-source';
+  b.issue.notice = '';
+  assert.throws(() => validateSelection(b), /覆盖缺口/);
+});
+
+test('selection reports all broken candidates together with their names', () => {
+  const b = { issue: { stories: [] }, selectionAudit: [
+    { event: 'bad-state', leadUrls: ['https://example.com/a'], decision: 'merged', reason: 'merged into another event' },
+    { event: 'missing-research', importance: 'high', leadUrls: ['https://example.com/b'], decision: 'unverified', reason: 'not checked' },
+  ] };
+  assert.throws(() => validateSelection(b), error => /bad-state.*候选状态不合法/.test(error.message) && /missing-research.*未追查/.test(error.message));
+});
 test('diagnostics distinguish search limits from network and crawl failures', () => {
   const event = { type: 'tool_execution_end', toolName: 'mcp__exa__web_search_exa', isError: true, result: { content: [{ type: 'text', text: 'HTTP 429 free MCP rate limit; fetch failed; CRAWL_TIMEOUT' }] } };
   assert.deepEqual(diagnoseRun(JSON.stringify(event)), { searchRateLimited: true, networkFailure: true, crawlTimeout: true, searchCooldownBlocked: false });

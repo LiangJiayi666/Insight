@@ -2,12 +2,14 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { readJson, saveJson } from './runtime.mjs';
 import { classifyToolFailure } from './tool-failure.mjs';
+import { searchKind, initializeSearchBudget, budgetSummary } from './search-budget.mjs';
 export class SearchGuard {
-  constructor(folder, { intervalMs = 8000, cooldownMs = 15 * 60000, maxCalls = 60, now = Date.now, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
-    Object.assign(this, { folder, intervalMs, cooldownMs, maxCalls, now, sleep });
+  constructor(folder, { intervalMs = 8000, cooldownMs = 15 * 60000, maxCalls = 60, maxSearch = 24, maxFetch = 36, now = Date.now, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
+    Object.assign(this, { folder, intervalMs, cooldownMs, maxCalls, maxSearch, maxFetch, now, sleep });
     this.queue = Promise.resolve(); this.calls = new Map();
   }
   key(tool, input) { return createHash('sha256').update(JSON.stringify({ tool, input })).digest('hex'); }
+  async budget() { return budgetSummary(await initializeSearchBudget(this.folder), this); }
   async before(id, tool, input) {
     const previous = this.queue; let release;
     this.queue = new Promise(r => { release = r; });
@@ -16,11 +18,13 @@ export class SearchGuard {
       const key = this.key(tool, input); const file = path.join(this.folder, `${key}.json`);
       const cached = await readJson(file, null);
       if (cached) { release(); return { block: true, reason: `相同请求已有成功结果，不重复联网。请用read读取缓存：${file}。缓存取得时间：${cached.fetchedAt}` }; }
-      const state = await readJson(path.join(this.folder, 'guard-state.json'), { count: 0, nextAt: 0, blockedUntil: 0 });
+      const state = await initializeSearchBudget(this.folder);
       if (state.count >= this.maxCalls) { release(); return { block: true, reason: '本刊搜索/读取硬预算已用完，请复用缓存并完成已有证据稿件。' }; }
+      const kind = searchKind(tool);
+      if (state[`${kind}Count`] >= (kind === 'search' ? this.maxSearch : this.maxFetch)) { release(); return { block: true, reason: '本刊分项预算已用完。' + budgetSummary(state, this) }; }
       if (state.blockedUntil > this.now()) { release(); return { block: true, reason: `搜索服务限流冷却至${new Date(state.blockedUntil).toISOString()}。请使用缓存收尾，勿继续调用。` }; }
       await this.sleep(Math.max(0, state.nextAt - this.now()));
-      state.count++; state.nextAt = this.now() + this.intervalMs;
+      state.count++; state[`${kind}Count`]++; state.nextAt = this.now() + this.intervalMs;
       await saveJson(path.join(this.folder, 'guard-state.json'), state);
       this.calls.set(id, { release, file, tool, input });
     } catch (e) { release(); throw e; }

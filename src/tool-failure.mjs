@@ -8,7 +8,7 @@ export function classifyToolFailure(result) {
   ));
   const text = failed ? JSON.stringify(result) : '';
   const guardBlocked = /搜索服务限流冷却至/.test(text);
-  const localBlock = guardBlocked || /相同请求已有成功结果|本刊搜索\/读取硬预算已用完/.test(text);
+  const localBlock = guardBlocked || /相同请求已有成功结果|本刊搜索\/读取硬预算已用完|本刊分项预算已用完/.test(text);
   const status429 = envelopes.some(value => value && [value.status, value.statusCode, value.httpStatus, value.error?.code].some(code => Number(code) === 429));
   return {
     failed,

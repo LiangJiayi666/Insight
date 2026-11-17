@@ -9,6 +9,7 @@ import { publish } from '../src/publish.mjs';
 import { updateLedger, filesUnder } from '../src/operations.mjs';
 import { pendingIssueDates, issueWindow, publicationPosition, shiftDate } from '../src/daily-plan.mjs';
 import { syncGit } from '../src/git-sync.mjs';
+import { initializeSearchBudget, budgetSummary } from '../src/search-budget.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 async function produceIssue({ date, now, state, config, settings, smoke, resumeDate }) {
@@ -24,38 +25,43 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
   const backfill = !smoke && date < chinaDate(now);
   const output = path.join(folder, 'bundle.json');
   const promptFile = path.join(folder, 'prompt.txt');
+  const validation = { date, window: checkpoint.window, target, requireSelection: !smoke, requireHistory: !smoke };
+  await saveJson(path.join(folder, 'validation.json'), validation);
   let bundle;
   let repair = '';
   try {
     bundle = await readJson(output, null);
-    if (bundle) validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke, requireHistory: !smoke });
+    if (bundle) validatePiBundle(bundle, validation);
   } catch (error) {
-    repair = `\n恢复任务：先读取已有 ${output}，上次校验错误：${error.message}。保留有来源支撑的内容，优先补齐历史序列、比较及缺失证据，质量达标后才考虑增加条数。evidence必须与issue同级，正文每条至少200字符；不得通过重复填充来满足长度。不要从零重复搜索已经有的事件。`;
+    repair = `\n恢复任务：先读取已有 ${output}，上次校验错误：${error.message}。使用edit精确修改出错字段，每次只修改必要片段，避免重新输出整份JSON导致连接中断。保留有来源支撑的内容，优先补齐历史序列、比较及缺失证据，质量达标后才考虑增加条数。evidence必须与issue同级，正文每条至少200字符；不得通过重复填充来满足长度。不要从零重复搜索已经有的事件。`;
     checkpoint.validationError = error.message;
     bundle = null;
   }
   if (!bundle) {
-    const guardState = await readJson(path.join(folder, 'search-cache/guard-state.json'), null);
+    const guardState = await initializeSearchBudget(path.join(folder, 'search-cache'));
     if (guardState?.blockedUntil > Date.now()) throw new Error('搜索服务冷却中，本次不消耗制作尝试次数，等待稍后恢复。');
     if (checkpoint.attempts >= config.maxAttemptsPerDay) throw new Error('本日Pi尝试次数已达上限，请检查私有日志；不会自动无限重跑。');
     checkpoint.attempts++; checkpoint.status = 'running';
     await saveJson(checkpointFile, checkpoint);
-    await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke, backfill }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。` + repair);
+    await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke, backfill }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。\n${budgetSummary(guardState, smoke ? { maxSearch: 4, maxFetch: 3, maxCalls: 7 } : {})}` + repair);
+    let processError;
     try {
-      await invokePi({ root, config, promptFile, logFile: path.join(folder, `attempt-${checkpoint.attempts}.private.log`), timeoutMinutes: smoke ? config.smokeTimeoutMinutes : config.timeoutMinutes });
+      try { await invokePi({ root, config, promptFile, logFile: path.join(folder, `attempt-${checkpoint.attempts}.private.log`), timeoutMinutes: smoke ? config.smokeTimeoutMinutes : config.timeoutMinutes }); }
+      catch (error) { processError = error; throw error; }
       bundle = await readJson(output);
-      validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke, requireHistory: !smoke });
+      validatePiBundle(bundle, validation);
     } catch (error) {
       // A final model reply can fail after the completed file was written.
       // Only accept the artifact if every normal validation still passes.
       try {
         bundle = await readJson(output);
-        validatePiBundle(bundle, { date, window: checkpoint.window, target, requireSelection: !smoke, requireHistory: !smoke });
+        validatePiBundle(bundle, validation);
         checkpoint.recoveredAfterProcessError = true;
       } catch (validationError) {
         checkpoint.status = 'failed';
         checkpoint.diagnostics = diagnoseRun(await readFile(path.join(folder, `attempt-${checkpoint.attempts}.private.log`), 'utf8').catch(() => ''));
-        checkpoint.providerError = error.message;
+        if (processError) checkpoint.providerError = processError.message;
+        else delete checkpoint.providerError;
         checkpoint.validationError = validationError.message;
         await saveJson(checkpointFile, checkpoint);
         const artifact = validationError.code === 'ENOENT'

@@ -4,6 +4,9 @@ import { mkdtemp, rm, readFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { SearchGuard } from '../src/search-guard.mjs';
+import { saveJson } from '../src/runtime.mjs';
+import { writeFile } from 'node:fs/promises';
+import { initializeSearchBudget, budgetSummary } from '../src/search-budget.mjs';
 test('serializes calls, reuses successful cache and persists rate-limit cooldown', async () => {
   const folder = await mkdtemp(path.join(os.tmpdir(), 'guard-'));
   try {
@@ -49,4 +52,29 @@ test('structured MCP errors are not cached and real limits survive restart', asy
     await assert.rejects(readFile(path.join(folder, `${guard.key('search', {})}.json`)), { code: 'ENOENT' });
     assert.match((await new SearchGuard(folder, options).before('blocked', 'search', {})).reason, /冷却/);
   } finally { await rm(folder, { recursive: true, force: true }); }
+});
+
+test('budget migration counts failed requests but excludes cache and cooldown blocks', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'guard-budget-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const folder = path.join(root, 'search-cache');
+  await saveJson(path.join(folder, 'guard-state.json'), { count: 2, blockedUntil: 0, nextAt: 0 });
+  const events = [
+    { type: 'tool_execution_start', toolName: 'mcp__exa__web_search_exa', toolCallId: '1' },
+    { type: 'tool_execution_end', toolName: 'mcp__exa__web_search_exa', toolCallId: '1', isError: true, result: { content: ['fetch failed'] } },
+    { type: 'tool_execution_start', toolName: 'mcp__exa__web_fetch_exa', toolCallId: '2' },
+    { type: 'tool_execution_start', toolName: 'mcp__exa__web_search_exa', toolCallId: '3' },
+    { type: 'tool_execution_end', toolName: 'mcp__exa__web_search_exa', toolCallId: '3', isError: true, result: { content: ['相同请求已有成功结果'] } },
+  ];
+  await writeFile(path.join(root, 'attempt-1.private.log'), events.map(JSON.stringify).join('\n'));
+  const state = await initializeSearchBudget(folder);
+  assert.equal(state.searchCount, 1); assert.equal(state.fetchCount, 1); assert.equal(state.count, 2);
+  assert.match(budgetSummary(state), /剩余搜索23次、读取35次/);
+  const guard = new SearchGuard(folder, { intervalMs: 0, maxSearch: 1 });
+  assert.match((await guard.before('4', 'search', { query: 'new' })).reason, /分项预算已用完/);
+  assert.equal(await guard.before('5', 'fetch', { url: 'https://example.com' }), undefined);
+  await guard.after('5', { content: [], isError: false });
+  assert.match(await guard.budget(), /读取2\/36次/);
+  assert.equal((await guard.before('6', 'fetch', { url: 'https://example.com' })).block, true);
+  assert.match(await guard.budget(), /合计3\/60次/);
 });

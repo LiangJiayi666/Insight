@@ -75,3 +75,27 @@ test('an exhausted old issue remains failed but does not prevent publishing toda
   assert.equal(state.published[missing], undefined);
   assert.equal(state.published[today].count, 1);
 });
+
+test('a failed edition publishes existing supported stories with a documented failed candidate search', async t => {
+  const { root, run } = await project(t);
+  await ready(root, missing);
+  const folder = path.join(root, 'data/pi-runs', datePath(missing));
+  const checkpoint = await readJson(path.join(folder, 'checkpoint.json'));
+  checkpoint.status = 'failed'; checkpoint.attempts = 3;
+  checkpoint.validationError = '重大候选未追查独立来源';
+  await saveJson(path.join(folder, 'checkpoint.json'), checkpoint);
+  const bundle = await readJson(path.join(folder, 'bundle.json'));
+  bundle.issue.notice = '重大候选查询失败，未收入正文。';
+  bundle.selectionAudit.push({ event: 'failed major lead', importance: 'high', leadUrls: ['https://example.com/lead'], followUpUrls: [], decision: 'unverified', reason: 'network failure', followUpAttempts: [{ query: 'actual failed query', result: 'unavailable', detail: 'fetch failed' }] });
+  await saveJson(path.join(folder, 'bundle.json'), bundle);
+  const { stdout } = await run(`--resume-date=${missing}`);
+  assert.match(stdout, /已发布 1\/12/);
+  const published = await readJson(path.join(root, 'data/issues', datePath(missing), 'issue.json'));
+  assert.equal(published.stories.length, 1);
+  assert.equal(published.stories[0].id, 'one');
+  assert.match(published.notice, /重大候选查询失败/);
+  const audit = await readJson(path.join(root, 'data/evidence', datePath(missing), 'selection-audit.json'));
+  assert.equal(audit[1].decision, 'unverified');
+  assert.deepEqual(audit[1].followUpAttempts, bundle.selectionAudit[1].followUpAttempts);
+  assert.equal((await readJson(path.join(folder, 'checkpoint.json'))).attempts, 3);
+});
