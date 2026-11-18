@@ -33,5 +33,5 @@ export async function initializeSearchBudget(folder) {
 
 export function budgetSummary(state, { maxCalls = 60, maxSearch = 24, maxFetch = 36 } = {}) {
   const total = Math.max(state.count || 0, (state.searchCount || 0) + (state.fetchCount || 0));
-  return `本刊真实联网调用累计：搜索${state.searchCount || 0}/${maxSearch}次、读取${state.fetchCount || 0}/${maxFetch}次、合计${total}/${maxCalls}次。剩余搜索${Math.max(0, Math.min(maxSearch - (state.searchCount || 0), maxCalls - total))}次、读取${Math.max(0, Math.min(maxFetch - (state.fetchCount || 0), maxCalls - total))}次（共享合计剩余${Math.max(0, maxCalls - total)}次）。缓存命中不消耗预算；不得凭估计宣称额度用完。`;
+  return `本刊真实联网调用累计（分母为项目本地预算，不是Exa官方限额）：搜索${state.searchCount || 0}/${maxSearch}次、读取${state.fetchCount || 0}/${maxFetch}次、合计${total}/${maxCalls}次。剩余搜索${Math.max(0, Math.min(maxSearch - (state.searchCount || 0), maxCalls - total))}次、读取${Math.max(0, Math.min(maxFetch - (state.fetchCount || 0), maxCalls - total))}次（共享合计剩余${Math.max(0, maxCalls - total)}次）。缓存命中不消耗预算；不得凭估计宣称额度用完。`;
 }
