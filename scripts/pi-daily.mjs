@@ -39,7 +39,8 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
   }
   if (!bundle) {
     const guardState = await initializeSearchBudget(path.join(folder, 'search-cache'));
-    if (guardState?.blockedUntil > Date.now()) throw new Error('搜索服务冷却中，本次不消耗制作尝试次数，等待稍后恢复。');
+    const rateState = await readJson(path.join(root, 'data/runtime/exa-rate-limit.json'), guardState);
+    if (rateState?.blockedUntil - Date.now() > (config.exaPolicy?.maxWaitMs ?? 60000)) throw new Error(`Exa限流等待至${new Date(rateState.blockedUntil).toISOString()}（依据：${rateState.retrySource || '旧版本地冷却策略'}），本次不消耗制作尝试次数；可以复用缓存，稍后恢复。`);
     if (checkpoint.attempts >= config.maxAttemptsPerDay) throw new Error('本日Pi尝试次数已达上限，请检查私有日志；不会自动无限重跑。');
     checkpoint.attempts++; checkpoint.status = 'running';
     await saveJson(checkpointFile, checkpoint);

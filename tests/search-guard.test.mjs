@@ -11,7 +11,7 @@ test('serializes calls, reuses successful cache and persists rate-limit cooldown
   const folder = await mkdtemp(path.join(os.tmpdir(), 'guard-'));
   try {
     let clock = 0;
-    const opts = { now: () => clock, sleep: async ms => { clock += ms; }, intervalMs: 8000 };
+    const opts = { now: () => clock, sleep: async ms => { clock += ms; }, intervalMs: 8000, maxWaitMs: 0 };
     const g = new SearchGuard(folder, opts);
     assert.equal(await g.before('1', 'search', { q: 'one' }), undefined);
     await g.after('1', { content: ['real result'], isError: false });
@@ -20,7 +20,7 @@ test('serializes calls, reuses successful cache and persists rate-limit cooldown
     assert.equal(clock, 8000);
     await g.after('3', { content: ['HTTP 429'], isError: true });
     const next = new SearchGuard(folder, opts);
-    assert.match((await next.before('4', 'search', { q: 'three' })).reason, /冷却/);
+    assert.match((await next.before('4', 'search', { q: 'three' })).reason, /本地指数退避/);
   } finally { await rm(folder, { recursive: true, force: true }); }
 });
 
@@ -43,14 +43,14 @@ test('successful article URL containing 429 is cached and never blocks the next 
 test('structured MCP errors are not cached and real limits survive restart', async () => {
   const folder = await mkdtemp(path.join(os.tmpdir(), 'guard-'));
   try {
-    const options = { intervalMs: 0, now: () => 1000 };
+    const options = { intervalMs: 0, now: () => 1000, maxWaitMs: 0 };
     const guard = new SearchGuard(folder, options);
     await guard.before('network', 'search', {});
     await guard.after('network', { isError: true, content: [{ type: 'text', text: 'fetch failed; request abc429xyz' }] });
     assert.equal(await guard.before('retry', 'search', {}), undefined);
     await guard.after('retry', { isError: false, structuredContent: { isError: true, content: [{ type: 'text', text: 'MCP HTTP request failed with status 429: free MCP rate limit' }] } });
     await assert.rejects(readFile(path.join(folder, `${guard.key('search', {})}.json`)), { code: 'ENOENT' });
-    assert.match((await new SearchGuard(folder, options).before('blocked', 'search', {})).reason, /冷却/);
+    assert.match((await new SearchGuard(folder, options).before('blocked', 'search', {})).reason, /Exa限流等待至/);
   } finally { await rm(folder, { recursive: true, force: true }); }
 });
 
@@ -69,8 +69,8 @@ test('budget migration counts failed requests but excludes cache and cooldown bl
   await writeFile(path.join(root, 'attempt-1.private.log'), events.map(JSON.stringify).join('\n'));
   const state = await initializeSearchBudget(folder);
   assert.equal(state.searchCount, 1); assert.equal(state.fetchCount, 1); assert.equal(state.count, 2);
-  assert.match(budgetSummary(state), /剩余搜索23次、读取35次/);
-  const guard = new SearchGuard(folder, { intervalMs: 0, maxSearch: 1 });
+  assert.match(budgetSummary(state), /未设置按刊次数上限/);
+  const guard = new SearchGuard(folder, { intervalMs: 0, maxSearch: 1, maxFetch: 36, maxCalls: 60 });
   assert.match((await guard.before('4', 'search', { query: 'new' })).reason, /分项预算已用完/);
   assert.equal(await guard.before('5', 'fetch', { url: 'https://example.com' }), undefined);
   await guard.after('5', { content: [], isError: false });

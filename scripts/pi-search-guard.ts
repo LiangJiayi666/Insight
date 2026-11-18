@@ -5,7 +5,7 @@ import { readJson } from '../src/runtime.mjs';
 export default function(pi: any) {
   const folder = process.env.INSIGHT_SEARCH_CACHE;
   if (!folder) return;
-  const guard = new SearchGuard(folder);
+  const guard = new SearchGuard(folder, { ...JSON.parse(process.env.INSIGHT_EXA_POLICY || '{}'), ...(process.env.INSIGHT_EXA_RATE_LIMIT_STATE ? { rateLimitFile: process.env.INSIGHT_EXA_RATE_LIMIT_STATE } : {}) });
   pi.on('before_agent_start', async () => {
     const options = await readJson(path.join(path.dirname(folder), 'validation.json'), null);
     if (options?.requireSelection === false) { guard.maxSearch = 4; guard.maxFetch = 3; guard.maxCalls = 7; }
@@ -17,8 +17,8 @@ export default function(pi: any) {
     return guard.before(event.toolCallId, event.toolName, event.input);
   });
   pi.on('tool_result', async (event: any) => {
-    await guard.after(event.toolCallId, { content: event.content, details: event.details, structuredContent: event.structuredContent, isError: event.isError });
-    if (/^mcp__exa__web_(search|fetch)_exa$/.test(event.toolName)) return { content: [...event.content, { type: 'text', text: await guard.budget() }], structuredContent: event.structuredContent };
+    const result = await guard.after(event.toolCallId, { content: event.content, details: event.details, structuredContent: event.structuredContent, isError: event.isError });
+    if (/^mcp__exa__web_(search|fetch)_exa$/.test(event.toolName)) return { content: [...event.content, { type: 'text', text: [await guard.budget(), await guard.policyStatus()].filter(Boolean).join('\n') }], details: result?.details || event.details, structuredContent: event.structuredContent };
     return bundleWriteFeedback(event, path.dirname(folder));
   });
 }

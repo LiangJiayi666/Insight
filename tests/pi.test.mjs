@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validatePiBundle, makePiPrompt } from '../src/pi-contract.mjs';
-import { piArgs } from '../src/pi-runner.mjs';
+import { piArgs, resolvePi } from '../src/pi-runner.mjs';
 import { mkdtemp, mkdir, cp, writeFile, readFile, rm, access } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -40,6 +40,20 @@ test('Pi CLI uses isolated session and no command shell or credential flags', ()
   assert.ok(args.includes('--no-session')); assert.ok(args.includes('--no-approve'));
   assert.ok(args.includes('@C:/a b/prompt.txt')); assert.ok(!args.includes('--api-key'));
   assert.ok(!args.includes('--continue'));
+});
+
+test('Pi resolves the same bundled entry as the installed command, preserving explicit overrides', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'pi-entry-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const dist = path.join(root, 'npm/node_modules/@earendil-works/pi-coding-agent/dist');
+  await mkdir(path.join(dist, 'bundle'), { recursive: true });
+  const bundled = path.join(dist, 'bundle/cli.js'), legacy = path.join(dist, 'cli.js'), override = path.join(root, 'override.js');
+  for (const file of [bundled, legacy, override]) await writeFile(file, '');
+  assert.equal(await resolvePi({}, { APPDATA: root }), bundled);
+  assert.equal(await resolvePi({ cliPath: override }, { APPDATA: root }), override);
+  assert.equal(await resolvePi({ cliPath: legacy }, { APPDATA: root, INSIGHT_PI_CLI: override }), override);
+  await rm(bundled);
+  assert.equal(await resolvePi({}, { APPDATA: root }), legacy);
 });
 test('prompt carries the exact window, target and output', () => {
   const prompt = makePiPrompt({ date, window, target: 12, output: 'output.json' });

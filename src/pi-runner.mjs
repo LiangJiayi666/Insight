@@ -4,14 +4,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { saveJson } from './runtime.mjs';
 
-export async function resolvePi(config) {
-  const guesses = [process.env.INSIGHT_PI_CLI, config.cliPath,
-    process.env.APPDATA && path.join(process.env.APPDATA, 'npm/node_modules/@earendil-works/pi-coding-agent/dist/cli.js')].filter(Boolean);
+export async function resolvePi(config, env = process.env) {
+  const packageRoot = env.APPDATA && path.join(env.APPDATA, 'npm/node_modules/@earendil-works/pi-coding-agent');
+  const guesses = [env.INSIGHT_PI_CLI, config.cliPath,
+    packageRoot && path.join(packageRoot, 'dist/bundle/cli.js'),
+    packageRoot && path.join(packageRoot, 'dist/cli.js')].filter(Boolean);
   for (const file of guesses) { try { await access(file); return file; } catch {} }
   throw new Error('未找到Pi CLI；在config/pi.json设置cliPath，或设置INSIGHT_PI_CLI。');
 }
 export function piArgs(cli, config, promptFile) {
-  return [cli, '--extension', fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)), '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
+  return ['--import', new URL('../scripts/pi-exa-observer.mjs', import.meta.url).href, cli, '--extension', fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)), '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
     '--tools', config.tools.join(','), ...(config.model ? ['--model', config.model] : []), '@' + promptFile];
 }
 export async function invokePi({ root, config, promptFile, logFile, timeoutMinutes }) {
@@ -21,9 +23,9 @@ export async function invokePi({ root, config, promptFile, logFile, timeoutMinut
   try {
     await new Promise((resolve, reject) => {
       const args = piArgs(cli, config, promptFile);
-      args[2] = path.join(root, 'scripts/pi-search-guard.ts');
+      args[args.indexOf('--extension') + 1] = path.join(root, 'scripts/pi-search-guard.ts');
       const child = spawn(process.execPath, args, {
-        cwd: root, env: { ...process.env, INSIGHT_SEARCH_CACHE: path.join(path.dirname(logFile), 'search-cache') }, stdio: ['ignore', log.fd, log.fd], windowsHide: true,
+        cwd: root, env: { ...process.env, INSIGHT_SEARCH_CACHE: path.join(path.dirname(logFile), 'search-cache'), INSIGHT_EXA_RATE_LIMIT_STATE: path.join(root, 'data/runtime/exa-rate-limit.json'), INSIGHT_EXA_POLICY: JSON.stringify(config.exaPolicy || {}) }, stdio: ['ignore', log.fd, log.fd], windowsHide: true,
       });
       const processFile = path.join(path.dirname(logFile), 'process.json');
       const startedAt = new Date().toISOString();
