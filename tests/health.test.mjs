@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { inspectHealth } from '../src/health.mjs';
+import { saveJson } from '../src/runtime.mjs';
+import { renderIssue } from '../src/render.mjs';
+
+test('health distinguishes overdue gaps from today before deadline, and notices broken publication', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'insight-health-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const issue = JSON.parse(await readFile(new URL('../data/issues/2026/11/11/issue.json', import.meta.url), 'utf8'));
+  await saveJson(path.join(root, 'config/pi.json'), { maxAttemptsPerDay: 3, timeoutMinutes: 90 });
+  await saveJson(path.join(root, 'data/runtime/state.json'), { published: { '2026-11-11': { count: issue.stories.length } } });
+  await saveJson(path.join(root, 'data/issues/2026/11/11/issue.json'), issue);
+  const archive = path.join(root, 'public/issues/2026/11/11');
+  await mkdir(archive, { recursive: true });
+  for (const file of ['index.html', 'styles.css', 'app.js']) await writeFile(path.join(archive, file), file === 'index.html' ? renderIssue(issue) : 'fixture');
+  await writeFile(path.join(root, 'public/index.html'), renderIssue(issue));
+  assert.equal((await inspectHealth(root, new Date('2026-11-12T08:00:00Z'))).status, 'healthy');
+  let result = await inspectHealth(root, new Date('2026-11-12T14:00:00Z'));
+  assert.deepEqual(result.missing, ['2026-11-12']);
+  assert.equal(result.status, 'unhealthy');
+  await saveJson(path.join(root, 'data/pi-runs/2026/11/12/checkpoint.json'), { attempts: 3, status: 'failed' });
+  await writeFile(path.join(root, 'data/pi-runs/2026/11/12/attempt-3.private.log'), JSON.stringify({ type: 'message_end', message: { role: 'assistant', stopReason: 'error', errorMessage: '502 status code (no body)' } }));
+  await writeFile(path.join(root, 'public/index.html'), 'wrong home');
+  result = await inspectHealth(root, new Date('2026-11-13T08:00:00Z'));
+  assert.deepEqual(result.missing, ['2026-11-12']);
+  assert.equal(result.failures[0].exhausted, true);
+  assert.match(result.failures[0].diagnosis.terminalProviderError, /502/);
+  assert.ok(result.findings.some(f => f.code === 'publication-integrity'));
+});

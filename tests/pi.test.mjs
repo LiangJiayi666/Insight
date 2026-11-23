@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validatePiBundle, makePiPrompt } from '../src/pi-contract.mjs';
-import { piArgs, resolvePi } from '../src/pi-runner.mjs';
+import { piArgs, resolvePi, invokePi } from '../src/pi-runner.mjs';
+import { validateMcpStatus } from '../src/pi-preflight.mjs';
 import { mkdtemp, mkdir, cp, writeFile, readFile, rm, access } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -36,10 +37,34 @@ test('source tracking parameters do not bypass evidence matching or duplicate de
   assert.throws(() => validatePiBundle(bundle, { date, window, target: 12 }));
 });
 test('Pi CLI uses isolated session and no command shell or credential flags', () => {
-  const args = piArgs('cli.js', { tools: ['read', 'write'], projectTrust: 'ignore', model: '' }, 'C:/a b/prompt.txt');
+  const args = piArgs('cli.js', { tools: ['read', 'write'], projectTrust: 'ignore', model: 'openai-codex/gpt-6-luna', thinkingLevel: 'high' }, 'C:/a b/prompt.txt');
+  assert.equal(args[args.indexOf('--thinking') + 1], 'high');
+  assert.equal(args[args.indexOf('--model') + 1], 'openai-codex/gpt-6-luna');
   assert.ok(args.includes('--no-session')); assert.ok(args.includes('--no-approve'));
   assert.ok(args.includes('@C:/a b/prompt.txt')); assert.ok(!args.includes('--api-key'));
   assert.ok(!args.includes('--continue'));
+  assert.ok(args.includes('--no-extensions'));
+  assert.ok(args.includes('builtin:mcp'));
+  assert.ok(args.includes('builtin:tool-search'));
+});
+
+test('MCP preflight requires both reachable Exa tools', () => {
+  assert.throws(() => validateMcpStatus({ servers: [] }), /未连接/);
+  const server = { name: 'exa', enabled: true, state: 'connected', tools: ['web_search_exa'] };
+  assert.throws(() => validateMcpStatus({ servers: [server] }), /缺少/);
+  server.tools.push('web_fetch_exa');
+  assert.equal(validateMcpStatus({ servers: [server] }).state, 'connected');
+  server.exposure = 'hidden';
+  assert.throws(() => validateMcpStatus({ servers: [server] }), /缺少/);
+});
+
+test('a zero-exit Pi process with a terminal model 502 is a failure', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'pi-zero-exit-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const cli = path.join(root, 'cli.mjs');
+  const event = { type: 'message_end', message: { role: 'assistant', stopReason: 'error', errorMessage: '502 status code (no body)' } };
+  await writeFile(cli, `console.log(${JSON.stringify(JSON.stringify(event))});`);
+  await assert.rejects(invokePi({ root, config: { cliPath: cli, tools: ['read'] }, promptFile: 'unused', logFile: path.join(root, 'attempt-1.private.log'), timeoutMinutes: 1 }), /模型服务失败.*502/);
 });
 
 test('Pi resolves the same bundled entry as the installed command, preserving explicit overrides', async t => {

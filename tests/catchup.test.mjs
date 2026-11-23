@@ -21,7 +21,7 @@ async function project(t) {
   await saveJson(path.join(root, 'config/pi.json'), { cliPath: sentinel, maxAttemptsPerDay: 3 });
   await saveJson(path.join(root, 'config/settings.json'), { targetStories: 12, initialLookbackHours: 24, maxCatchupHours: 72 });
   const run = (...args) => promisify(execFile)(process.execPath, [path.join(root, 'scripts/pi-daily.mjs'), '--no-sync', ...args], { cwd: root, env: { ...process.env, INSIGHT_PI_CLI: sentinel }, timeout: 15000, windowsHide: true });
-  return { root, run };
+  return { root, run, sentinel };
 }
 
 async function ready(root, date, { noBundle = false } = {}) {
@@ -98,4 +98,40 @@ test('a failed edition publishes existing supported stories with a documented fa
   assert.equal(audit[1].decision, 'unverified');
   assert.deepEqual(audit[1].followUpAttempts, bundle.selectionAudit[1].followUpAttempts);
   assert.equal((await readJson(path.join(folder, 'checkpoint.json'))).attempts, 3);
+});
+
+async function failingProvider(root, sentinel) {
+  await cp(new URL('../scripts/pi-exa-observer.mjs', import.meta.url), path.join(root, 'scripts/pi-exa-observer.mjs'));
+  await writeFile(sentinel, `
+    if (process.argv.includes('mcp')) console.log(JSON.stringify({ servers: [{ name: 'exa', enabled: true, state: 'connected', tools: ['web_search_exa', 'web_fetch_exa'] }] }));
+    else console.log(JSON.stringify({ type: 'message_end', message: { role: 'assistant', stopReason: 'error', errorMessage: '502 status code (no body)' } }));
+  `);
+  await saveJson(path.join(root, 'config/pi.json'), { cliPath: sentinel, maxAttemptsPerDay: 3, timeoutMinutes: 1, tools: ['read'] });
+}
+
+test('terminal provider failure stops remaining network attempts but still publishes ready artifacts', async t => {
+  const { root, run, sentinel } = await project(t);
+  await failingProvider(root, sentinel);
+  await saveJson(path.join(root, 'data/pi-runs', datePath(first), 'checkpoint.json'), { date: first, window: { start: `${first}T00:00:00+08:00`, end: `${first}T23:59:59.999+08:00` }, attempts: 0 });
+  await ready(root, today);
+  await assert.rejects(run(), /502/);
+  const failed = await readJson(path.join(root, 'data/pi-runs', datePath(first), 'checkpoint.json'));
+  assert.equal(failed.attempts, 1);
+  assert.match(failed.providerError, /502/);
+  assert.equal(await readJson(path.join(root, 'data/pi-runs', datePath(missing), 'checkpoint.json'), null), null);
+  assert.equal((await readJson(path.join(root, 'data/runtime/state.json'))).published[today].count, 1);
+});
+
+test('explicit retry grants exactly one attempt and preserves exhausted history', async t => {
+  const { root, run, sentinel } = await project(t);
+  await failingProvider(root, sentinel);
+  await ready(root, missing, { noBundle: true });
+  await assert.rejects(run(`--resume-date=${missing}`), /尝试次数已达上限/);
+  await assert.rejects(run(`--resume-date=${missing}`, '--retry-failed'), /502/);
+  const checkpoint = await readJson(path.join(root, 'data/pi-runs', datePath(missing), 'checkpoint.json'));
+  assert.equal(checkpoint.attempts, 4);
+  assert.equal(checkpoint.retryAuthorizations.length, 1);
+  assert.equal(checkpoint.retryAuthorizations[0].attempt, 4);
+  await assert.rejects(run(`--resume-date=${missing}`), /尝试次数已达上限/);
+  assert.equal((await readJson(path.join(root, 'data/pi-runs', datePath(missing), 'checkpoint.json'))).attempts, 4);
 });

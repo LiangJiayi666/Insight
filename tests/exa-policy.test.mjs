@@ -73,6 +73,22 @@ test('short server delay is awaited exactly, success resets backoff, and cache a
   assert.match(await guard.budget(), /搜索2次/);
 });
 
+test('Pi batch preparation rejects a concurrent call without waiting for an unexecuted first call', { timeout: 2000 }, async t => {
+  const guard = new SearchGuard(await folder(t), { rejectConcurrent: true });
+  // Reproduce Pi: prepare ALL calls, then execute/finalize them. A queued
+  // second before() would wait forever, because first.after() cannot run yet.
+  const first = guard.before('first', 'search', { query: 'one' });
+  const blocked = await guard.before('second', 'search', { query: 'two' });
+  assert.equal(blocked.block, true);
+  assert.match(blocked.reason, /尚未联网/);
+  await first;
+  assert.match(await guard.budget(), /搜索1次/);
+  await guard.after('first', { content: [], isError: false });
+  assert.equal(await guard.before('retry', 'search', { query: 'two' }), undefined);
+  await guard.after('retry', { content: [], isError: false });
+  assert.match(await guard.budget(), /搜索2次/);
+});
+
 test('long provider cooldown is shared across editions and never shortened to the local cap', async t => {
   const root = await folder(t), shared = path.join(root, 'shared.json');
   const options = { rateLimitFile: shared, now: () => 1000, sleep: async () => assert.fail('should not sleep') };
@@ -123,5 +139,7 @@ test('Pi invocation preloads observation before the CLI and passes one project-w
   assert.equal(probe.observer, true);
   assert.equal(probe.file, path.join(root, 'data/runtime/exa-rate-limit.json'));
   assert.equal(probe.policy.maxWaitMs, 1234);
-  assert.equal(probe.args[probe.args.indexOf('--extension') + 1], path.join(root, 'scripts/pi-search-guard.ts'));
+  assert.ok(probe.args.includes(path.join(root, 'scripts/pi-search-guard.ts')));
+  assert.ok(probe.args.includes('--no-extensions'));
+  assert.ok(probe.args.includes('builtin:mcp'));
 });

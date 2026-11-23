@@ -49,3 +49,19 @@ test('diagnostics ignore successful content, prompts, call IDs and local cache b
   ];
   assert.deepEqual(diagnoseRun(events.map(JSON.stringify).join('\n')), { searchRateLimited: false, networkFailure: false, crawlTimeout: false, searchCooldownBlocked: true });
 });
+
+test('diagnostics expose model timeouts, 502s and unavailable tools independently', () => {
+  const events = [
+    { type: 'message_end', message: { role: 'assistant', stopReason: 'error', errorMessage: 'Request timed out.' } },
+    { type: 'tool_execution_end', toolName: 'tool_search', result: { content: [{ type: 'text', text: 'No matching tools found.' }] } },
+    { type: 'message_end', message: { role: 'assistant', stopReason: 'error', errorMessage: '502 status code (no body)' } },
+  ];
+  const result = diagnoseRun(events.map(JSON.stringify).join('\n'));
+  assert.equal(result.networkFailure, true);
+  assert.equal(result.searchRateLimited, false);
+  assert.equal(result.searchToolsUnavailable, true);
+  assert.equal(result.providerErrors[1].status, 502);
+  assert.match(result.terminalProviderError, /502/);
+  events.push({ type: 'message_end', message: { role: 'assistant', stopReason: 'stop' } });
+  assert.equal(diagnoseRun(events.map(JSON.stringify).join('\n')).terminalProviderError, undefined);
+});

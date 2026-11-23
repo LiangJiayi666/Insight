@@ -47,13 +47,15 @@
 
 ```powershell
 npm run pi:check       # 检查现有Pi路径
+npm run doctor         # 只读检查缺刊、窗口、产物和最近失败原因
+npm run pi:probe       # 测试模型响应与Exa工具发现，不生成日报
 npm run daily:pi       # 先补缺失刊期，再制作当天日报
 npm run build          # 从最新稿件离线重建页面
 npm start              # 本机预览public目录
 npm test               # 离线测试
 ```
 
-详细命令及边界见 [Pi运行手册](docs/PI-AUTOMATION.md)、[发送与维护](docs/OPERATIONS.md)。[清理记录](docs/CODE-AUDIT.md)列出已移除的旧实现与保留理由。
+详细命令及边界见 [Pi运行手册](docs/PI-AUTOMATION.md)、[发送与维护](docs/OPERATIONS.md)。[11月23日诊断报告](docs/DIAGNOSIS-2026-11-23.md)记录最近停刊原因、修复和验证结果。[清理记录](docs/CODE-AUDIT.md)列出已移除的旧实现与保留理由。
 
 ## 日报与台账
 

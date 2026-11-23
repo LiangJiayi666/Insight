@@ -10,6 +10,8 @@
     "unlock": "node scripts/unlock.mjs",
     "daily:pi": "node scripts/pi-daily.mjs",
     "pi:check": "node scripts/pi-daily.mjs --check",
+    "doctor": "node scripts/doctor.mjs",
+    "pi:probe": "node scripts/pi-probe.mjs",
     "pi:smoke": "node scripts/pi-daily.mjs --smoke"
   },
   "engines": { "node": ">=20" }

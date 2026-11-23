@@ -1,8 +1,9 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { access, mkdir, open } from 'node:fs/promises';
+import { access, mkdir, open, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { saveJson } from './runtime.mjs';
+import { diagnoseRun } from './run-diagnostics.mjs';
 
 export async function resolvePi(config, env = process.env) {
   const packageRoot = env.APPDATA && path.join(env.APPDATA, 'npm/node_modules/@earendil-works/pi-coding-agent');
@@ -13,8 +14,12 @@ export async function resolvePi(config, env = process.env) {
   throw new Error('未找到Pi CLI；在config/pi.json设置cliPath，或设置INSIGHT_PI_CLI。');
 }
 export function piArgs(cli, config, promptFile) {
-  return ['--import', new URL('../scripts/pi-exa-observer.mjs', import.meta.url).href, cli, '--extension', fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)), '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
-    '--tools', config.tools.join(','), ...(config.model ? ['--model', config.model] : []), '@' + promptFile];
+  return ['--import', new URL('../scripts/pi-exa-observer.mjs', import.meta.url).href, cli,
+    '--no-extensions', '--extension', 'builtin:mcp', '--extension', 'builtin:tool-search',
+    '--extension', fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)),
+    '--no-skills', '--no-prompt-templates', '--print', '--mode', 'json', '--no-session', config.projectTrust === 'approve' ? '--approve' : '--no-approve',
+    '--tools', config.tools.join(','), ...(config.model ? ['--model', config.model] : []),
+    ...(config.thinkingLevel ? ['--thinking', config.thinkingLevel] : []), '@' + promptFile];
 }
 export async function invokePi({ root, config, promptFile, logFile, timeoutMinutes }) {
   const cli = await resolvePi(config);
@@ -23,7 +28,7 @@ export async function invokePi({ root, config, promptFile, logFile, timeoutMinut
   try {
     await new Promise((resolve, reject) => {
       const args = piArgs(cli, config, promptFile);
-      args[args.indexOf('--extension') + 1] = path.join(root, 'scripts/pi-search-guard.ts');
+      args[args.indexOf(fileURLToPath(new URL('../scripts/pi-search-guard.ts', import.meta.url)))] = path.join(root, 'scripts/pi-search-guard.ts');
       const child = spawn(process.execPath, args, {
         cwd: root, env: { ...process.env, INSIGHT_SEARCH_CACHE: path.join(path.dirname(logFile), 'search-cache'), INSIGHT_EXA_RATE_LIMIT_STATE: path.join(root, 'data/runtime/exa-rate-limit.json'), INSIGHT_EXA_POLICY: JSON.stringify(config.exaPolicy || {}) }, stdio: ['ignore', log.fd, log.fd], windowsHide: true,
       });
@@ -49,4 +54,7 @@ export async function invokePi({ root, config, promptFile, logFile, timeoutMinut
       });
     });
   } finally { await log.close(); }
+  const diagnosis = diagnoseRun(await readFile(logFile, 'utf8'));
+  if (diagnosis.terminalProviderError) throw new Error(`Pi模型服务失败（进程退出码为0）：${diagnosis.terminalProviderError}`);
+  if (diagnosis.searchToolsUnavailable) throw new Error('Pi未发现可用Exa工具；请检查MCP连接，未进行新闻检索');
 }

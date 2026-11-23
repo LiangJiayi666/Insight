@@ -38,3 +38,12 @@ test('publishing an older issue preserves the current home page and collection c
   assert.deepEqual(publicationPosition(state, '2026-11-14', '2026-11-14T15:59:59.999Z'), { latest: false, lastCutoff: state.lastCutoff });
   assert.deepEqual(publicationPosition(state, '2026-11-16', '2026-11-16T11:50:00Z'), { latest: true, lastCutoff: '2026-11-16T11:50:00Z' });
 });
+
+test('a failed predecessor checkpoint prevents an uncovered evening gap', () => {
+  const state = { published: { '2026-11-19': { cutoff: '2026-11-19T11:50:00Z' } } };
+  const previous = { date: '2026-11-20', status: 'failed', window: { end: '2026-11-20T11:50:00Z' } };
+  const window = issueWindow('2026-11-21', state, settings, new Date('2026-11-21T11:50:00Z'), previous);
+  assert.equal(window.start, '2026-11-20T11:50:00.000Z');
+  assert.equal(window.end, '2026-11-21T11:50:00.000Z');
+  assert.throws(() => issueWindow('2026-11-22', state, settings, new Date('2026-11-22T11:50:00Z'), previous), /日期不匹配/);
+});

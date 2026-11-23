@@ -10,16 +10,18 @@ import { updateLedger, filesUnder } from '../src/operations.mjs';
 import { pendingIssueDates, issueWindow, publicationPosition, shiftDate } from '../src/daily-plan.mjs';
 import { syncGit } from '../src/git-sync.mjs';
 import { initializeSearchBudget, budgetSummary } from '../src/search-budget.mjs';
+import { checkPiMcp } from '../src/pi-preflight.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-async function produceIssue({ date, now, state, config, settings, smoke, resumeDate }) {
+async function produceIssue({ date, now, state, config, settings, smoke, resumeDate, retryFailed, preflight }) {
   const dp = datePath(date);
   const stateFile = path.join(root, 'data/runtime/state.json');
   if (!smoke && state.published[date]) { console.log(date + '已发布，不重复运行。'); return; }
   const folder = path.join(root, 'data', smoke ? 'pi-smoke' : 'pi-runs', smoke ? now.toISOString().replace(/[:.]/g, '-') : dp);
   const checkpointFile = path.join(folder, 'checkpoint.json');
   if (resumeDate) await readJson(checkpointFile); // Resume existing window only, never invent historical coverage.
-  const checkpoint = await readJson(checkpointFile, null) || { date, window: smoke ? computeWindow(now, null, settings) : issueWindow(date, state, settings, now), attempts: 0 };
+  const previousCheckpoint = smoke ? null : await readJson(path.join(root, 'data/pi-runs', datePath(shiftDate(date, -1)), 'checkpoint.json'), null);
+  const checkpoint = await readJson(checkpointFile, null) || { date, window: smoke ? computeWindow(now, null, settings) : issueWindow(date, state, settings, now, previousCheckpoint), attempts: 0 };
   if (checkpoint.date !== date) throw new Error('检查点刊期不匹配');
   const target = smoke ? 1 : settings.targetStories;
   const backfill = !smoke && date < chinaDate(now);
@@ -41,7 +43,12 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
     const guardState = await initializeSearchBudget(path.join(folder, 'search-cache'));
     const rateState = await readJson(path.join(root, 'data/runtime/exa-rate-limit.json'), guardState);
     if (rateState?.blockedUntil - Date.now() > (config.exaPolicy?.maxWaitMs ?? 60000)) throw new Error(`Exa限流等待至${new Date(rateState.blockedUntil).toISOString()}（依据：${rateState.retrySource || '旧版本地冷却策略'}），本次不消耗制作尝试次数；可以复用缓存，稍后恢复。`);
-    if (checkpoint.attempts >= config.maxAttemptsPerDay) throw new Error('本日Pi尝试次数已达上限，请检查私有日志；不会自动无限重跑。');
+    if (checkpoint.attempts >= config.maxAttemptsPerDay && !retryFailed) throw new Error('本刊Pi尝试次数已达上限，请检查私有日志；修复后可用 --resume-date=日期 --retry-failed 显式追加一次，不会自动无限重跑。');
+    await preflight();
+    if (retryFailed) {
+      checkpoint.retryAuthorizations ||= [];
+      checkpoint.retryAuthorizations.push({ at: new Date().toISOString(), attempt: checkpoint.attempts + 1, reason: 'operator --resume-date --retry-failed; existing attempts and logs retained' });
+    }
     checkpoint.attempts++; checkpoint.status = 'running';
     await saveJson(checkpointFile, checkpoint);
     await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke, backfill }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。\n${budgetSummary(guardState, smoke ? { maxSearch: 4, maxFetch: 3, maxCalls: 7 } : {})}` + repair);
@@ -62,13 +69,16 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
         checkpoint.status = 'failed';
         checkpoint.diagnostics = diagnoseRun(await readFile(path.join(folder, `attempt-${checkpoint.attempts}.private.log`), 'utf8').catch(() => ''));
         if (processError) checkpoint.providerError = processError.message;
+        else if (checkpoint.diagnostics.terminalProviderError) checkpoint.providerError = checkpoint.diagnostics.terminalProviderError;
         else delete checkpoint.providerError;
         checkpoint.validationError = validationError.message;
         await saveJson(checkpointFile, checkpoint);
         const artifact = validationError.code === 'ENOENT'
           ? `未生成产物 ${output}`
           : `产物校验：${validationError.message}`;
-        throw new Error(`${error.message}；${artifact}`);
+        const failure = new Error(`${error.message}；${artifact}`);
+        failure.infrastructure = !!(checkpoint.diagnostics.terminalProviderError || checkpoint.diagnostics.searchToolsUnavailable);
+        throw failure;
       }
     }
   }
@@ -97,9 +107,11 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
 
 async function main() {
   const args = process.argv.slice(2);
-  if (args.some(arg => !['--check', '--smoke', '--no-sync'].includes(arg) && !/^--(?:resume-date|backfill-date)=\d{4}-\d{2}-\d{2}$/.test(arg))) throw new Error('参数不合法');
+  if (args.some(arg => !['--check', '--smoke', '--no-sync', '--retry-failed'].includes(arg) && !/^--(?:resume-date|backfill-date)=\d{4}-\d{2}-\d{2}$/.test(arg))) throw new Error('参数不合法');
   const resumeDate = args.find(arg => arg.startsWith('--resume-date='))?.split('=')[1];
   const backfillDate = args.find(arg => arg.startsWith('--backfill-date='))?.split('=')[1];
+  const retryFailed = args.includes('--retry-failed');
+  if (retryFailed && !resumeDate) throw new Error('--retry-failed 必须与 --resume-date 配合，仅追加该刊一次尝试');
   const now = new Date(), today = chinaDate(now);
   const modes = args.filter(arg => arg === '--check' || arg === '--smoke' || arg.startsWith('--resume-date=') || arg.startsWith('--backfill-date='));
   if (modes.length > 1) throw new Error('检查、测试、恢复和补刊模式不能混用');
@@ -121,9 +133,18 @@ async function main() {
     if (!dates.length) { console.log('历史刊期与当天均已发布，不重复运行。'); return; }
     console.log('制作顺序：' + dates.join(' → '));
     const errors = [];
+    let preflightResult;
+    let infrastructureFailure;
+    const preflight = () => {
+      if (infrastructureFailure) throw new Error('共同依赖故障，本批剩余联网制作暂停：' + infrastructureFailure);
+      return preflightResult ||= checkPiMcp(config, root);
+    };
     for (const date of dates) {
-      try { await produceIssue({ date, now, state, config, settings, smoke, resumeDate }); }
-      catch (error) { errors.push(date + '：' + error.message); console.error(errors.at(-1)); }
+      try { await produceIssue({ date, now, state, config, settings, smoke, resumeDate, retryFailed, preflight }); }
+      catch (error) {
+        if (error.infrastructure) infrastructureFailure = error.message;
+        errors.push(date + '：' + error.message); console.error(errors.at(-1));
+      }
     }
     if (errors.length) throw new Error('部分刊期未完成：' + errors.join('；'));
   } finally {

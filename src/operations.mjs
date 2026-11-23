@@ -15,19 +15,38 @@ export async function filesUnder(folder) {
   }
   return result;
 }
-export function parseUsage(text) {
+export function parseUsage(text, { date, fallbackDate } = {}) {
   const result = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, totalTokens: 0, turns: 0, errors: 0, tools: {}, models: [], reportedCost: 0, priceIncomplete: false, missingUsage: false };
-  const evidence = []; const seen = new Set();
+  const evidence = []; const seen = new Set(); const calls = new Map();
+  const dates = new Set();
+  let eventDate = fallbackDate;
   for (const line of text.split('\n')) {
     let e; try { e = JSON.parse(line); } catch { continue; }
-    if (e.type === 'tool_execution_start') result.tools[e.toolName] = (result.tools[e.toolName] || 0) + 1;
-    if (e.type === 'tool_execution_end' && /web_fetch_exa|web_search_exa/.test(e.toolName || '')) evidence.push(e);
+    const stamp = e.message?.timestamp ?? e.timestamp;
+    const time = typeof stamp === 'number' ? stamp : Date.parse(stamp);
+    if (Number.isFinite(time)) eventDate = chinaDate(new Date(time));
+    if (eventDate) dates.add(eventDate);
+    if (e.type === 'tool_execution_start') calls.set(e.toolCallId, { name: e.toolName, date: eventDate, local: false, ended: false });
+    if (e.type === 'tool_execution_end') {
+      const call = calls.get(e.toolCallId);
+      if (call) {
+        call.ended = true;
+        const first = e.result?.content?.find(c => c.type === 'text')?.text || '';
+        call.local = !!(e.isError || e.result?.isError) && /同批Exa调用须串行|相同请求已有成功结果|搜索服务限流冷却至|Exa限流等待至|本次运行的429重试次数已达上限|本次运行因Exa认证或余额错误停止联网|本刊搜索\/读取硬预算已用完|本刊分项预算已用完/.test(first);
+      }
+      if (/web_fetch_exa|web_search_exa/.test(e.toolName || '') && (!date || (call?.date || eventDate) === date)) evidence.push(e);
+    }
+    if (date && eventDate !== date) continue;
     const m = e.message;
     if (e.type !== 'message_end' || m?.role !== 'assistant') continue;
     if (m.id && seen.has(m.id)) continue;
     if (m.id) seen.add(m.id);
     result.turns++;
-    if (m.stopReason === 'error') result.errors++;
+    if (m.stopReason === 'error') {
+      result.errors++;
+      // SDK error placeholders with all-zero usage do not prove zero billing.
+      if (!m.usage?.totalTokens) result.missingUsage = true;
+    }
     if (!m.usage) result.missingUsage = true;
     for (const key of ['input', 'output', 'cacheRead', 'cacheWrite', 'totalTokens']) result[key] += Number(m.usage?.[key]) || 0;
     const cost = Number(m.usage?.cost?.total) || 0;
@@ -36,20 +55,37 @@ export function parseUsage(text) {
     const model = `${m.provider || 'unknown'}/${m.model || 'unknown'}`;
     if (!result.models.includes(model)) result.models.push(model);
   }
+  for (const call of calls.values()) {
+    if (call.local || (date && call.date !== date)) continue;
+    result.tools[call.name] = (result.tools[call.name] || 0) + 1;
+    if (!call.ended && /web_fetch_exa|web_search_exa/.test(call.name)) result.missingUsage = true;
+  }
   if (!result.turns) result.missingUsage = true;
-  return { usage: result, evidence };
+  return { usage: result, evidence, dates: [...dates] };
 }
 export async function updateLedger(root, date) {
   const ledgerFile = path.join(root, 'data/costs', datePath(date) + '.json');
   const ledger = await readJson(ledgerFile, { date, runs: {} });
-  const logs = [...await filesUnder(path.join(root, 'data/pi-runs', datePath(date))), ...await filesUnder(path.join(root, 'data/pi-smoke'))].filter(f => f.endsWith('.private.log'));
+  const logs = [...await filesUnder(path.join(root, 'data/pi-runs')), ...await filesUnder(path.join(root, 'data/pi-smoke'))].filter(f => {
+    const key = path.relative(root, f).replaceAll('\\', '/');
+    return /^data\/pi-runs\/\d{4}\/\d{2}\/\d{2}\/attempt-\d+\.private\.log$/.test(key) || /^data\/pi-smoke\/[^/]+\/attempt-\d+\.private\.log$/.test(key);
+  });
+  // Remove old accidental snapshot copies, but retain canonical entries whose
+  // original logs have already passed the retention period.
+  for (const key of Object.keys(ledger.runs)) {
+    if (!/^data\/pi-runs\/\d{4}\/\d{2}\/\d{2}\/attempt-\d+\.private\.log$/.test(key) && !/^data\/pi-smoke\/[^/]+\/attempt-\d+\.private\.log$/.test(key)) delete ledger.runs[key];
+  }
   for (const file of logs) {
+    let fallbackDate;
     if (file.includes(`${path.sep}pi-smoke${path.sep}`)) {
       const stamp = path.basename(path.dirname(file)).replace(/T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/, 'T$1:$2:$3.$4Z');
-      if (!Number.isFinite(Date.parse(stamp)) || chinaDate(new Date(stamp)) !== date) continue;
+      if (Number.isFinite(Date.parse(stamp))) fallbackDate = chinaDate(new Date(stamp));
+    } else {
+      fallbackDate = path.relative(path.join(root, 'data/pi-runs'), file).replaceAll('\\', '/').slice(0, 10).replaceAll('/', '-');
     }
     const key = path.relative(root, file).replaceAll('\\', '/');
-    const { usage, evidence } = parseUsage(await readFile(file, 'utf8'));
+    const { usage, evidence, dates } = parseUsage(await readFile(file, 'utf8'), { date, fallbackDate });
+    if (dates.length ? !dates.includes(date) : fallbackDate !== date) { delete ledger.runs[key]; continue; }
     ledger.runs[key] = usage;
     if (evidence.length) {
       const id = createHash('sha256').update(key).digest('hex').slice(0, 16);
@@ -64,7 +100,7 @@ export async function updateLedger(root, date) {
     total.incomplete ||= run.missingUsage;
   }
   ledger.total = total; ledger.updatedAt = new Date().toISOString();
-  ledger.scope = '仅Insight的Pi制作与测试，含失败运行的可观测用量；不含普通飞书聊天。金额/credits未经供应商账单确认。';
+  ledger.scope = '仅Insight的Pi制作与测试，按事件实际北京时间归属（无时间戳的旧日志回退刊期），含补刊及失败运行；缓存/本地拦截不计联网次数，快照副本排除。不含普通飞书聊天，金额/credits未经供应商账单确认。';
   await saveJson(ledgerFile, ledger);
   return ledger;
 }

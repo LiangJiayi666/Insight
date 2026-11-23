@@ -11,7 +11,7 @@ export function classifyToolFailure(result) {
   // tool error can identify a locally blocked call; the explanation is not one.
   const first = failed ? (result?.content?.find(item => item?.type === 'text')?.text || '') : '';
   const guardBlocked = /搜索服务限流冷却至|Exa限流等待至|本次运行的429重试次数已达上限/.test(first);
-  const localBlock = guardBlocked || /相同请求已有成功结果|本刊搜索\/读取硬预算已用完|本刊分项预算已用完|本次运行因Exa认证或余额错误停止联网/.test(first);
+  const localBlock = guardBlocked || /同批Exa调用须串行|相同请求已有成功结果|本刊搜索\/读取硬预算已用完|本刊分项预算已用完|本次运行因Exa认证或余额错误停止联网/.test(first);
   const status429 = envelopes.some(value => value && [value.status, value.statusCode, value.httpStatus, value.error?.code].some(code => Number(code) === 429));
   const status = envelopes.flatMap(value => value ? [value.status, value.statusCode, value.httpStatus, value.error?.code] : []).map(Number).find(code => code >= 400 && code <= 599)
     || Number(/\b(?:HTTP(?: request failed with status)?|status(?: code)?|error)\s*[:=]?\s*([45]\d\d)\b/i.exec(text)?.[1]) || null;

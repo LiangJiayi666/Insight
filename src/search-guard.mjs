@@ -7,10 +7,10 @@ import { providerRetry, takeExaResponse } from './exa-response.mjs';
 export class SearchGuard {
   constructor(folder, { intervalMs = 0, maxCalls = Infinity, maxSearch = Infinity, maxFetch = Infinity,
     fallbackBackoffMs = 30000, maxBackoffMs = 900000, maxWaitMs = 60000, maxRateLimitRetries = 2,
-    rateLimitFile = path.join(folder, 'rate-limit.json'), now = Date.now, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
+    rateLimitFile = path.join(folder, 'rate-limit.json'), rejectConcurrent = false, now = Date.now, sleep = ms => new Promise(r => setTimeout(r, ms)) } = {}) {
     for (const value of [intervalMs, fallbackBackoffMs, maxBackoffMs, maxWaitMs, maxRateLimitRetries]) if (!Number.isFinite(value) || value < 0) throw new Error('Exa退避配置须为非负有限数值');
     if (!Number.isInteger(maxRateLimitRetries) || fallbackBackoffMs < 1 || maxBackoffMs < fallbackBackoffMs || maxWaitMs > 60000) throw new Error('Exa退避配置无效：单次自动等待不超过60秒');
-    Object.assign(this, { folder, intervalMs, maxCalls, maxSearch, maxFetch, fallbackBackoffMs, maxBackoffMs, maxWaitMs, maxRateLimitRetries, rateLimitFile, now, sleep });
+    Object.assign(this, { folder, intervalMs, maxCalls, maxSearch, maxFetch, fallbackBackoffMs, maxBackoffMs, maxWaitMs, maxRateLimitRetries, rateLimitFile, rejectConcurrent, now, sleep });
     this.rateLimitsThisRun = 0; this.stopReason = null;
     this.queue = Promise.resolve(); this.calls = new Map();
   }
@@ -31,8 +31,13 @@ export class SearchGuard {
     return `${stop ? '本次运行的429重试次数已达上限。' : ''}Exa限流等待至${new Date(state.blockedUntil).toISOString()}，依据：${basis}。${stop || state.blockedUntil - this.now() > this.maxWaitMs ? '本次停止新的联网调用，使用已保存证据；保留检查点，届时可恢复。' : '下一次Exa调用将先等待再尝试，勿立即反复请求。'}`;
   }
   async before(id, tool, input) {
+    // Pi prepares every call in a parallel batch BEFORE executing any call.
+    // Waiting for another call's result here deadlocks the entire batch.
+    // In the Pi hook, reject the extra call so it can be issued next turn.
+    if (this.rejectConcurrent && this.busy) return { block: true, reason: '同批Exa调用须串行：本条尚未联网、不计额度。请等待本批第一条结果，在下一轮单独重新调用本条。' };
+    this.busy = true;
     const previous = this.queue; let release;
-    this.queue = new Promise(r => { release = r; });
+    this.queue = new Promise(r => { release = () => { this.busy = false; r(); }; });
     await previous;
     try {
       const key = this.key(tool, input); const file = path.join(this.folder, `${key}.json`);

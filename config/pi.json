@@ -1,6 +1,7 @@
 {
   "cliPath": "",
-  "model": "aliyun-custom/gpt-6-astra",
+  "model": "openai-codex/gpt-6-luna",
+  "thinkingLevel": "high",
   "timeoutMinutes": 90,
   "smokeTimeoutMinutes": 10,
   "maxAttemptsPerDay": 3,

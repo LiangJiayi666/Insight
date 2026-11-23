@@ -21,7 +21,7 @@ export async function initializeSearchBudget(folder) {
       if (!/^mcp__exa__web_(search|fetch)_exa$/.test(event.toolName || '')) continue;
       const key = `${name}:${event.toolCallId}`;
       if (event.type === 'tool_execution_start') calls.set(key, searchKind(event.toolName));
-      if (event.type === 'tool_execution_end' && (event.isError || event.result?.isError) && /相同请求已有成功结果|搜索服务限流冷却至|Exa限流等待至|本次运行的429重试次数已达上限|本次运行因Exa认证或余额错误停止联网|本刊搜索\/读取硬预算已用完|本刊分项预算已用完/.test(JSON.stringify(event.result))) calls.delete(key);
+      if (event.type === 'tool_execution_end' && (event.isError || event.result?.isError) && /同批Exa调用须串行|相同请求已有成功结果|搜索服务限流冷却至|Exa限流等待至|本次运行的429重试次数已达上限|本次运行因Exa认证或余额错误停止联网|本刊搜索\/读取硬预算已用完|本刊分项预算已用完/.test(JSON.stringify(event.result))) calls.delete(key);
     }
   }
   state.searchCount = [...calls.values()].filter(kind => kind === 'search').length;

@@ -5,7 +5,7 @@ import { readJson } from '../src/runtime.mjs';
 export default function(pi: any) {
   const folder = process.env.INSIGHT_SEARCH_CACHE;
   if (!folder) return;
-  const guard = new SearchGuard(folder, { ...JSON.parse(process.env.INSIGHT_EXA_POLICY || '{}'), ...(process.env.INSIGHT_EXA_RATE_LIMIT_STATE ? { rateLimitFile: process.env.INSIGHT_EXA_RATE_LIMIT_STATE } : {}) });
+  const guard = new SearchGuard(folder, { ...JSON.parse(process.env.INSIGHT_EXA_POLICY || '{}'), rejectConcurrent: true, ...(process.env.INSIGHT_EXA_RATE_LIMIT_STATE ? { rateLimitFile: process.env.INSIGHT_EXA_RATE_LIMIT_STATE } : {}) });
   pi.on('before_agent_start', async () => {
     const options = await readJson(path.join(path.dirname(folder), 'validation.json'), null);
     if (options?.requireSelection === false) { guard.maxSearch = 4; guard.maxFetch = 3; guard.maxCalls = 7; }

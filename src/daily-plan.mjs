@@ -21,15 +21,18 @@ export function pendingIssueDates(state, checkpointDates, today) {
   return pending;
 }
 
-export function issueWindow(date, state, settings, now = new Date()) {
+export function issueWindow(date, state, settings, now = new Date(), previousCheckpoint = null) {
   shiftDate(date, 0);
   const today = chinaDate(now);
   if (date > today) throw new Error('不能制作未来刊期');
   const end = date < today ? new Date(`${date}T23:59:59.999+08:00`) : now;
   const previous = state.published?.[shiftDate(date, -1)];
+  if (previousCheckpoint && previousCheckpoint.date !== shiftDate(date, -1)) throw new Error('前一期检查点日期不匹配');
   // A missing previous edition is handled separately. Its failure must not cause
   // today's issue to silently absorb the entire unpublished interval again.
-  const start = previous?.cutoff || (Object.keys(state.published || {}).length || date < today
+  // A failed predecessor still owns a fixed coverage window. Continue from its
+  // cutoff so that evening-to-midnight news is not lost during catch-up.
+  const start = previous?.cutoff || previousCheckpoint?.window?.end || (Object.keys(state.published || {}).length || date < today
     ? `${date}T00:00:00+08:00` : null);
   return computeWindow(end, start, settings);
 }
