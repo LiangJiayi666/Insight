@@ -1,0 +1,225 @@
+{
+  "date": "2026-11-22",
+  "cutoff": "2026-11-22T14:01:38.248Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-21T11:50:02.643Z 至 2026-11-22T14:01:38.248Z；实际 2/12 条。",
+  "notice": "补刊：于2026-11-24补建，资料在历史截止时间之后整理，不是当日网页快照。本期于2026-11-23补建，网页均为事后读取，无法还原刊期当日网页快照。可核实的重点新闻仅2条，未为达到12条而填充。全球市场候选主要依据一篇Yahoo Finance报道；市场下跌的原因和后续表现不作因果定论。未能对所有首轮搜索结果逐一追查独立原文，范围覆盖有限。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-1",
+      "publisher": "CGTN",
+      "title": "China rolls out policy package to stabilize market and anchor expectations",
+      "url": "https://news.cgtn.com/news/2026-11-22/China-rolls-out-policy-package-to-stabilize-market-and-expectations-1ShDFzCbgqc/p.html",
+      "published": "2026-11-22T13:24:03Z",
+      "accessed": "2026-11-23T17:08:06.452Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "To further stabilize market expectations, under the overall guidance of the China Securities Regulatory Commission (CSRC), the Shanghai Stock Exchange, Shenzhen Stock Exchange, Beijing Stock Exchange and China Securities Depository and Clearing Corporation Limited jointly unveiled a set of policy packages on November 22. The moves are designed to bolster the inherent stability of the A-share market, refine its fundamental institutional framework and foster a sound market ecosystem.\n\nChina Securities Regulatory Commission, November 12, 2026. /VCG\n\nShanghai, Shenzhen and Beijing stock exchanges adjust margin requirements for margin trading\n\nOn November 22, to advance counter-cyclical regulation of margin trading and securities lending and support its sound and steady development, with the approval of the CSRC, the three bourses issued a notice on adjustments to margin requirements and related arrangements. The minimum margin ratio for margin purchases will be lowered from 100% to 80%, effective November 30, 2026.",
+      "limits": "文章汇总多项交易所措施；本稿融资保证金事实以所引上交所规则原文为准。"
+    },
+    {
+      "id": "s-2",
+      "publisher": "上海证券交易所",
+      "title": "关于调整融资保证金比例等相关安排的通知",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+      "published": "2026-11-22",
+      "accessed": "2026-11-23T17:08:21.371Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方原文",
+      "excerpt": "为了加强融资融券逆周期调节，促进融资融券业务健康平稳发展，经中国证监会批准，上海证券交易所（以下简称本所）现就融资保证金比例等相关安排通知如下：\n\n一、投资者融资买入证券时，融资保证金比例不得低于80%。会员在计算投资者的保证金可用余额时，若投资者在本次通知实施前有尚未了结的融资合约，会员可以按照修改后的规定相应下调其保证金比例。\n\n二、会员应当加强投资者融资融券交易行为管理，对存在异常交易行为的投资者采取差异化的管控措施，从严适用保证金比例、可充抵保证金证券折算率等风险控制指标，审慎控制其授信规模及交易费率。",
+      "limits": "官方通知当时标注待生效；新规则自2026-11-30起实施。"
+    },
+    {
+      "id": "s-3",
+      "publisher": "上海证券交易所",
+      "title": "关于调整融资保证金比例的通知",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20260114_10805174.shtml",
+      "published": "2026-01-14",
+      "accessed": "2026-11-23T17:08:31.175Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史规则",
+      "excerpt": "为加强融资逆周期调节，经中国证监会批准，上海证券交易所（以下简称本所）现就调整融资保证金比例相关安排通知如下：\n\n一、投资者融资买入证券时，融资保证金比例不得低于100%。\n\n本通知实施前尚未了结的融资合约及其展期，融资保证金比例要求仍按照原规定执行。\n\n二、本通知自2026年1月19日起施行。本所于2023年8月27日发布的《关于修改<上海证券交易所融资融券交易实施细则（2023年修订）>第三十九条的通知》（上证发〔2026〕140号）同时废止。",
+      "limits": "官方通知给出当时新开融资合约的最低比例；条款说明旧合约及展期仍按原规定执行。"
+    },
+    {
+      "id": "s-4",
+      "publisher": "上海证券交易所",
+      "title": "上海证券交易所适度降低融资保证金比例 促进两融业务功能有效发挥",
+      "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20230827_5725661.shtml",
+      "published": "2023-08-27",
+      "accessed": "2026-11-23T17:08:36.166Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史规则",
+      "excerpt": "2023年8月27日，经中国证监会批准，上海证券交易所（以下简称上交所）修改了《上海证券交易所融资融券交易实施细则（2023年修订）》第三十九条，将融资保证金比例从100%降低至80%，此次调整将于2023年9月8日收市后正式实施。\n\n融资保证金比例，是指投资者融资买入时交付的保证金与融资交易金额的比例。例如，当融资保证金比例为100%时，投资者用100万元的保证金最多可以向证券公司融资100万元买入证券。而当融资保证金比例降低至80%时，客户用100万元的保证金最多可以向证券公司融资125万元买入证券。",
+      "limits": "官方回溯2023年规则及其实施安排；不是本次新闻窗口内的新事件。"
+    },
+    {
+      "id": "s-5",
+      "publisher": "Yahoo Finance",
+      "title": "Nvidia Falls 48% From Peak as AI Selloff Spreads to Bitcoin and Crypto",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/nvidia-falls-48-peak-ai-225000738.html",
+      "published": "2026-11-21T22:50:00-05:00",
+      "accessed": "2026-11-23T17:07:36.823Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Nvidia (NASDAQ: $NVDA) plunged 14% on Friday and the Nasdaq Composite lost 5.3%, capping the index's worst week since 2020 as investors questioned whether the trillions of dollars being poured into artificial intelligence will pay off. The rout dragged Bitcoin (CRYPTO: $BTC) to its lowest levels since the summer.\nThe selloff marks the biggest test yet for the AI boom that has driven markets for three years. Analysts are now divided over whether it is a healthy correction or the start of a dot-com-style bust.\nThe Nasdaq closed at 22,617.73, about 18% below its Oct. 6 record and down 10% for the week, erasing its gains for 2026. The S&P 500 slipped into correction territory.\nNvidia closed at $125.53, down 47.5% from its October record of $239.24, after losing nearly 23% over the week. The chipmaker beat earnings estimates and raised its outlook on Tuesday, but those results have done little to slow the slide following Jensen Huang's departure as CEO.",
+      "limits": "Yahoo转载/发布的市场报道，本文未独立取得交易所原始行情序列；归因和跨资产延伸均按该报道表述。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "china-margin-requirement-cut-2026-11-22",
+      "category": "金融",
+      "title": "沪深北交易所将融资保证金最低比例从100%降至80%，11月30日起实施",
+      "published": "2026-11-22",
+      "eventDate": "2026-11-22",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "融资买入的最低保证金比例下调20个百分点，规则自11月30日起实施；相较今年1月的上调，此次是逆周期回调，也重新放宽融资杠杆空间。",
+      "facts": "沪深北交易所经证监会批准，将投资者融资买入证券的最低保证金比例由100%下调至80%，11月30日起生效。上交所允许券商按新规重算未了结合约可用保证金，同时要求对异常交易采取差异化管控。",
+      "affected": "参与融资买入的投资者及提供融资融券服务的证券公司",
+      "sourceIds": [
+        "s-1",
+        "s-2"
+      ],
+      "claims": [
+        {
+          "text": "沪深北交易所将融资买入最低保证金比例从100%降至80%，新规11月30日起实施。",
+          "sourceId": "s-1",
+          "quote": "The minimum margin ratio for margin purchases will be lowered from 100% to 80%, effective November 30, 2026."
+        },
+        {
+          "text": "上交所允许券商按新规下调未了结融资合约的保证金比例，并要求对异常交易加强差异化管理。",
+          "sourceId": "s-2",
+          "quote": "若投资者在本次通知实施前有尚未了结的融资合约，会员可以按照修改后的规定相应下调其保证金比例。\n\n二、会员应当加强投资者融资融券交易行为管理，对存在异常交易行为的投资者采取差异化的管控措施"
+        }
+      ],
+      "history": {
+        "status": "complete",
+        "interpretation": "同一融资买入最低保证金工具的路径为2023年80%、2026年1月上调至100%、本次拟自2026年11月30日恢复至80%。本次较前次节点下降20个百分点（2000基点），较2023年8月节点水平不变；这是先上调后的反向调整，不是连续下调。",
+        "series": [
+          {
+            "id": "margin-ratio",
+            "metric": "上交所融资买入最低保证金比例",
+            "unit": "%",
+            "measure": "interest-rate",
+            "kind": "observed",
+            "frequency": "decision",
+            "basis": "上交所融资买入保证金最低比例；按各次官方规则/调整公告记载。2026-11-22的新规则于11月30日生效，公告值作为当次决策节点。",
+            "points": [
+              {
+                "period": "2023-08-27",
+                "value": 80,
+                "sourceId": "s-4",
+                "quote": "将融资保证金比例从100%降低至80%"
+              },
+              {
+                "period": "2026-01-14",
+                "value": 100,
+                "sourceId": "s-3",
+                "quote": "投资者融资买入证券时，融资保证金比例不得低于100%。"
+              },
+              {
+                "period": "2026-11-22",
+                "value": 80,
+                "sourceId": "s-2",
+                "quote": "投资者融资买入证券时，融资保证金比例不得低于80%。"
+              }
+            ]
+          }
+        ],
+        "comparisons": [
+          {
+            "seriesId": "margin-ratio",
+            "from": "2026-01-14",
+            "to": "2026-11-22",
+            "method": "basis-points",
+            "label": "本次公告节点相对前次调整节点（2026-01-14）的融资最低保证金比例变化"
+          },
+          {
+            "seriesId": "margin-ratio",
+            "from": "2023-08-27",
+            "to": "2026-11-22",
+            "method": "basis-points",
+            "label": "本次公告节点相对至少一年前节点（2023-08-27）的融资最低保证金比例变化"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "title": "一年内从收紧转为放宽",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "上交所历史规则显示，2023年融资保证金最低比例为80%，2026年1月上调至100%，此次又定为80%；这是明确的政策方向反转，而非连续宽松。上交所对1月调整的说明称，当时融资交易活跃、流动性相对充裕；本次上交所规则则以逆周期调节为目标，并允许对存量合约按新规计算可用保证金。政策扩大可用杠杆空间，但并不代表资金必然流入股市，也不构成对市场走势的保证。",
+            "保证金比例从100%降到80%时，理论融资倍数从保证金金额的1倍升至1.25倍；该计算关系由上交所2023年说明举例支持。新规同时要求券商对异常交易从严控制授信及风险指标，因此放宽门槛与个体风控并行。"
+          ],
+          "sourceIds": [
+            "s-2",
+            "s-3",
+            "s-4"
+          ]
+        },
+        {
+          "title": "实施节点与风险边界",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "规则发布日期为11月22日、生效日为11月30日；留意交易所后续实施安排以及券商如何处理存量合约。若市场融资交易恢复，需同时观察异常交易管控是否按通知落实；比例调整本身不能证明融资需求或市场流动性已经回升。"
+          ],
+          "sourceIds": [
+            "s-2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-ai-market-selloff-2026-11-21",
+      "category": "金融",
+      "title": "AI相关股票重挫拖累纳指一周跌10%，比特币同步下探",
+      "published": "2026-11-21",
+      "eventDate": "2026-11-20",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "周五AI相关股票下跌加深，纳指录得周跌10%、抹去年内涨幅，报道同时称比特币跌至夏季以来低位；市场对AI投资回报的质疑扩散至科技与加密资产。",
+      "facts": "Yahoo Finance报道，11月20日英伟达跌14%，纳指跌5.3%；纳指当周跌10%，年内涨幅归零，标普500进入修正区间。比特币周跌9.8%，周末报道价格约58,895美元。文章将市场忧虑归于AI巨额投资回报的不确定性，并提及英伟达CEO离任等背景。",
+      "affected": "持有科技股、半导体资产或加密资产的投资者，以及依赖资本市场融资的AI基础设施企业",
+      "sourceIds": [
+        "s-5"
+      ],
+      "claims": [
+        {
+          "text": "11月20日英伟达下跌14%，纳指下跌5.3%；纳指一周跌10%并抹去当年涨幅。",
+          "sourceId": "s-5",
+          "quote": "Nvidia (NASDAQ: $NVDA) plunged 14% on Friday and the Nasdaq Composite lost 5.3%, capping the index's worst week since 2020 as investors questioned whether the trillions of dollars being poured into artificial intelligence will pay off."
+        },
+        {
+          "text": "报道所列比特币周跌9.8%，并指出市场人士对AI行情是修正还是泡沫破裂意见不一。",
+          "sourceId": "s-5",
+          "quote": "Bitcoin ended the week near $58,895, down 9.8% for the week and more than 50% below its 2025 peak"
+        }
+      ],
+      "sections": [
+        {
+          "title": "回撤显示估值与投资回报疑问升温",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "报道给出的纳指周跌10%且年内涨幅归零，表明抛售已不止于单日波动；英伟达和半导体资产的跌幅也说明压力集中在AI产业链。但同一报道指出，分析人士对其属于正常修正还是泡沫破裂看法分歧，单周价格变动不足以判定AI资本开支的长期回报已经恶化。",
+            "报道将投资者疑虑与AI投入能否兑现回报联系起来，并列出高利率对数据中心融资的压力；这是报道中的市场解释，不是已证实的单一因果关系。报道所列比特币同周下跌显示风险资产同步承压，但单一报道不足以证明科技股下跌直接导致加密资产下跌。"
+          ],
+          "sourceIds": [
+            "s-5"
+          ]
+        },
+        {
+          "title": "后续验证",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "判断抛售是否延续，可核对后续交易日纳指、半导体板块及比特币是否企稳，并检视AI企业资本支出与收入兑现情况；这些后续数据不在本次历史窗口内，本稿不预判其结果。"
+          ],
+          "sourceIds": []
+        }
+      ]
+    }
+  ]
+}

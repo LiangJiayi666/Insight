@@ -11,6 +11,7 @@ import { pendingIssueDates, issueWindow, publicationPosition, shiftDate } from '
 import { syncGit } from '../src/git-sync.mjs';
 import { initializeSearchBudget, budgetSummary } from '../src/search-budget.mjs';
 import { checkPiMcp } from '../src/pi-preflight.mjs';
+import { alignSourceAccessTimes } from '../src/source-access.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 async function produceIssue({ date, now, state, config, settings, smoke, resumeDate, retryFailed, preflight }) {
@@ -51,7 +52,7 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
     }
     checkpoint.attempts++; checkpoint.status = 'running';
     await saveJson(checkpointFile, checkpoint);
-    await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke, backfill }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。\n${budgetSummary(guardState, smoke ? { maxSearch: 4, maxFetch: 3, maxCalls: 7 } : {})}` + repair);
+    await atomicWrite(promptFile, makePiPrompt({ date, window: checkpoint.window, target, output, smoke, backfill, generatedAt: now.toISOString() }) + `\n本刊已取得的搜索资料索引：${path.join(folder, 'search-cache/index.json')}（存在则先read复用；不存在可忽略）。相同请求被缓存拦截时读取返回的缓存文件，不要换参数绕过。\n${budgetSummary(guardState, smoke ? { maxSearch: 4, maxFetch: 3, maxCalls: 7 } : {})}` + repair);
     let processError;
     try {
       try { await invokePi({ root, config, promptFile, logFile: path.join(folder, `attempt-${checkpoint.attempts}.private.log`), timeoutMinutes: smoke ? config.smokeTimeoutMinutes : config.timeoutMinutes }); }
@@ -91,6 +92,8 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
   }
   await saveJson(path.join(root, 'data/evidence', dp, 'selection-audit.json'), bundle.selectionAudit);
   const issue = bundle.issue;
+  const accessCorrections = await alignSourceAccessTimes(issue, folder);
+  if (accessCorrections.length) await saveJson(path.join(folder, 'source-access-corrections.json'), accessCorrections);
   issue.scope = `${checkpoint.window.start} 至 ${checkpoint.window.end}；实际 ${issue.stories.length}/${target} 条。`;
   issue.notice = `${backfill ? `补刊：于${chinaDate(now)}补建，资料在历史截止时间之后整理，不是当日网页快照。` : ''}${issue.notice || ''} 自动化检查不等于独立事实核验。${checkpoint.window.gap ? '更早断更区间未覆盖。' : ''}`;
   for (const story of issue.stories) story.status = 'Pi自动生成 · 未经人工逐条核验';

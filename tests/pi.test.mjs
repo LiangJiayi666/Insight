@@ -84,7 +84,12 @@ test('prompt carries the exact window, target and output', () => {
   const prompt = makePiPrompt({ date, window, target: 12, output: 'output.json' });
   for (const value of [window.start, window.end, '目标12条', 'output.json', '不得读取或输出认证文件']) assert.ok(prompt.includes(value));
   assert.ok(prompt.includes('标题必须写明当事人'));
+  assert.ok(prompt.includes('mcp__exa__web_search_exa（query、objective）'));
+  assert.ok(prompt.includes('No matching tools found不代表已经直接提供的Exa工具不可用'));
   assert.ok(makePiPrompt({ date, window, target: 12, output: 'output.json', backfill: true }).includes('这是历史补刊'));
+  const historical = makePiPrompt({ date, window, target: 12, output: 'output.json', backfill: true, generatedAt: '2026-11-24T00:00:00.000Z' });
+  assert.ok(historical.includes('实际制作时间=2026-11-24T00:00:00.000Z'));
+  assert.ok(historical.includes('不能使用历史刊期日期冒充读取时间'));
 });
 
 test('write feedback lets Pi repair a saved invalid bundle before ending its run', async t => {
@@ -139,4 +144,17 @@ test('ready Pi artifact publishes during cooldown without another attempt or Git
     await assert.rejects(access(path.join(root, 'data/runtime/daily.lock')), { code: 'ENOENT' });
     await assert.rejects(access(path.join(root, 'data/runtime/git-sync.json')), { code: 'ENOENT' });
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('evidence validation identifies all short and duplicate entries in one repair round', () => {
+  const bundle = fixture();
+  bundle.evidence.push({ ...bundle.evidence[0], id: 'short-1', text: 'x'.repeat(197) });
+  bundle.evidence.push({ ...bundle.evidence[0], id: 'short-2', text: 'x'.repeat(178) });
+  bundle.evidence.push({ ...bundle.evidence[0] });
+  assert.throws(() => validatePiBundle(bundle, { date, window, target: 12 }), error => {
+    assert.match(error.message, /evidence\[1\].*short-1.*197字符/);
+    assert.match(error.message, /evidence\[2\].*short-2.*178字符/);
+    assert.match(error.message, /evidence\[3\].*s-1.*重复ID/);
+    return true;
+  });
 });

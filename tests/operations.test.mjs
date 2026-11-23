@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { parseUsage, updateLedger, maintain, costText, deliverDailyReport } from '../src/operations.mjs';
+import { parseUsage, updateLedger, maintain, costText, deliverDailyReport, redeliverDailyReports } from '../src/operations.mjs';
 import { renderIssue } from '../src/render.mjs';
 import { saveJson } from '../src/runtime.mjs';
 test('usage counts completed messages only, preserves unknown pricing and missing logs', () => {
@@ -114,4 +114,45 @@ test('ledger is idempotent, backup restores renderable issue', async () => {
     assert.equal(renderIssue(restored), renderIssue(issue));
     assert.ok(result.verifiedFiles > 0);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+
+test('historical resend sends exact recovered attachments, preserves prior records and deduplicates retries', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'insight-resend-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const bridgeDirectory = path.join(root, 'fake-bridge');
+  await saveJson(path.join(bridgeDirectory, 'config.json'), { appId: 'test', appSecret: 'test' });
+  await saveJson(path.join(bridgeDirectory, 'owner.json'), { chatId: 'test', openId: 'test' });
+  const dates = ['2026-11-11', '2026-11-12'];
+  await saveJson(path.join(root, 'data/runtime/state.json'), { published: Object.fromEntries(dates.map(d => [d, {count: 1}])) });
+  for (const date of dates) {
+    const archive = path.join(root, 'public/issues', date.replaceAll('-', '/'));
+    await mkdir(archive, {recursive: true});
+    await writeFile(path.join(archive, 'index.html'), '<link rel="stylesheet" href="styles.css"><p>' + date + '</p><script src="app.js" defer></script>');
+    await writeFile(path.join(archive, 'styles.css'), 'body{}');
+    await writeFile(path.join(archive, 'app.js'), '');
+    await saveJson(path.join(root, 'data/delivery-ledger', date + '-daily.json'), { date, status:'sent', kind:'text', editionDate:null, uuid:'old-' + date, attempts:1 });
+  }
+  const calls = [];
+  const request = async (url, options) => {
+    calls.push({url,options});
+    return {ok:true,json:async()=>({code:0,...(url.includes('/auth/') ? {tenant_access_token:'test'} : url.endsWith('/files') ? {data:{file_key:'file-' + options.body.get('file_name')}} : {data:{message_id:'message-' + calls.length}})})};
+  };
+  const options = {now:new Date('2026-11-14T01:00:00Z'),request,bridgeDirectory};
+  await assert.rejects(redeliverDailyReports(root, [dates[0], '2026-11-13'], options), /尚未发布/);
+  assert.equal(calls.length, 0);
+  assert.deepEqual(await redeliverDailyReports(root, dates, options), dates.map(date=>({date,status:'file-sent'})));
+  assert.equal(calls.filter(c=>c.url.includes('/auth/')).length, 1);
+  const uploads = calls.filter(c=>c.url.endsWith('/files'));
+  assert.deepEqual(uploads.map(c=>c.options.body.get('file_name')), dates.map(d=>'Insight-Daily-' + d + '.html'));
+  const {readdir} = await import('node:fs/promises');
+  assert.equal((await readdir(path.join(root, 'data/delivery-ledger/history'))).length, 2);
+  const before = calls.length;
+  assert.deepEqual(await redeliverDailyReports(root, dates, options), dates.map(date=>({date,status:'already-sent'})));
+  assert.equal(calls.length, before);
+  for(const date of dates) {
+    const record=JSON.parse(await readFile(path.join(root,'data/delivery-ledger',date+'-daily.json'),'utf8'));
+    assert.equal(record.editionDate,date); assert.equal(record.kind,'file'); assert.equal(record.status,'sent');
+    assert.notEqual(record.uuid,'old-'+date);
+  }
 });

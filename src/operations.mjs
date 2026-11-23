@@ -4,6 +4,7 @@ import { readFile, readdir, stat, mkdir, copyFile, unlink } from 'node:fs/promis
 import { createHash, randomUUID } from 'node:crypto';
 import { readJson, saveJson, chinaDate, datePath, acquireLock } from './runtime.mjs';
 import { prepareDailyAttachment } from './daily-attachment.mjs';
+import { shiftDate } from './daily-plan.mjs';
 
 export async function filesUnder(folder) {
   let entries; try { entries = await readdir(folder, { withFileTypes: true }); } catch (e) { if (e.code === 'ENOENT') return []; throw e; }
@@ -192,6 +193,36 @@ export async function deliverDailyReport(root, { requestId, now = new Date(), re
     try { result.daily = await notifyDaily(root, date, key, delivery); } catch (e) { errors.push(e.message); }
     if (errors.length) throw new Error(errors.join('；'));
     return result;
+  } finally { await release(); }
+}
+
+// Explicit operator-requested historical resend; normal scheduling is unchanged.
+export async function redeliverDailyReports(root, editionDates, { now = new Date(), request = fetch, bridgeDirectory = path.join(os.homedir(), '.pi/feishu-bridge') } = {}) {
+  if (!Array.isArray(editionDates) || !editionDates.length) throw new Error('请指定需要补发的刊期');
+  const dates = [...new Set(editionDates)];
+  const release = await acquireLock(path.join(root, 'data/runtime/report-delivery.lock'));
+  try {
+    const state = await readJson(path.join(root, 'data/runtime/state.json'), { published: {} });
+    // Validate the entire request and prepare exact archives before any send.
+    for (const date of dates) {
+      shiftDate(date, 0);
+      if (date > chinaDate(now) || !state.published[date]) throw new Error('补发刊期尚未发布：' + date);
+      await prepareDailyAttachment(root, date);
+    }
+    let client;
+    const getClient = () => client ||= authorizeFeishu(bridgeDirectory, request);
+    const results = [], errors = [];
+    for (const date of dates) {
+      try {
+        const previous = await readJson(path.join(root, 'data/delivery-ledger', `${date}-daily.json`), null);
+        if (previous && !(previous.status === 'sent' && previous.kind === 'file' && previous.editionDate === date)) {
+          await saveJson(path.join(root, 'data/delivery-ledger/history', `${date}-${randomUUID()}.json`), { archivedAt: new Date().toISOString(), reason: 'operator-requested historical attachment resend', previous });
+        }
+        results.push({ date, status: await notifyDaily(root, date, date, { editionDate: date, getClient }) });
+      } catch (error) { errors.push(date + '：' + error.message); }
+    }
+    if (errors.length) throw new Error('部分补发未确认成功：' + errors.join('；'));
+    return results;
   } finally { await release(); }
 }
 

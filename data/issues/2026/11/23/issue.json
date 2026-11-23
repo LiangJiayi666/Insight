@@ -1,0 +1,154 @@
+{
+  "date": "2026-11-23",
+  "cutoff": "2026-11-23T15:17:40.873Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-22T14:01:38.248Z 至 2026-11-23T15:17:40.873Z；实际 2/12 条。",
+  "notice": "本期目前仅纳入2条已读取正文并核对发布时间的事件，未达到12条目标。其余重大候选及覆盖缺口见selectionAudit；未将新闻汇编拆分充数。未完成更广泛的社会、政治及统计历史调查，故不以泛化简讯补足。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-1",
+      "publisher": "Reuters（经Investing.com转载）",
+      "title": "Nvidia reinstates Jensen Huang as CEO",
+      "url": "https://www.investing.com/news/stock-market-news/nvidia-reinstates-jensen-huang-as-ceo-5045809",
+      "published": "2026-11-23T14:05:51.000Z",
+      "accessed": "2026-11-23",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+正文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道（Reuters）",
+      "excerpt": "Nov 23 (Reuters) - Nvidia on Monday said it is reinstating Jensen Huang as chief executive, effective immediately. Nvidia shares surged on the news, jumping more than 25% in premarket trading. The company’s move to bring Huang back marks a sharp reversal from its board’s decision just days earlier to rule out his return. Huang built Nvidia from a video-game chip designer into the dominant supplier of AI processors, steering its chip roadmap, customer deals and Washington ties along the way. He resigned on November 12 after revelations of extramarital affairs, including one with a businesswoman US authorities suspect of spying for China, an allegation Beijing denies. The board said it was satisfied with Huang’s candor and leadership ability and, after receiving input from senior U.S. government officials, saw no national security risk in his return.",
+      "limits": "Reuters稿件经Investing.com转载；报道中的指控属于媒体转述，未在本稿扩展为已证实事实。"
+    },
+    {
+      "id": "s-2",
+      "publisher": "NVIDIA Newsroom",
+      "title": "NVIDIA Board Reinstates Jensen Huang as President, CEO and Board Director",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
+      "published": "2026-11-23",
+      "accessed": "2026-11-23",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+正文读取（mcp__exa__web_fetch_exa）",
+      "kind": "公司公告",
+      "excerpt": "NVIDIA (NASDAQ: NVDA) today announced that effective immediately, Jensen Huang has been reinstated as President and Chief Executive Officer and as a member of the Board. The Board of Directors voted unanimously to reinstate Mr. Huang following a series of discussions and meetings with Mr. Huang, after which the Board was satisfied with respect to Mr. Huang’s candor and ability to lead NVIDIA. In the process of reaching its decision, the Board received input from senior levels of the United States government, and based on that input, the Board is confident that Mr. Huang’s reinstatement poses no national security risk.\n\n“The Board believes Jensen is the right person to lead NVIDIA, and that his reinstatement is in the best interests of our stockholders, employees, partners and customers,” said Harvey C. Jones, Chair of the Board.",
+      "limits": "公告仅标注日期，未显示发布时间；对董事会决策理由按公司自述归因。"
+    },
+    {
+      "id": "s-3",
+      "publisher": "The Straits Times",
+      "title": "Singapore, China reach 29 deals at top bilateral forum, the highest in recent years",
+      "url": "https://www.straitstimes.com/singapore/singapore-china-reach-29-deals-at-top-bilateral-forum",
+      "published": "2026-11-23T04:08:06.000Z",
+      "accessed": "2026-11-23",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+正文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Singapore and China concluded 29 deals in areas ranging from trade and finance to science and technology and public health at their top bilateral forum on Nov 23 – the highest number in recent years. Deputy Prime Minister Gan Kim Yong, who co-chairs the Joint Council for Bilateral Cooperation (JCBC) with Chinese Vice-Premier Ding Xuexiang, witnessed the signing of these agreements after the meetings. Both sides also discussed ways to refresh the three flagship government-to-government projects in line with this year’s JCBC theme, Innovating Together for New Opportunities. The projects are the Suzhou Industrial Park, the Tianjin Eco-City and the Chongqing Connectivity Initiative.",
+      "limits": "单一独立媒体报道；报道中的协议数量及内容未逐项与两国官方清单交叉核对。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "nvidia-huang-reinstated-2026-11-23",
+      "category": "企业/科技",
+      "title": "英伟达董事会恢复黄仁勋总裁兼CEO职务，柯莱特·克雷斯继续任CFO",
+      "published": "2026-11-23",
+      "eventDate": "2026-11-23",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "英伟达董事会宣布黄仁勋即刻复任总裁、CEO及董事；过渡期间担任临时CEO的柯莱特·克雷斯继续任首席财务官。此举逆转董事会数日前排除其回归的决定；Reuters报道盘前股价应声上涨，但单次价格反应不能说明治理和合规风险已经消除。",
+      "facts": "Reuters报道，英伟达11月23日宣布黄仁勋即刻复任CEO，董事会数日前曾排除其回归；报道指盘前股价上涨逾25%。公司公告称董事会一致表决恢复其总裁、CEO和董事身份，克雷斯继续担任CFO。公司称曾听取美国政府高层意见，并将继续调查及配合政府调查。",
+      "affected": "英伟达股东、员工、客户与合作伙伴，以及关注AI芯片供应和出口合规的市场参与者。",
+      "sourceIds": [
+        "s-1",
+        "s-2"
+      ],
+      "claims": [
+        {
+          "text": "黄仁勋即刻复任英伟达CEO，盘前股价上涨超过25%是Reuters报道的市场反应。",
+          "sourceId": "s-1",
+          "quote": "Nvidia on Monday said it is reinstating Jensen Huang as chief executive, effective immediately. Nvidia shares surged on the news, jumping more than 25% in premarket trading."
+        },
+        {
+          "text": "英伟达董事会一致恢复黄仁勋的总裁、CEO及董事身份；克雷斯继续任CFO。",
+          "sourceId": "s-2",
+          "quote": "effective immediately, Jensen Huang has been reinstated as President and Chief Executive Officer and as a member of the Board. The Board of Directors voted unanimously to reinstate Mr. Huang"
+        },
+        {
+          "text": "公司称董事会获得美国政府高层意见，并设有独立董事委员会调查相关事项。",
+          "sourceId": "s-2",
+          "quote": "the Board received input from senior levels of the United States government, and based on that input, the Board is confident that Mr. Huang’s reinstatement poses no national security risk."
+        }
+      ],
+      "sections": [
+        {
+          "title": "人事变化与市场反应",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "Reuters称，黄仁勋即刻复任CEO，盘前股价上涨逾25%；英伟达公告进一步确认他同时恢复总裁和董事身份。公告称柯莱特·克雷斯结束临时CEO安排、继续担任CFO。股价反应是当时市场表现，不等同于对公司治理或经营风险的长期判断。"
+          ],
+          "sourceIds": [
+            "s-1",
+            "s-2"
+          ]
+        },
+        {
+          "title": "治理影响取决于调查与合规安排",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "这次逆转把领导权重新交还联合创始人，但董事会公告同时称，针对近期报道所涉外国情报活动的独立董事调查仍将继续，并设立国家安全与出口管制委员会、招聘首席合规官。因而，短期市场欢迎回归与长期治理审视并存；后续判断应看调查是否完成、合规负责人是否到位以及公司对政府调查的配合进展，而不是把单日涨幅当作风险解除证据。上述安排为公司公告所述，调查对象及背景报道不在此作独立事实认定。"
+          ],
+          "sourceIds": [
+            "s-2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "singapore-china-jcbc-29-deals-2026-11-23",
+      "category": "政治/经贸",
+      "title": "新加坡与中国年度合作理事会达成29项成果，推进自贸协定升级讨论",
+      "published": "2026-11-23",
+      "eventDate": "2026-11-23",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "中新联合理事会第22次会议宣布29项合作成果，涉及贸易、金融、科技、公共卫生及人员往来；双方还讨论升级中新自贸协定。协议数量显示议程广泛，但具体经贸效果仍取决于后续谈判和落实。",
+      "facts": "《海峡时报》报道，新加坡副总理颜金勇与中国副总理丁薛祥共同主持第22次中新联合理事会，双方宣布29项成果，涵盖贸易、金融、科技、公共卫生和人文交流。双方讨论升级2009年生效的中新自贸协定，报道引述颜金勇称相关工作可能需要一至两年。",
+      "affected": "中新企业、跨境服务与数字贸易经营者、食品进口商及参与双边科研和公共卫生合作的机构。",
+      "sourceIds": [
+        "s-3"
+      ],
+      "claims": [
+        {
+          "text": "中新第22次联合理事会宣布29项合作成果，涉及多个领域。",
+          "sourceId": "s-3",
+          "quote": "Singapore and China concluded 29 deals in areas ranging from trade and finance to science and technology and public health at their top bilateral forum on Nov 23 – the highest number in recent years."
+        },
+        {
+          "text": "双方讨论升级2009年生效的中新自贸协定，时间可能为一至两年。",
+          "sourceId": "s-3",
+          "quote": "Gan and Ding also discussed the launch of negotiations to upgrade the China-Singapore Free Trade Agreement, which took effect in 2009. A memorandum of understanding to launch upgrade negotiations was announced on Nov 20"
+        }
+      ],
+      "sections": [
+        {
+          "title": "合作议程涵盖经贸与公共服务",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "报道列出29项成果，包含续签服务贸易合作备忘录、创新合作，以及公共卫生和人文交流；新加坡食品局批准海南冷冻及冷藏禽肉、猪肉和禽蛋输新。双方还讨论自贸协定升级，颜金勇称工作可能需一至两年。上述是已报道的会议成果与讨论，不能视为协定升级已经完成。"
+          ],
+          "sourceIds": [
+            "s-3"
+          ]
+        },
+        {
+          "title": "成果数量不等于即时贸易增量",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "29项成果说明合作议题覆盖面扩大，但其中既有审批、续签，也有仍在讨论的安排。例如，快速支付系统的小额转账联通在报道中仍属讨论事项；自贸协定升级也尚待谈判。评估实质影响应区分已生效的许可与备忘录、待谈判条款及后续执行数据。"
+          ],
+          "sourceIds": [
+            "s-3"
+          ]
+        }
+      ]
+    }
+  ]
+}
