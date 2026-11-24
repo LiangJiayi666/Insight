@@ -9,6 +9,8 @@
 | `scripts/bridge-evening-check.ps1` | Windows任务 `Insight-Bridge-Evening` | 检查晚间投递记录，必要时启动飞书桥接；自身不调用模型、不发消息 |
 | `scripts/git-sync.mjs` | 手工维护 | 单独重试Git同步 |
 
+晚间巡检每天22:00通过 `scripts/bridge-evening-hidden.vbs` 隐藏启动一次，在同一个后台进程内每10分钟检查。确认当天费用台账发送成功、当天日报附件发送成功且刊期匹配后立即退出，当晚不再启动；未完成则检查到午夜为止，次晚22:00重新启动。
+
 ## 投递
 
 定时与手动共享 `deliverDailyReport`，统一选择刊期：当天已出刊则发当天，否则仅回退到昨天；两天都没有则发送明确提示。附件打包器只处理选定的确切刊期，不另行查找更早的旧刊。
