@@ -36,7 +36,7 @@ async function produceIssue({ date, now, state, config, settings, smoke, resumeD
     bundle = await readJson(output, null);
     if (bundle) validatePiBundle(bundle, validation);
   } catch (error) {
-    repair = `\n恢复任务：先读取已有 ${output}，上次校验错误：${error.message}。使用edit精确修改出错字段，每次只修改必要片段，避免重新输出整份JSON导致连接中断。保留有来源支撑的内容，优先补齐历史序列、比较及缺失证据，质量达标后才考虑增加条数。evidence必须与issue同级，正文每条至少200字符；不得通过重复填充来满足长度。不要从零重复搜索已经有的事件。`;
+    repair = `\n恢复任务：先读取已有 ${output}，上次校验错误：${error.message}。使用insight_update_bundle按JSON字段修改；先用空operations取得revision再read文件，每次只修改必要字段，避免重新输出整份JSON导致连接中断。保留有来源支撑的内容，优先补齐历史序列、比较及缺失证据，质量达标后才考虑增加条数。evidence必须与issue同级，正文每条至少200字符；不得通过重复填充来满足长度。不要从零重复搜索已经有的事件。`;
     checkpoint.validationError = error.message;
     bundle = null;
   }
@@ -143,10 +143,24 @@ async function main() {
       return preflightResult ||= checkPiMcp(config, root);
     };
     for (const date of dates) {
-      try { await produceIssue({ date, now, state, config, settings, smoke, resumeDate, retryFailed, preflight }); }
-      catch (error) {
-        if (error.infrastructure) infrastructureFailure = error.message;
-        errors.push(date + '：' + error.message); console.error(errors.at(-1));
+      // Content repair reuses the saved window, cache and attempt counter. Never
+      // retry provider failures or grant extra attempts in an automatic run.
+      for (let pass = 0; ; pass++) {
+        const checkpointFile = path.join(root, 'data/pi-runs', datePath(date), 'checkpoint.json');
+        const before = !smoke && await readJson(checkpointFile, null);
+        try { await produceIssue({ date, now, state, config, settings, smoke, resumeDate, retryFailed, preflight }); break; }
+        catch (error) {
+          if (error.infrastructure) infrastructureFailure = error.message;
+          const after = !smoke && await readJson(checkpointFile, null);
+          if (!smoke && !retryFailed && !error.infrastructure && !infrastructureFailure && after?.status === 'failed'
+            && after.validationError && !after.providerError && after.attempts > (before?.attempts || 0)
+            && after.attempts < config.maxAttemptsPerDay && pass + 1 < config.maxAttemptsPerDay) {
+            console.error(`${date}：本次稿件校验失败，自动恢复（已用${after.attempts}/${config.maxAttemptsPerDay}次）；保留原窗口和缓存。`);
+            continue;
+          }
+          errors.push(date + '：' + error.message); console.error(errors.at(-1));
+          break;
+        }
       }
     }
     if (errors.length) throw new Error('部分刊期未完成：' + errors.join('；'));

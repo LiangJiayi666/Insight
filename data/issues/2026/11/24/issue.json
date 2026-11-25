@@ -1,0 +1,222 @@
+{
+  "date": "2026-11-24",
+  "cutoff": "2026-11-24T11:50:02.275Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-23T15:17:40.873Z 至 2026-11-24T11:50:02.275Z；实际 2/12 条。",
+  "notice": "补刊：于2026-11-25补建，资料在历史截止时间之后整理，不是当日网页快照。本刊于2026-11-25补建，属于事后读取，无法还原2026-11-24当日网页快照；仅收录2条有窗口内精确发布时间并读取具体正文的新闻，未达12条目标。英伟达复任原报道早于窗口，另收录窗口内董事会治理争议后续；中国融资保证金报道越界，养老托育稿仅有日期而无可核实具体时刻，均已移出正文。全球政治及重大社会线索尚未取得窗口内独立报道全文，覆盖有限。检索摘要与新闻汇编只用于发现候选，不作为正文证据。新增Reuters治理报道实际读取时间记为2026-11-25T03:59:34.788Z；既有来源保留原读取记录。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-1",
+      "publisher": "Reuters",
+      "title": "Huang returns as Nvidia CEO after Trump intervention in abrupt board reversal",
+      "url": "https://www.reuters.com/3fec1b0a85a0/technology/nvidia-reinstates-jensen-huang-ceo-2026-11-23/",
+      "published": "2026-11-23T13:59:25Z",
+      "accessed": "2026-11-24T11:51:22.814Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "媒体报道",
+      "excerpt": "Nvidia (NVDA.O), opens new tab reinstated Jensen Huang as CEO on Monday under pressure from US President Donald Trump, a stunning reversal following his resignation over revelations of extramarital affairs, drawing approval from Wall Street and opposition from US lawmakers.\n\nHuang's comeback caps a whirlwind week of events that roiled markets and tore through the AI ecosystem that has relied on Nvidia for everything from supplying chips to bankrolling the industry's massive buildout.\n\nBut the board's about-face — less than a week after Chair Harvey Jones said Nvidia would not rehire Huang as CEO because his personal behavior was inconsistent with the company's code of conduct — raises questions about its independence, governance experts said, even as the company's investigation remains unfinished.\n\nHuang's comeback boosted Wall Street and sent Nvidia's shares soaring. The stock closed up 31.5%, adding nearly $1 trillion in market value, vaulting the chipmaker back to the position of the second-biggest company by market value after Apple.",
+      "limits": "Reuters报道援引公司及多名相关人士；人事及股价事实据报道，不能据此独立确认全部背景指控。"
+    },
+    {
+      "id": "s-2",
+      "publisher": "中国政府网（新华社）",
+      "title": "《“一老一小”服务体系建设实施方案》发布",
+      "url": "https://www.gov.cn/lianbo/202611/content_7087028.htm",
+      "published": "2026-11-23",
+      "accessed": "2026-11-24T11:51:32.885Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "官方原文（新华社稿）",
+      "excerpt": "新华社北京11月23日电（记者 何晓）“一老一小”事关亿万家庭福祉和国家长远发展。记者23日从国家发展改革委获悉，为贯彻落实党中央、国务院关于促进人口高质量发展的决策部署，扩大养老、托育服务有效供给，日前，经国务院同意，国家发展改革委、民政部、国家卫生健康委、教育部印发《“一老一小”服务体系建设实施方案》。\n\n实施方案明确，到2030年，养老、托育服务设施布局更加合理、条件明显改善，医养结合持续深化，“一老一小”服务体系进一步健全、供需适配度进一步提高，养老机构护理型床位占比达到73%，社区养老服务机构和设施覆盖率达到70%，3岁以下婴幼儿入托率较2025年提高6个百分点，覆盖城乡、布局合理、价格可接受、质量有保障的普惠养老、托育服务供给格局基本形成。\n\n实施方案围绕优化资源布局、提升服务品质、完善管理模式、健全保障措施等方面提出明确工作任务和目标要求，包括推动医养结合服务设施有序扩容；加快智能技术在养老、托育领域落地应用；探索构建城乡养老服务联合体；加大资金、土地、人才等要素支撑。",
+      "limits": "原文公布政策目标，未给出当前覆盖率或资金预算，目标不应误写为已实现成效。"
+    },
+    {
+      "id": "s-7",
+      "publisher": "新华社",
+      "title": "China announces measures to steady stock market",
+      "url": "https://english.news.cn/20261123/652a2973bd6140c2b15d0aae466304ce/c.html",
+      "published": "2026-11-23T08:45:15Z",
+      "accessed": "2026-11-24T11:51:22.814Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "媒体报道",
+      "excerpt": "BEIJING, Nov. 23 (Xinhua) -- China will roll out a slew of measures to steady the stock market, including lowering the minimum margin requirement for leveraged stock purchases to generate incremental funds, the country's securities regulator said Sunday.\n\nWith approval from the China Securities Regulatory Commission (CSRC), the Shanghai, Shenzhen and Beijing stock exchanges will lower the minimum margin ratio from 100 percent to 80 percent, effective from Nov. 30, according to the CSRC.\n\nThe adjustment is estimated to theoretically bring in nearly 400 billion yuan (about 59.58 billion U.S. dollars) in incremental funds.",
+      "limits": "新闻原文依据监管机构和交易所规则；理论资金估计不代表实际流入。"
+    },
+    {
+      "id": "s-3",
+      "publisher": "上海证券交易所",
+      "title": "关于调整融资保证金比例等相关安排的通知",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+      "published": "2026-11-22",
+      "accessed": "2026-11-24T11:54:30.871Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "官方原文",
+      "excerpt": "发文文号 上证发〔2026〕108号 发布日期 2026年11月22日 生效日期 2026年11月30日 时效性 待生效 规则类别 融资融券 规则层级 业务通知\n\n为了加强融资融券逆周期调节，促进融资融券业务健康平稳发展，经中国证监会批准，上海证券交易所（以下简称本所）现就融资保证金比例等相关安排通知如下：\n\n一、投资者融资买入证券时，融资保证金比例不得低于80%。会员在计算投资者的保证金可用余额时，若投资者在本次通知实施前有尚未了结的融资合约，会员可以按照修改后的规定相应下调其保证金比例。\n\n四、本通知自2026年11月30日起施行。本所于2026年1月14日发布的《关于调整融资保证金比例的通知》（上证发〔2026〕5号）同时废止。",
+      "limits": "交易所规则原文；实施日为11月30日，报道窗口内尚未生效。"
+    },
+    {
+      "id": "s-5",
+      "publisher": "上海证券交易所",
+      "title": "关于调整融资保证金比例的通知",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20260114_10805174.shtml",
+      "published": "2026-01-14",
+      "accessed": "2026-11-24T11:54:30.871Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "官方原文",
+      "excerpt": "发文文号 上证发〔2026〕5号 发布日期 2026年01月14日 生效日期 2026年01月19日 时效性 现行有效 规则类别 融资融券 规则层级 业务通知\n\n上证发〔2026〕5号\n\n各市场参与人：\n\n为加强融资逆周期调节，经中国证监会批准，上海证券交易所（以下简称本所）现就调整融资保证金比例相关安排通知如下：\n\n一、投资者融资买入证券时，融资保证金比例不得低于100%。\n\n本通知自2026年1月19日起施行。",
+      "limits": "历史决定，用于与2026年11月新规比较。"
+    },
+    {
+      "id": "s-6",
+      "publisher": "上海证券交易所",
+      "title": "上海证券交易所适度降低融资保证金比例 促进两融业务功能有效发挥",
+      "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20230827_5725661.shtml",
+      "published": "2023-08-27",
+      "accessed": "2026-11-24T11:56:18.706Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "官方原文",
+      "excerpt": "2023年8月27日，经中国证监会批准，上海证券交易所（以下简称上交所）修改了《上海证券交易所融资融券交易实施细则（2023年修订）》第三十九条，将融资保证金比例从100%降低至80%，此次调整将于2023年9月8日收市后正式实施。\n\n融资保证金比例，是指投资者融资买入时交付的保证金与融资交易金额的比例。例如，当融资保证金比例为100%时，投资者用100万元的保证金最多可以向证券公司融资100万元买入证券。而当融资保证金比例降低至80%时，客户用100万元的保证金最多可以向证券公司融资125万元买入证券。",
+      "limits": "历史规则为上交所规则文本；比较对象为相同融资买入最低保证金比例。"
+    },
+    {
+      "id": "s-8",
+      "publisher": "Reuters（经Investing.com转载）",
+      "title": "Nvidia board’s Huang reversal raises doubts about independence, critics say",
+      "url": "https://www.investing.com/news/stock-market-news/nvidia-boards-huang-reversal-raises-doubts-about-independence-critics-say-5047621",
+      "published": "2026-11-24T11:02:26Z",
+      "accessed": "2026-11-25T04:01:41.262Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "媒体报道（Reuters转载）",
+      "excerpt": "Nvidia’s board undermined its claims of independence by reinstating CEO Jensen Huang before investigations into his conduct concluded, investors and corporate governance experts said.\n\nThe decision is striking because the board effectively vouched for Huang’s candor and fitness to lead the company before its own investigation was complete, raising doubts about whether directors had sufficient information to make an independent judgment, these people said.\n\nNvidia said on Monday that after talks with senior US officials, its board \"is confident that Mr. Huang’s reinstatement poses no national security risk.\"\n\nThe abrupt U-turn, just days after the board vowed to look elsewhere for a successor, has also drawn US President Donald Trump and his administration into Nvidia’s corporate governance. Nvidia shares closed 31.5% higher on Monday even as it was becoming clear that the chipmaker’s board acted under pressure from Trump and others, and the president took credit for the change.\n\nThe company said an independent board committee is still investigating reports that Huang was targeted by a foreign intelligence effort, and said \"the committee’s investigation will proceed to conclusion,\" with Huang’s cooperation.",
+      "limits": "Reuters报道引述投资者及治理专家观点；公司调查仍在进行，报道不构成独立核实。"
+    },
+    {
+      "id": "s-4",
+      "publisher": "Reuters（经Investing.com转载）",
+      "title": "Japan cuts view on consumer spending for 1st time since 2024",
+      "url": "https://www.investing.com/news/economy-news/japan-cuts-view-on-consumer-spending-for-1st-time-since-2024-5047324",
+      "published": "2026-11-24T08:22:22Z",
+      "accessed": "2026-11-24T11:52:04.127Z",
+      "method": "Pi搜索 mcp__exa__web_search_exa + 原文读取 mcp__exa__web_fetch_exa",
+      "kind": "媒体报道（Reuters转载）",
+      "excerpt": "TOKYO, Nov 24 (Reuters) - The Japanese government downgraded its view on consumer spending in November for the first time in more than 2-1/2 years as rising prices weighed on consumer sentiment.\n\nOn private consumption, the government cut its view on consumer spending for the first time since February 2024, saying it \"appears to be pausing for picking up.\" In October, it said spending was \"showing movements of picking up.\"\n\nOn exports, the government upgraded its view for the first time since June, to \"showing movements of picking up,\" as shipments to the US and EU picked up. On industrial production, authorities raised their assessment for the first time since September, saying it was \"picking up as a whole.\"",
+      "limits": "未取得日本政府原始月报与可比统计原表；下文仅报道判断措辞，历史数据追查受工具搜索失败限制。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "nvidia-board-governance-questions-2026-11-24",
+      "category": "企业/科技",
+      "title": "黄仁勋复任英伟达CEO后，董事会独立性遭投资者与治理专家质疑",
+      "published": "2026-11-24",
+      "eventDate": "2026-11-24",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "英伟达董事会在调查未结束时复任黄仁勋，引发董事会是否有充分依据独立判断的质疑；公司称调查将继续，故复任并未消除治理与监管悬念。",
+      "facts": "Reuters报道，投资者和公司治理专家质疑英伟达董事会在调查结束前复任黄仁勋，是否有足够信息作出独立判断。公司称董事会在与美国高级官员沟通后认为复任不构成国家安全风险，但独立董事委员会仍将完成相关调查。报道还称美国国会委员会将于12月1日访谈黄仁勋。",
+      "affected": "英伟达股东、董事会及管理层、芯片出口管制相关方和AI产业链企业。",
+      "sourceIds": [
+        "s-8"
+      ],
+      "claims": [
+        {
+          "text": "投资者与治理专家质疑董事会在调查结束前复任黄仁勋是否具备充分信息。",
+          "sourceId": "s-8",
+          "quote": "Nvidia’s board undermined its claims of independence by reinstating CEO Jensen Huang before investigations into his conduct concluded, investors and corporate governance experts said."
+        },
+        {
+          "text": "英伟达称独立董事委员会仍将继续调查。",
+          "sourceId": "s-8",
+          "quote": "The company said an independent board committee is still investigating reports that Huang was targeted by a foreign intelligence effort, and said \"the committee’s investigation will proceed to conclusion,\" with Huang’s cooperation."
+        },
+        {
+          "text": "报道说国会委员会将于12月1日访谈黄仁勋。",
+          "sourceId": "s-8",
+          "quote": "US congressional committees will interview Huang on December 1."
+        }
+      ],
+      "sections": [
+        {
+          "title": "复任与调查并行，治理疑问未结",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "Reuters引述投资者和治理专家指出，董事会在自身调查尚未结束时已认可黄仁勋的坦诚与领导能力，程序顺序因此成为独立性争议的核心。公司称复任不构成国家安全风险，却同时表示委员会调查将继续；两者分别是公司判断和未完结调查状态，不能据此认定风险已排除。"
+          ],
+          "sourceIds": [
+            "s-8"
+          ]
+        },
+        {
+          "title": "后续可检验节点",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "12月1日国会委员会访谈及独立董事委员会最终调查结论，将检验董事会判断所依据的信息是否充分，以及出口合规风险是否出现新事实。"
+          ],
+          "sourceIds": [
+            "s-8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "japan-government-consumption-assessment-2026-11-24",
+      "category": "经济",
+      "title": "日本政府下调消费判断：物价压力下家庭支出复苏暂歇",
+      "published": "2026-11-24",
+      "eventDate": "2026-11",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "日本政府对消费的判断由“显现回升动向”转为“回升暂歇”，但对出口和工业生产的判断改善，显示内需与制造业外需表现分化。",
+      "facts": "Reuters报道，日本政府11月首次自2024年2月下调消费判断，称消费“回升暂歇”；10月措辞为“显现回升动向”。政府同期上调出口判断，称出口“显现回升动向”，并称工业生产整体回升。政府仍认为整体经济温和复苏，且指出物价上涨压低消费情绪。",
+      "affected": "日本家庭消费相关企业、出口制造商及关注日本内需的政策制定者。",
+      "sourceIds": [
+        "s-4"
+      ],
+      "claims": [
+        {
+          "text": "日本政府11月下调消费判断，称消费回升暂歇；10月判断为显现回升动向。",
+          "sourceId": "s-4",
+          "quote": "the government cut its view on consumer spending for the first time since February 2024, saying it \"appears to be pausing for picking up.\" In October, it said spending was \"showing movements of picking up.\""
+        },
+        {
+          "text": "政府同期上调出口判断并改善工业生产判断。",
+          "sourceId": "s-4",
+          "quote": "On exports, the government upgraded its view for the first time since June, to \"showing movements of picking up,\""
+        }
+      ],
+      "history": {
+        "status": "limited",
+        "interpretation": "Reuters报道显示月度判断从10月改善措辞转为11月消费复苏停顿，构成判断方向转弱；但未取得日本政府月报原表或消费量化序列，不能据措辞推断实际消费增速变化。",
+        "series": [],
+        "comparisons": [],
+        "missing": [
+          "日本政府11月及10月月度经济报告原文、消费指标连续值及同比/环比统计序列"
+        ],
+        "attempts": [
+          {
+            "query": "Japan November 2026 monthly economic report consumer spending downgraded October 2026 government official November 24 2026",
+            "result": "unavailable",
+            "detail": "mcp__exa__web_search_exa实际返回fetch failed，未返回可用搜索结果。"
+          },
+          {
+            "query": "Cabinet Office Japan monthly economic report November 2026 consumer spending pausing for picking up October 2026",
+            "result": "unavailable",
+            "detail": "mcp__exa__web_search_exa再次实际返回fetch failed；未取得官方原表或历史序列，停止以避免编造。"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "title": "消费与生产判断分化",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "Reuters所引政府判断将消费描述为回升暂歇，同时将出口改判为回升、工业生产改判为整体回升。历史官方原表检索两次均返回fetch failed，缺少消费的量化连续序列，故不作实际增速或家庭影响推算。"
+          ],
+          "sourceIds": [
+            "s-4"
+          ]
+        }
+      ]
+    }
+  ]
+}

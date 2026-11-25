@@ -135,3 +135,37 @@ test('explicit retry grants exactly one attempt and preserves exhausted history'
   await assert.rejects(run(`--resume-date=${missing}`), /尝试次数已达上限/);
   assert.equal((await readJson(path.join(root, 'data/pi-runs', datePath(missing), 'checkpoint.json'))).attempts, 4);
 });
+
+for (const repair of [true, false]) test(`automatic content recovery ${repair ? 'publishes after repair' : 'stops at the cumulative limit'}`, async t => {
+  const { root, run, sentinel } = await project(t);
+  await ready(root, missing);
+  const folder = path.join(root, 'data/pi-runs', datePath(missing));
+  const file = path.join(folder, 'bundle.json');
+  const bundle = await readJson(file);
+  bundle.evidence[0].published = '2000-01-01';
+  await saveJson(file, bundle);
+  const originalWindow = (await readJson(path.join(folder, 'checkpoint.json'))).window;
+  await failingProvider(root, sentinel);
+  const configFile = path.join(root, 'config/pi.json');
+  await saveJson(configFile, { ...await readJson(configFile), maxAttemptsPerDay: 10 });
+  await writeFile(sentinel, `
+    import fs from 'node:fs';
+    if (process.argv.includes('mcp')) console.log(JSON.stringify({ servers: [{ name: 'exa', enabled: true, state: 'connected', tools: ['web_search_exa', 'web_fetch_exa'] }] }));
+    else {
+      const checkpoint = JSON.parse(fs.readFileSync(${JSON.stringify(path.join(folder, 'checkpoint.json'))}));
+      if (${repair} && checkpoint.attempts === 10) {
+        const file = ${JSON.stringify(file)};
+        const bundle = JSON.parse(fs.readFileSync(file));
+        bundle.evidence[0].published = bundle.issue.sources[0].published;
+        fs.writeFileSync(file, JSON.stringify(bundle));
+      }
+    }
+  `);
+  if (repair) assert.match((await run(`--resume-date=${missing}`)).stdout, /已发布 1\/12/);
+  else await assert.rejects(run(`--resume-date=${missing}`), /主新闻不在检索窗口内/);
+  const checkpoint = await readJson(path.join(folder, 'checkpoint.json'));
+  assert.equal(checkpoint.attempts, 10);
+  assert.equal(checkpoint.status, repair ? 'published' : 'failed');
+  assert.deepEqual(checkpoint.window, originalWindow);
+  assert.equal(checkpoint.retryAuthorizations, undefined);
+});

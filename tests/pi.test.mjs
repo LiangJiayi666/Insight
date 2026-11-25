@@ -29,6 +29,19 @@ test('Pi bundle rejects reused primary sources', () => {
   assert.throws(() => validatePiBundle(data, { date, window, target: 12 }), /重复/);
 });
 
+test('window feedback identifies every invalid story and source without changing the window', () => {
+  const bundle = fixture();
+  bundle.evidence[0].published = '2026-11-10';
+  bundle.issue.stories.push({ ...bundle.issue.stories[0], id: 'two' });
+  assert.throws(() => validatePiBundle(bundle, { date, window, target: 12 }), error => {
+    assert.match(error.message, /stories\[0\].*one.*s-1.*2026-11-10/);
+    assert.match(error.message, /stories\[1\].*two.*s-1/);
+    assert.ok(error.message.includes(window.start));
+    assert.ok(error.message.includes(window.end));
+    return true;
+  });
+});
+
 test('source tracking parameters do not bypass evidence matching or duplicate detection', () => {
   const bundle = fixture();
   bundle.issue.sources[0].url += '?utm_source=newsletter#story';
@@ -100,7 +113,7 @@ test('write feedback lets Pi repair a saved invalid bundle before ending its run
   const bundle = fixture();
   bundle.selectionAudit = [{ event: 'major event', importance: 'high', leadUrls: [bundle.evidence[0].url], followUpUrls: [], decision: 'included', reason: 'fixture', storyId: 'one' }];
   await saveJson(file, bundle);
-  const event = { toolName: 'write', input: { path: file }, content: [{ type: 'text', text: 'saved' }], isError: false };
+  const event = { toolName: 'write', input: { path: file, content: JSON.stringify(bundle) }, content: [{ type: 'text', text: 'saved' }], isError: false };
   assert.equal(bundleWriteRestriction(event, folder), undefined);
   assert.equal(bundleWriteRestriction({ ...event, toolName: 'edit', input: { path: path.join(folder, '../code.mjs') } }, folder).block, true);
   const failed = await bundleWriteFeedback(event, folder);
