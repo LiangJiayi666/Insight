@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 # Local-only watchdog: no model calls and no Feishu messages.
 $root = Split-Path $PSScriptRoot -Parent
 $now = Get-Date
-if ($now.TimeOfDay -lt [TimeSpan]::Parse('22:00:00')) { exit 0 }
+if ($now.TimeOfDay -lt [TimeSpan]::Parse('20:30:00')) { exit 0 }
 $date = $now.ToString('yyyy-MM-dd')
 while ((Get-Date).ToString('yyyy-MM-dd') -eq $date) {
 $done = $true
