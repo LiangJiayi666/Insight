@@ -9,9 +9,9 @@ let release;
 try {
   release = await acquireLock(path.join(root, 'data/runtime/operations.lock'));
   let notificationError;
-  // A missed scheduled run must not send today's evening report before 20:30.
+  // A missed scheduled run must not send today's evening report before 21:00.
   const chinaTime = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date());
-  if (process.argv.includes('--notify') && chinaTime >= '20:30') {
+  if (process.argv.includes('--notify') && chinaTime >= '21:00') {
     try { console.log('daily-report:', await deliverDailyReport(root)); }
     catch (e) { notificationError = e; }
   } else await updateLedger(root, chinaDate());

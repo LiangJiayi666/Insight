@@ -175,7 +175,7 @@ async function notifyDaily(root, date, deliveryKey, { editionDate, getClient }) 
   return attachment ? 'file-sent' : 'unavailable-notice-sent';
 }
 
-// Both the 20:30 job and the bound user's 日报 command call this exact action.
+// Both the 21:00 job and the bound user's 日报 command call this exact action.
 export async function deliverDailyReport(root, { requestId, now = new Date(), request = fetch, bridgeDirectory = path.join(os.homedir(), '.pi/feishu-bridge') } = {}) {
   const release = await acquireLock(path.join(root, 'data/runtime/report-delivery.lock'));
   try {
