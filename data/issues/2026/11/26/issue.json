@@ -1,0 +1,949 @@
+{
+  "date": "2026-11-26",
+  "cutoff": "2026-11-26T11:50:02.150Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-25T11:50:01.961Z 至 2026-11-26T11:50:02.150Z；实际 11/12 条。",
+  "notice": "本期目前整理11条窗口内稿件，低于目标12条；覆盖中国政策与贸易、美国贸易及科技政治、亚洲企业融资、韩国货币政策、太空科技、AI研发、埃及交通事故及药品安全标签进展。已追查并因发布时间过早排除NVIDIA复任黄仁勋及巴基斯坦航天员进驻天宫等候选；8省市6G试点批复/启动亦在窗口前。sources.accessed记录实际读取日期，工具未返回精确读取时刻。部分融资与研发计划依赖匿名信源，已注明限制。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-1",
+      "publisher": "France 24 / AFP",
+      "title": "China warns of 'necessary measures' after new US tariffs",
+      "url": "https://www.france24.com/en/live-news/20261126-china-warns-of-necessary-measures-after-new-us-tariffs",
+      "published": "2026-11-26T09:59:17Z",
+      "accessed": "2026-11-26T11:50:42.980Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Beijing (AFP) – China warned Thursday it could take \"necessary measures\" after Washington unveiled new tariffs that risk shaking the uneasy truce in the countries' trade war that expires on January 10.\n\nIssued on: 26/11/2026 - 10:59\n\nUS President Donald Trump and China's Xi Jinping are due to meet for the fourth time this year in December at a G20 summit in the United States.\n\nAnnouncing the proposed levies for a raft of countries on Wednesday, Washington set the rate at 20 percent for China but warned it could double to 40 percent.\n\n\"China urges the United States to correct its erroneous practices and return to the right track of resolving issues through dialogue and consultation,\" Chinese commerce ministry spokesman He Yadong said.\n\n\"China will closely monitor developments and reserves the right to take necessary measures to firmly defend its legitimate rights and interests,\" He told a regular briefing.",
+      "limits": "France 24转载AFP报道；美国关税提案具体制度及适用范围未以美方原始公告核对。"
+    },
+    {
+      "id": "s-2",
+      "publisher": "CGTN",
+      "title": "China unveils services trade plan to boost global competitiveness",
+      "url": "https://news.cgtn.com/news/2026-11-26/China-unveils-services-trade-plan-to-boost-global-competitiveness-1SnKpdHkHg4/p.html",
+      "published": "2026-11-26T05:59:13Z",
+      "accessed": "2026-11-26T11:50:42.980Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "China has unveiled a new plan to expand services trade in five years, with a focus on emerging AI services, greater market openness and easier cross-border flows of capital, talent, technology and data.\n\nThe plan, jointly released on Thursday by the Ministry of Commerce and seven other government departments, sets out priorities for China's services trade development during the 15th Five-Year Plan period (2026-2030), aiming to enhance the international competitiveness of \"China's services\" by 2030.\n\nFor the first time, the plan sets out development priorities for both producer and consumer services, seeking to strengthen the competitiveness of integrated manufacturing and services offerings and cultivate new export advantages in tourism, culture and services with distinctive Chinese characteristics.\n\nDeveloping new forms of AI services trade is another key feature of the plan. It calls for promoting the overseas expansion of AI-related services, including cloud computing and large models, in a prudent and orderly manner, while strengthening cooperation with Belt and Road partner countries in AI applications and industrial innovation.",
+      "limits": "CGTN报道；以商务部发布文件作政策原文交叉核对。"
+    },
+    {
+      "id": "s-3",
+      "publisher": "中华人民共和国商务部",
+      "title": "商务部等8部门关于印发《服务贸易发展“十五五”规划》的通知",
+      "url": "https://www.mofcom.gov.cn/zcfb/zc/art/2026/art_6ed41ce4da7e40a4ba7c393a7135c784.html",
+      "published": "2026-11-26",
+      "accessed": "2026-11-26T11:52:24.115Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方原文",
+      "excerpt": "来源：服贸司 类型：原创 2026-11-26 09:12\n\n商务部等8部门关于印发《服务贸易发展“十五五”规划》的通知\n\n【发布单位】服贸司 【发布文号】商服贸发〔2026〕212号 【发文日期】2026年11月26日\n\n为推动服务贸易高质量发展，加快贸易强国建设，根据《中华人民共和国国民经济和社会发展第十五个五年规划纲要》和商务领域有关规划，商务部会同相关部门研究编制了《服务贸易发展“十五五”规划》，现予印发，请结合实际认真组织实施。\n\n商务部 中央宣传部 中央网信办\n\n工业和信息化部 交通运输部\n\n文化和旅游部 中国人民银行 海关总署\n\n2026年11月19日\n\n服务贸易发展“十五五”规划.pdf",
+      "limits": "官方通知页面及发文日期可核；所附规划全文PDF未单独读取。"
+    },
+    {
+      "id": "s-4",
+      "publisher": "Bloomberg",
+      "title": "Billions in Data Center Deals Grind to Halt After Chip Curbs",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-25/billions-in-data-center-deals-grind-to-halt-after-ai-chip-curbs",
+      "published": "2026-11-25T16:01:00Z",
+      "accessed": "2026-11-26T11:50:42.980Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Lenders have hit the brakes on billions of dollars in loans tied to Chinese firms ByteDance, Alibaba and Tencent, as new US curbs on chip access threaten to upend Asia’s burgeoning AI debt financing market.\n\nWhile Jensen Huang’s surprise return to Nvidia Corp. buoyed AI stocks briefly earlier this week, bankers remained concerned about the legal risks of financing data centers and neoclouds potentially facing stricter US export controls. Deals that were near the finish line are suddenly in doubt and lenders trying to sell down their exposure are struggling to find interested buyers.",
+      "limits": "Bloomberg正文读取内容受限；报道援引未具名知情人士，相关公司未确认具体贷款。"
+    },
+    {
+      "id": "s-5",
+      "publisher": "The Straits Times",
+      "title": "Data centre deals grind to halt after AI chip curbs",
+      "url": "https://www.straitstimes.com/business/billions-in-data-centre-deals-grind-to-halt-after-ai-chip-curbs",
+      "published": "2026-11-26T01:45:00Z",
+      "accessed": "2026-11-26T11:53:58.052Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Lenders have hit the brakes on billions of dollars in loans tied to Chinese firms ByteDance, Alibaba and Tencent, as new US curbs on chip access threaten to upend Asia’s burgeoning AI debt financing market. \n\nWhile Jensen Huang’s surprise return to Nvidia buoyed AI stocks briefly earlier this week, bankers remained concerned about the legal risks of financing data centres and neoclouds potentially facing stricter US export controls.\n\nDeals that were near the finish line are suddenly in doubt and lenders trying to sell down their exposure are struggling to find interested buyers.\n\nSome lenders have delayed moving forward as they do more due diligence on an upsized US$6.6 billion (S$8.51 billion) loan sought by Bain Capital’s Bridge Data Centres (BDC), whose Malaysian facilities are used by clients including ByteDance, according to people involved in the discussions.",
+      "limits": "据知情人士描述未具名贷款谈判；当事公司未回应或拒绝评论，报道部分信息与Bloomberg相同。"
+    },
+    {
+      "id": "s-6",
+      "publisher": "Reuters（经Investing.com转载）",
+      "title": "South Korea’s central bank raises rates, upgrades 2027 growth outlook",
+      "url": "https://www.investing.com/news/economy-news/south-koreas-central-bank-raises-rates-upgrades-2027-growth-outlook-5051906",
+      "published": "2026-11-26T02:20:01Z",
+      "accessed": "2026-11-26T11:56:16.721Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "The seven-member monetary policy board voted 5-2 to raise the 7-day repurchase rate by a quarter of a percentage point to 3.25%, its highest since November 2024, a decision forecast by 32 of 34 analysts surveyed by Reuters.\n\nThe bank also raised this year’s growth forecast to 3.9% from 3.3% previously and took its August outlook of 2.9% for next year to 4.1%, the fastest since 2021.\n\nThe hike was the BOK’s third this year, following back-to-back increases in July and August, and brought cumulative tightening to 75 basis points.",
+      "limits": "Reuters报道经Investing.com转载；市场预期和投票数为媒体报道，政策利率序列采用韩国央行官方决定核对。"
+    },
+    {
+      "id": "s-7",
+      "publisher": "韩国银行（Bank of Korea）",
+      "title": "Monetary Policy Decision & Opening Remarks to the Press Conference (November 26, 2026)",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?menuNo=400069&nttId=11067086",
+      "published": "2026-11-26",
+      "accessed": "2026-11-26T11:56:10.696Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方原文",
+      "excerpt": "The Monetary Policy Board of the Bank of Korea decided today to raise the Base Rate by 25 basis points from 3.00% to 3.25%. Domestic economic growth has further strengthened, inflation is projected to remain above the target level for a considerable time, and financial stability risks persist. The Board, therefore, judged that it is appropriate to raise the Base Rate by 25 basis points.\n\nFive Monetary Policy Board members supported the decision to raise the Base Rate, while two members, Hwang Kunil and Lee Soohyung, voted against the decision, proposing to keep the Base Rate unchanged at 3.00%.",
+      "limits": "官方页面给出决议日期但未给具体时分；不以此作为精确发布时间判断，窗口时间以Reuters报道为准。"
+    },
+    {
+      "id": "s-8",
+      "publisher": "韩国银行（Bank of Korea）",
+      "title": "Monetary Policy Decision (October 22, 2026)",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?menuNo=400069&nttId=11065825",
+      "published": "2026-10-22",
+      "accessed": "2026-11-26T11:56:10.696Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史决议",
+      "excerpt": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 3.00% for the intermeeting period. The domestic economy maintained strong growth led by exports and investment, inflation remains high at around 3%, and financial stability risks persist. However, given the growing uncertainties surrounding the Middle East conflict and monetary and fiscal policies in major economies, the Board judged that it would be necessary to assess developments in both domestic and external risk factors and the effects of the two prior rate hikes while maintaining the current level of the Base Rate.",
+      "limits": "官方历史利率决议；页面未给具体时分，不作为本刊新增主新闻。"
+    },
+    {
+      "id": "s-9",
+      "publisher": "韩国银行（Bank of Korea）",
+      "title": "Monetary Policy Decision (August 27, 2026)",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?menuNo=400069&nttId=11064193",
+      "published": "2026-08-27",
+      "accessed": "2026-11-26T11:56:10.696Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史决议",
+      "excerpt": "The Monetary Policy Board of the Bank of Korea decided today to raise the Base Rate by 25 basis points from 2.75% to 3.00%. While the domestic economy has continued to grow at a stronger than expected pace, supported by strong exports and a recovery in domestic demand, inflation is expected to remain above the target level for a considerable time.",
+      "limits": "官方历史利率决议；页面未给具体时分，不作为本刊新增主新闻。"
+    },
+    {
+      "id": "s-10",
+      "publisher": "韩国银行（Bank of Korea）",
+      "title": "Monetary Policy Decision (November 27, 2025)",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?depth=400423&menuNo=400423&nttId=10094810&programType=newsDataEng&relate=Y",
+      "published": "2025-11-27",
+      "accessed": "2026-11-26",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史决议",
+      "excerpt": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 2.50% for the intermeeting period. Along with inflation having risen somewhat, the economy continues to improve, driven by consumption and exports, while uncertainty in the growth outlook continues, and risks to financial stability also remain.",
+      "limits": "官方历史利率决议；约一年前的同一政策工具历史节点。"
+    },
+    {
+      "id": "s-11",
+      "publisher": "韩国银行（Bank of Korea）",
+      "title": "Monetary Policy Decision (August 28, 2025)",
+      "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?depth=400423&depth2=400417&depth3=400423&menuNo=400423&nttId=10093244&oldMenuNo=400423&pageIndex=1&pageUnit=10&programType=newsDataEng&searchCnd=1",
+      "published": "2025-08-28",
+      "accessed": "2026-11-26T12:02:03.715Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方历史决议",
+      "excerpt": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 2.50% for the intermeeting period. With inflation remaining stable, economic growth, while there is still high uncertainty surrounding the economic growth outlook, has shown modest improvement, mainly driven by domestic demand, and movements in housing prices in Seoul and its surrounding areas and in household debt need to be further monitored.",
+      "limits": "官方历史利率决议；作为超过一年以前的同一工具对照。"
+    },
+    {
+      "id": "s-12",
+      "publisher": "NPR / Associated Press",
+      "title": "FCC says SpaceX can deploy 1 million satellites for data centers in space. Scientists are skeptical",
+      "url": "https://www.npr.org/2026/11/26/g-s1-155940/fcc-spacex-satellites-data-centers-in-space",
+      "published": "2026-11-26T06:53:09Z",
+      "accessed": "2026-11-26T11:56:16.721Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "The Trump administration on Wednesday gave SpaceX the green light to deploy 1 million satellites that it said would create data centers in space, a long-lofty goal of Elon Musk's rocket company, in a move that has raised both skepticism and alarm among some scientists.\n\nThe U.S. Federal Communications Commission lauded its authorization as a historic first amid the artificial intelligence race. It said that SpaceX's one million \"orbital compute modules\" (forming a data center constellation called \"Starmind\") would process massive amounts of data that would be used back on Earth — and bring humans closer to harnessing \"the full power of the sun.\"\n\nA lengthier authorization order published by the FCC noted that the company must deploy at least \"one authorized space station\" by 2033 — and then gradually add more and more through 2040.",
+      "limits": "NPR转载AP；强调FCC核准不等于近期完成部署，技术与环境影响仍有争议。"
+    },
+    {
+      "id": "s-13",
+      "publisher": "美国联邦通信委员会（FCC）",
+      "title": "Space Exploration Holdings LLC Application for Launch and Operating Authority for the SpaceX Orbital Data Center System",
+      "url": "https://eu-assets.contentstack.com/v3/assets/blt23eb5bbc4124baa6/bltf4cdf2af47159e12/6b071c5f5506bb38bca5b0ec/FCC_report_and_order_on_SpaceX_Starmind_AI_constellation_11-25-2026.pdf",
+      "published": "2026-11-25",
+      "accessed": "2026-11-26T11:56:16.721Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方监管决定",
+      "excerpt": "MEMORANDUM OPINION AND ORDER AND AUTHORIZATION\n\nAdopted: November 25, 2026 Released: November 25, 2026\n\nThe SpaceX Orbital Data Center System (Starmind) is a non-geostationary satellite orbit constellation of 1,000,000 satellites deployed into orbital shells at altitudes from 500 to 1,002 km.\n\nScope of Grant: Authority for radiofrequency communications for backup and emergency telemetry, tracking, & command (TT&C) for a constellation of 1,000,000 NGSO satellites to operate as data centers in space.\n\nThe application is GRANTED-IN-PART and DEFERRED-IN-PART, with conditions.",
+      "limits": "FCC决定为部分批准、部分延期并附条件；未授权所有频段与部署事项无条件实施。"
+    },
+    {
+      "id": "s-14",
+      "publisher": "Reuters（经Investing.com转载）",
+      "title": "Exclusive: US chip curbs, distillation crackdown threaten Chinese AI model development",
+      "url": "https://www.investing.com/news/stock-market-news/exclusiveus-chip-curbs-distillation-crackdown-threaten-chinese-ai-model-development-sources-say-5052154",
+      "published": "2026-11-26T07:19:23Z",
+      "accessed": "2026-11-26",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "China’s Z.AI has fallen behind schedule on its next flagship AI model, while rival Moonshot AI expects the interval between major releases could double from six months to a year or longer if it loses access to overseas computing power, people familiar with the matter said.\n\nThe previously unreported details show how efforts by US AI companies OpenAI and Anthropic to prevent distillation, a technique in which developers train models using answers generated by more capable ones, have slowed Chinese AI development. Washington’s latest chip restrictions threaten further delays.\n\nZ.AI, also known as Zhipu AI, had planned to release its next flagship model, GLM-5.5, this month but has yet to do so, two people familiar with the matter said on condition of anonymity.",
+      "limits": "Reuters主要依据未具名知情人士，Z.AI及Moonshot未立即回应。"
+    },
+    {
+      "id": "s-15",
+      "publisher": "The Independent",
+      "title": "American tech defenses stall China’s next flagship AI models as Washington closes overseas chip loopholes",
+      "url": "https://www.independent.co.uk/tech/zhipu-moonshot-nvidia-chip-delays-b3092031.html",
+      "published": "2026-11-26T09:48:20Z",
+      "accessed": "2026-11-26T12:08:11.643Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Z.AI planned to release its next flagship AI model, GLM-5.5, this month, but has yet to do so, two people familiar with the matter said on condition of anonymity. The model is designed with roughly 3 trillion parameters, a measure of its size. One of the people said it has been held up partly by increasingly effective safeguards against distillation. Z.AI, also known as Zhipu AI, had hoped to complete training and release the model by year-end. The new U.S. computing restrictions could push its launch into the first quarter of 2027 or later, the person said.\n\nMoonshot AI, a Beijing-based rival, expects the interval between major releases could double from six months to a year or longer if it loses access to overseas computing power, people familiar with the matter said.",
+      "limits": "报道与Reuters所述事实高度重合，作为交叉读取而非独立验证具名公司内部计划。"
+    },
+    {
+      "id": "s-16",
+      "publisher": "Associated Press",
+      "title": "Egypt detains a driver suspected of causing Cairo tanker crash that killed 31",
+      "url": "https://apnews.com/article/cairo-egypt-highway-fire-tanker-fuel-traffic-db772346ece6e997a17c9aa3559bcee6",
+      "published": "2026-11-26T11:49:17Z",
+      "accessed": "2026-11-26T12:10:36.244Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Egyptian authorities said Thursday they detained the driver of a car suspected of causing a fuel tanker to overturn on a major highway surrounding Cairo, triggering a massive fire and killing at least 31 people during rush hour a day earlier.\n\nThe fire left 27 vehicles charred and injured 26 people, according to authorities. The public prosecutor’s office said DNA investigations were underway to identify the victims.\n\nThe prosecutors said in a statement on Facebook that authorities had detained the driver of the vehicle suspected of causing the fuel tanker to overturn. It said the driver told investigators he was speeding between lanes when he hit the oil tanker in the rear right.",
+      "limits": "AP援引检方和当局说法；事故调查仍在进行，驾驶人责任尚待司法程序确定。"
+    },
+    {
+      "id": "s-17",
+      "publisher": "Associated Press",
+      "title": "Fuel tanker crash ignites a massive fire on a highway surrounding Cairo, killing at least 31 people",
+      "url": "https://apnews.com/article/cairo-highway-fire-ring-road-89e4cd3d3d53016c9c35440b57c5ea1e",
+      "published": "2026-11-25T19:14:11Z",
+      "accessed": "2026-11-26T12:10:36.244Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "A crash involving a fuel tanker ignited a massive fire on a major highway surrounding Cairo on Wednesday, killing at least 31 people, Egyptian authorities said.\n\nThe blaze on Ring Road, a key artery that encircles the Egyptian capital, also injured at least 21 people and left more than two dozen cars and motorcycles charred, according to the latest figures released by the Health Ministry.\n\nThe stretch of the highway where the crash occurred was in Waraq, a densely populated neighborhood in Giza, part of the Greater Cairo area, according to the Health Ministry.\n\nAt the scene, rescue workers were pulling people out of burning cars.",
+      "limits": "同一事故较早AP稿件；伤者数字为当时初步统计，后续稿件更新为26人。"
+    },
+    {
+      "id": "s-18",
+      "publisher": "The Straits Times",
+      "title": "Novo Nordisk, Eli Lilly to add warning labels to GLP-1s amid wave of vision-loss lawsuits",
+      "url": "https://www.straitstimes.com/world/united-states/novo-nordisk-eli-lilly-to-add-warning-labels-to-glp-1s-amid-wave-of-vision-loss-lawsuits",
+      "published": "2026-11-25T12:25:00Z",
+      "accessed": "2026-11-26T12:13:24.821Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Novo Nordisk A/S and Eli Lilly are preparing to add a new federally required warning label to popular obesity drugs, as they face a growing body of lawsuits from users claiming the products caused damaging side effects that they did not adequately warn about.\n\nThe US Food and Drug Administration (FDA) said in November it will require safety labelling changes for GLP-1s because of “potential increased risk” of non-arteritic anterior ischaemic optic neuropathy, or NAION.",
+      "limits": "法律案件和标签更新分属不同程序；报道指出标签变更不代表公司承认因果关系。"
+    },
+    {
+      "id": "s-19",
+      "publisher": "美国食品药品监督管理局（FDA）",
+      "title": "FDA Requires Safety Labeling Changes for GLP-1 RAs Due to Potential Increased Risk of Rare But Serious Eye Condition",
+      "url": "https://www.fda.gov/drugs/drug-safety-communications/fda-requires-safety-labeling-changes-glucagon-peptide-1-receptor-agonists-glp-1-ras-due-potential",
+      "published": "2026-11-09",
+      "accessed": "2026-11-26T12:13:24.821Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方背景",
+      "excerpt": "FDA Drug Safety Communication – November 9, 2026\n\nThe U.S. Food and Drug Administration is informing patients and health care providers of a potential increased risk of non-arteritic anterior ischemic optic neuropathy (NAION) associated with use of glucagon-like peptide-1 receptor agonist (GLP-1 RA) medications. NAION is a rare condition that can result in acute, painless, decreased vision in one eye, including permanent vision loss.\n\nThe agency is requiring application holders for all GLP-1 RA medications to add information to the Warnings and Precautions section of labeling about the potential increased risk of NAION associated with use of these medications.",
+      "limits": "FDA公告发表于本刊新闻窗口前，只作背景；官方称潜在风险，不表示已经确认因果。"
+    },
+    {
+      "id": "s-20",
+      "publisher": "新华社",
+      "title": "China to track EU's follow-up probe into hybrid vehicles: commerce ministry",
+      "url": "https://english.news.cn/20261126/d6aef64b899f4be19c8d3283826e6f52/c.html",
+      "published": "2026-11-26T11:38:28Z",
+      "accessed": "2026-11-26T12:19:45.990Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "2026-11-26 19:20:00\n\nBEIJING, Nov. 26 (Xinhua) -- China will keep a close watch on any follow-up developments in the European Union's (EU) safeguard investigation into hybrid vehicles, and firmly protect the legitimate rights and interests of Chinese industries, the Ministry of Commerce said Thursday.\n\nMinistry spokesperson He Yadong made the remarks when commenting on the EU's preliminary ruling in its global safeguard investigation into hybrid vehicles.\n\nPrior to the EU's investigation, the two sides had conducted pre-initiation consultations and reached an understanding on hybrid vehicle trade arrangements in accordance with the three principles of \"compliance with World Trade Organization (WTO) rules, non-discrimination, and respect for facts,\" said He.\n\nThe spokesperson reiterated that protectionism leads nowhere, and open cooperation is the right path forward.",
+      "limits": "新华社报道商务部发言人回应；其发布时间距本刊截稿约12分钟，按搜索结果与页面19:20北京时间对应核对。"
+    },
+    {
+      "id": "s-21",
+      "publisher": "European Commission",
+      "title": "Commission imposes provisional import quotas on hybrid passenger vehicles",
+      "url": "https://ec.europa.eu/commission/presscorner/api/files/document/print/en/ip_26_2564/IP_26_2564_EN.pdf",
+      "published": "2026-11-24",
+      "accessed": "2026-11-26T12:19:45.990Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方背景",
+      "excerpt": "The European Commission today published provisional safeguard measures setting import quotas for certain hybrid vehicles. These restrictions are needed to protect EU industry against a sharp recent increase in imports of such vehicles. The measures will enter into force on 1 December and follow an investigation that showed imports of hybrid vehicles into the EU have increased significantly since 2023.\n\nWhile the safeguard measures implement the understanding reached at the second meeting of the EU-China Trade and Investment Consultations on 9 October 2026, to moderate China's exports of hybrids to the EU, they will apply to all hybrid imports regardless of their origin.\n\nThe Commission is imposing a quantitative restriction in the form of import quotas per exporting country, setting a maximum quantity of hybrid vehicles that may be imported into the EU for the duration of the provisional safeguard measures. Imports outside these quotas are not allowed.\n\nThe provisional safeguard measure will be in place for a maximum of 200 days.",
+      "limits": "欧委会措施发布于11月24日，超出新闻窗口，仅作为背景核实措施范围、适用对象和期限。"
+    },
+    {
+      "id": "s-22",
+      "publisher": "工业和信息化部、国家网信办、国家发展改革委",
+      "title": "三部门关于印发《新一代通信网建设实施方案》的通知",
+      "url": "https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2026/art_808db1814bb74a0e87965d66e74f5b4b.html",
+      "published": "2026-11-26",
+      "accessed": "2026-11-26T12:22:07.782Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "官方政策原文",
+      "excerpt": "标题：工业和信息化部 国家网信办 国家发展改革委关于印发《新一代通信网建设实施方案》的通知\n发文字号：工信部联通信〔2026〕267号\n发布日期：2026-11-26\n发布机构：工业和信息化部\n分类：通信发展,信息通信管理,网络安全管理,无线电管理\n发布时间：2026-11-26 08:36 来源：信息通信发展司\n\n工业和信息化部 国家网信办 国家发展改革委关于印发《新一代通信网建设实施方案》的通知\n\n工信部联通信〔2026〕267号\n\n各省、自治区、直辖市人民政府，国务院各部委、各直属机构及有关中央企业：\n\n《新一代通信网建设实施方案》已经国务院同意，现印发给你们，请认真贯彻执行。\n\n工业和信息化部\n\n国家网信办\n\n国家发展改革委\n\n2026年11月17日",
+      "limits": "官方网页标注发布日期2026年11月26日、页面发布时间北京时间08:36；文件成文日期为11月17日，发布时间不作为新闻报道主来源。"
+    },
+    {
+      "id": "s-23",
+      "publisher": "新华社",
+      "title": "China unveils roadmap for next-generation communication networks",
+      "url": "https://english.news.cn/20261126/de6010998cbb49f2a06fa8c715603441/c.html",
+      "published": "2026-11-26T14:41:15+08:00",
+      "accessed": "2026-11-26T12:22:07.782Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "2026-11-26 14:41:15\n\nBEIJING, Nov. 26 (Xinhua) -- Chinese authorities have released an implementation plan for the development of next-generation communication networks, aiming to build such networks featuring comprehensive coverage and leading performance by 2030.\n\nThe plan targets advancing 6G network development at an appropriate time and basically completing the construction of a low-Earth-orbit satellite internet system by 2030.\n\nChina also expects to promote the large-scale development of integrated networks like the Industrial Internet and the Internet of Vehicles, significantly improve smart development, and further strengthen the industrial ecosystem, according to the plan.\n\nIt sets out measures to improve basic networks, space-based networks and international networks, as well as integrated networks, while making communication networks smarter, greener, and more secure and resilient.",
+      "limits": "新华社报道解读官方方案；引用的宏观投资金额未纳入稿件，避免混淆多年建设规划与已实现投资。"
+    },
+    {
+      "id": "s-24",
+      "publisher": "Associated Press",
+      "title": "Vance says Jensen Huang won't need a pardon as scrutiny of Nvidia scandal builds in Washington",
+      "url": "https://apnews.com/article/vance-trump-pardon-nvidia-huang-congress-a8d3d781f182317cbff28863d56add5d",
+      "published": "2026-11-25T21:40:07Z",
+      "accessed": "2026-11-26T12:29:04.325Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Vice President JD Vance on Wednesday played down the possibility that Nvidia CEO Jensen Huang could need a presidential pardon just days before the executive of the AI giant is expected to appear before a congressional committee.\n\nVance told reporters that Justice Department officials and “multiple officials in our national security apparatus” have confirmed that Huang is “under no investigation.” The vice president made the remarks after having a Thanksgiving Eve meal with troops at Wright-Patterson Air Force Base.\n\n“I don’t think he needs a pardon at all,” Vance said. “I haven’t seen any evidence again that he committed a crime. And if there is evidence that he committed a crime, then that’s up to relevant authorities to actually bring a prosecution against him.”",
+      "limits": "报道转述副总统公开说法；未独立证明政府调查状态或黄仁勋是否违法。"
+    },
+    {
+      "id": "s-25",
+      "publisher": "CNBC",
+      "title": "Vance says he was assured Jensen Huang was not under DOJ investigation",
+      "url": "https://www.cnbc.com/2026/11/25/vance-jensen-huang-nvidia-doj-investigation.html",
+      "published": "2026-11-25T20:28:42Z",
+      "accessed": "2026-11-26T12:29:04.325Z",
+      "method": "Pi搜索（mcp__exa__web_search_exa）+原文读取（mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Vice President JD Vance said Wednesday that Attorney General Todd Blanche told him Nvidia CEO Jensen Huang was not under investigation.\n\n“I was told by the Department of Justice and multiple officials in our national security apparatus that he was under no investigation,” Vance told reporters in Ohio on Wednesday after being asked what assurances he had gotten that Huang was not under investigation. “Not even that he was about to be prosecuted; that he's under no investigation.”\n\nOn Tuesday, Trump left the door open to pardon Huang in an interview with the New York Post, but Vance said on Wednesday that the CEO doesn't need one.\n\n“I don't think he needs a pardon at all,” Vance said. “I haven't seen any evidence again that he committed a crime.”",
+      "limits": "报道反映Vance发言；未获司法部或英伟达回应，Vance表述不等同于完整调查结论。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "china-us-tariff-response",
+      "category": "政治",
+      "title": "中方回应美国拟对华加征20%关税：保留采取必要措施的权利",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "商务部发言人敦促美方回到对话协商，并称中方将密切关注事态、保留采取必要措施的权利；目前报道呈现的是回应与拟议措施，不是关税已经生效。",
+      "facts": "France 24转述AFP报道说，美国周三提出对包括中国在内多方征收新关税，对华拟定税率为20%，并警告可能升至40%。商务部发言人何亚东敦促美方纠正做法、通过对话协商解决问题，并表示中方保留采取必要措施维护合法权益。报道所述为拟议关税及回应，并非已实施税率。",
+      "affected": "中美贸易相关企业及跨境供应链",
+      "sourceIds": [
+        "s-1"
+      ],
+      "claims": [
+        {
+          "text": "美国提出对华拟征20%关税，并称税率可能升至40%。",
+          "sourceId": "s-1",
+          "quote": "Announcing the proposed levies for a raft of countries on Wednesday, Washington set the rate at 20 percent for China but warned it could double to 40 percent."
+        },
+        {
+          "text": "商务部发言人何亚东敦促美方通过对话协商，并称中方保留采取必要措施的权利。",
+          "sourceId": "s-1",
+          "quote": "\"China urges the United States to correct its erroneous practices and return to the right track of resolving issues through dialogue and consultation,\" Chinese commerce ministry spokesman He Yadong said.\n\n\"China will closely monitor developments and reserves the right to take necessary measures to firmly defend its legitimate rights and interests,\" He told a regular briefing."
+        }
+      ],
+      "sections": [
+        {
+          "title": "拟议措施与回应",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "报道将美方措施表述为拟议征税：对华拟定20%，并称可能提高至40%。中方回应强调对话协商，同时保留反制权利；现有材料不能证明新税已生效。"
+          ],
+          "sourceIds": [
+            "s-1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china-services-trade-plan",
+      "category": "经济",
+      "title": "商务部等八部门发布服务贸易“十五五”规划，首次专门部署人工智能服务贸易",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "规划把服务贸易发展着力点扩展至生产性与生活性服务，提出发展AI服务贸易新业态，并系统部署数据、人员、资金、技术跨境流动便利化；文件设定方向与任务，具体开放幅度仍取决于配套实施。",
+      "facts": "商务部等八部门发布《服务贸易发展“十五五”规划》，官方通知称文件于11月19日印发、11月26日发布。CGTN报道指出，规划覆盖2026—2030年，首次分别部署生产性和生活性服务，并提出稳妥有序推动云计算、大模型等AI相关服务出海；规划还提出跨境数据、人员、资金和技术流动管理措施。",
+      "affected": "服务贸易企业、AI及云计算服务商、跨境经营者和服务消费者",
+      "sourceIds": [
+        "s-2",
+        "s-3"
+      ],
+      "claims": [
+        {
+          "text": "商务部等八部门发布服务贸易发展‘十五五’规划，文件日期为2026年11月19日。",
+          "sourceId": "s-3",
+          "quote": "【发布单位】服贸司 【发布文号】商服贸发〔2026〕212号 【发文日期】2026年11月26日\n\n为推动服务贸易高质量发展，加快贸易强国建设，根据《中华人民共和国国民经济和社会发展第十五个五年规划纲要》和商务领域有关规划，商务部会同相关部门研究编制了《服务贸易发展“十五五”规划》，现予印发，请结合实际认真组织实施。\n\n商务部 中央宣传部 中央网信办\n\n工业和信息化部 交通运输部\n\n文化和旅游部 中国人民银行 海关总署\n\n2026年11月19日"
+        },
+        {
+          "text": "规划针对2026—2030年，提出AI服务出海及要素跨境流动管理措施。",
+          "sourceId": "s-2",
+          "quote": "The plan, jointly released on Thursday by the Ministry of Commerce and seven other government departments, sets out priorities for China's services trade development during the 15th Five-Year Plan period (2026-2030), aiming to enhance the international competitiveness of \"China's services\" by 2030.\n\nFor the first time, the plan sets out development priorities for both producer and consumer services, seeking to strengthen the competitiveness of integrated manufacturing and services offerings and cultivate new export advantages in tourism, culture and services with distinctive Chinese characteristics.\n\nDeveloping new forms of AI services trade is another key feature of the plan. It calls for promoting the overseas expansion of AI-related services, including cloud computing and large models, in a prudent and orderly manner, while strengthening cooperation with Belt and Road partner countries in AI applications and industrial innovation."
+        }
+      ],
+      "sections": [
+        {
+          "title": "规划新增的重点",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "政策范围覆盖2026—2030年，强调生产性与生活性服务协同；AI云计算和大模型服务出海被列为新业态方向。商务部官方通知同时确认八部门印发该规划，正式发布日期为11月26日，通知载明文件日期为11月19日。"
+          ],
+          "sourceIds": [
+            "s-2",
+            "s-3"
+          ]
+        },
+        {
+          "title": "从规划方向到落地",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "规划不只聚焦服务出口，还将跨境数据、人员、资金、技术流动列为便利化任务，说明服务贸易扩张涉及国内要素流动管理与对外开放的配套调整。现有报道没有列出具体实施时间表或量化目标，因此尚不能据此推断实际贸易增幅；后续需以配套规则和统计数据验证。"
+          ],
+          "sourceIds": [
+            "s-2",
+            "s-3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asia-ai-datacenter-financing",
+      "category": "金融",
+      "title": "美国AI芯片管制令亚洲数据中心融资遇阻，数十亿美元贷款重审",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-25",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "《海峡时报》报道，芯片出口限制引发银行重新评估与中国科技客户相关的数据中心贷款，融资交易延迟但并非项目全面停摆；影响来自出口合规和客户用途不确定性。",
+      "facts": "《海峡时报》报道，贷款方暂停或重审与字节跳动、阿里巴巴和腾讯相关的亚洲数据中心融资。报道进一步称，Bain Capital旗下Bridge Data Centres寻求的66亿美元贷款因尽调而延后，马来西亚设施客户包括字节跳动；另有一笔3.72亿美元贷款有银行决定不参与。报道援引谈判知情人士，相关企业未确认交易细节。",
+      "affected": "东南亚数据中心运营商、贷款银行及租用算力的中国科技企业",
+      "sourceIds": [
+        "s-5"
+      ],
+      "claims": [
+        {
+          "text": "Bain Capital旗下数据中心运营商所寻求的66亿美元贷款因进一步尽调而延后，报道指其马来西亚设施客户包括字节跳动。",
+          "sourceId": "s-5",
+          "quote": "Some lenders have delayed moving forward as they do more due diligence on an upsized US$6.6 billion (S$8.51 billion) loan sought by Bain Capital’s Bridge Data Centres (BDC), whose Malaysian facilities are used by clients including ByteDance, according to people involved in the discussions."
+        }
+      ],
+      "sections": [
+        {
+          "title": "融资影响与证据边界",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "《海峡时报》披露的案例显示，银行对66亿美元Bridge Data Centres贷款继续尽调，而另一家银行放弃参与3.72亿美元Digital Halo贷款；报道并未表示所有亚洲数据中心建设停止。数字和交易进展来自未具名谈判知情人士。"
+          ],
+          "sourceIds": [
+            "s-5"
+          ]
+        },
+        {
+          "title": "为何芯片规则会传导到贷款",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "贷款方担忧的不是单纯的芯片供给价格，而是出口许可、终端用户与客户算力用途可能改变项目现金流和合规责任。报道列出的交易重审与观望买家为这一机制提供了例证；但因关键交易细节未获借款方确认，不能据此推断违约或普遍融资中断。"
+          ],
+          "sourceIds": [
+            "s-5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "south-korea-rate-hike",
+      "category": "金融",
+      "title": "韩国银行加息25个基点至3.25%",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "韩国银行将基准利率升至3.25%，为2026年第三次加息；一年间累计上调75个基点。",
+      "facts": "韩国银行货币政策委员会以5比2投票，将基准利率提高25个基点至3.25%。官方决议称国内增长进一步增强、通胀预计较长时间高于目标，金融稳定风险仍在。Reuters报道指出，这是韩国银行2026年第三次加息，年内累计收紧75个基点。",
+      "affected": "韩国借款人、储户、企业融资方及市场参与者",
+      "sourceIds": [
+        "s-6",
+        "s-7"
+      ],
+      "claims": [
+        {
+          "text": "韩国银行将基准利率提高至3.25%。",
+          "sourceId": "s-7",
+          "quote": "The Monetary Policy Board of the Bank of Korea decided today to raise the Base Rate by 25 basis points from 3.00% to 3.25%."
+        }
+      ],
+      "sections": [
+        {
+          "title": "政策决定",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "委员会以5比2投票加息25基点至3.25%。央行称增长进一步增强、通胀预计较长时间高于目标，金融稳定风险持续。",
+            "官方利率决议显示10月维持3.00%，8月上调至3.00%；Reuters报道本年已累计加息75个基点。"
+          ],
+          "sourceIds": [
+            "s-6",
+            "s-7",
+            "s-8",
+            "s-9",
+            "s-10"
+          ]
+        },
+        {
+          "title": "暂停后的再次收紧",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "此前两次加息后，10月会议暂停并评估政策影响；11月再度上调，属于暂停后的继续收紧。央行列出的依据包括增长、通胀与金融稳定，但现有材料不支持将决定归因于单一因素。"
+          ],
+          "sourceIds": [
+            "s-7",
+            "s-8",
+            "s-9"
+          ]
+        }
+      ],
+      "history": {
+        "status": "complete",
+        "interpretation": "官方同一政策工具序列显示，基准利率从2025-08-28的2.50%升至2026-11-26的3.25%，累计增加0.75个百分点（75基点）。8月27日升至3.00%，10月22日暂停，11月再升25基点，因此本次是暂停后的再次收紧。央行列出的理由为增长走强、通胀高于目标及金融稳定风险。",
+        "series": [
+          {
+            "id": "bok-base-rate",
+            "metric": "韩国银行基准利率",
+            "unit": "%",
+            "measure": "interest-rate",
+            "kind": "observed",
+            "frequency": "decision",
+            "basis": "韩国银行官方货币政策委员会决定；按决议日期",
+            "points": [
+              {
+                "period": "2025-08-28",
+                "value": 2.5,
+                "sourceId": "s-11",
+                "quote": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 2.50% for the intermeeting period."
+              },
+              {
+                "period": "2025-11-27",
+                "value": 2.5,
+                "sourceId": "s-10",
+                "quote": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 2.50% for the intermeeting period."
+              },
+              {
+                "period": "2026-08-27",
+                "value": 3,
+                "sourceId": "s-9",
+                "quote": "The Monetary Policy Board of the Bank of Korea decided today to raise the Base Rate by 25 basis points from 2.75% to 3.00%."
+              },
+              {
+                "period": "2026-10-22",
+                "value": 3,
+                "sourceId": "s-8",
+                "quote": "The Monetary Policy Board of the Bank of Korea decided today to leave the Base Rate unchanged at 3.00% for the intermeeting period."
+              },
+              {
+                "period": "2026-11-26",
+                "value": 3.25,
+                "sourceId": "s-7",
+                "quote": "The Monetary Policy Board of the Bank of Korea decided today to raise the Base Rate by 25 basis points from 3.00% to 3.25%."
+              }
+            ],
+            "comparisons": [
+              {
+                "seriesId": "bok-base-rate",
+                "from": "2026-10-22",
+                "to": "2026-11-26",
+                "method": "basis-points",
+                "label": "较前次决议变化"
+              },
+              {
+                "seriesId": "bok-base-rate",
+                "from": "2025-08-28",
+                "to": "2026-11-26",
+                "method": "basis-points",
+                "label": "上年同期（2025-11-27）至本期变化"
+              }
+            ]
+          }
+        ],
+        "comparisons": [
+          {
+            "seriesId": "bok-base-rate",
+            "from": "2026-10-22",
+            "to": "2026-11-26",
+            "method": "basis-points",
+            "label": "较前次决定变化"
+          },
+          {
+            "seriesId": "bok-base-rate",
+            "from": "2025-08-28",
+            "to": "2026-11-26",
+            "method": "basis-points",
+            "label": "过去一年以上累计变化（相较2025-08-28节点）"
+          },
+          {
+            "seriesId": "bok-base-rate",
+            "from": "2025-11-27",
+            "to": "2026-11-26",
+            "method": "basis-points",
+            "label": "上年同期（2025-11-27）至本期利率变化"
+          }
+        ]
+      }
+    },
+    {
+      "id": "spacex-orbital-data-centers",
+      "category": "科技",
+      "title": "FCC有条件批准SpaceX部署百万颗轨道数据中心卫星，实施仍有门槛",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-25",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "FCC对SpaceX的Starmind星座作出部分批准、部分延期并附条件的决定；这不是百万颗卫星立即部署许可。AP报道指出，计划面临技术、财务、环境与轨道安全争议。",
+      "facts": "FCC于11月25日发布决定，对SpaceX申请的百万颗Starmind卫星星座部分批准、部分延期并附条件，授权范围包括数据中心卫星的应急遥测、跟踪和指令通信。NPR转述AP称，FCC要求至少一颗授权卫星在2033年前部署，此后逐步增加至2040年；科学家质疑散热、成本和碰撞风险。",
+      "affected": "SpaceX、卫星运营商、天文研究机构及依赖低轨卫星服务的公众",
+      "sourceIds": [
+        "s-12"
+      ],
+      "claims": [
+        {
+          "text": "FCC对最多百万颗卫星的数据中心星座作部分批准、部分延期并附条件。",
+          "sourceId": "s-13",
+          "quote": "The SpaceX Orbital Data Center System (Starmind) is a non-geostationary satellite orbit constellation of 1,000,000 satellites deployed into orbital shells at altitudes from 500 to 1,002 km.\n\nScope of Grant: Authority for radiofrequency communications for backup and emergency telemetry, tracking, & command (TT&C) for a constellation of 1,000,000 NGSO satellites to operate as data centers in space.\n\nThe application is GRANTED-IN-PART and DEFERRED-IN-PART, with conditions."
+        },
+        {
+          "text": "NPR转述AP报道称至少一颗获准卫星须在2033年前部署，后续逐步增加，科学界提出技术和环境顾虑。",
+          "sourceId": "s-12",
+          "quote": "A lengthier authorization order published by the FCC noted that the company must deploy at least \"one authorized space station\" by 2033 — and then gradually add more and more through 2040.\n\nThe world's richest man has long vowed to form vast, solar-powered data centers in space to help run AI tools on Earth. But scientists and industry experts have stressed enormous technical and financial obstacles, as well as a host of environmental concerns."
+        }
+      ],
+      "sections": [
+        {
+          "title": "监管决定的边界",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "FCC书面决定采用部分批准、部分延期且附条件的方式，授权主要涉及应急通信频段，并要求部署前完成协调、遵守干扰与轨道碎片相关条件。AP称至少一颗卫星须在2033年前部署；这与近期建成百万颗卫星数据中心不是一回事。"
+          ],
+          "sourceIds": [
+            "s-12",
+            "s-13"
+          ]
+        },
+        {
+          "title": "目标与现实约束",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "FCC放行使SpaceX获得继续推进所需的部分监管许可，但AP报道所引专家指出散热、制造和发射成本及轨道碰撞都构成重大约束。现有批准文件也保留部分事项待定，因此“获得许可”不能据此推导项目商业化时间或经济可行性。"
+          ],
+          "sourceIds": [
+            "s-12",
+            "s-13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china-ai-model-delays",
+      "category": "科技",
+      "title": "美芯片许可与反蒸馏措施挤压中国AI训练，Z.AI新模型或延至2027年",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "Reuters采访称，Z.AI旗舰模型GLM-5.5已晚于原计划，Moonshot内部预期若海外算力中断，主力模型发布间隔可能从半年拉长至一年以上。公司未确认匿名信源细节，不能将预测视作既定延期。",
+      "facts": "Reuters报道，Z.AI原计划11月发布约3万亿参数的GLM-5.5，但截至报道时尚未推出；匿名知情人士称，蒸馏防护加强和美国海外算力许可规则都可能影响训练进度。Moonshot方面一名知情人士称，若海外算力完全中断，主要模型发布间隔可能从六个月延至一年或更久，Kimi K4可能推迟至2027年年中左右。两家公司未立即回应。",
+      "affected": "中国AI模型开发商、海外云算力提供商及AI芯片供应链",
+      "sourceIds": [
+        "s-14"
+      ],
+      "claims": [
+        {
+          "text": "Z.AI尚未按原计划在11月推出GLM-5.5，匿名信源称上线可能推迟至2027年第一季度或更晚。",
+          "sourceId": "s-14",
+          "quote": "Z.AI, also known as Zhipu AI, had planned to release its next flagship model, GLM-5.5, this month but has yet to do so, two people familiar with the matter said on condition of anonymity.\n\nThe model, designed with roughly 3 trillion parameters - a measure of its size - has been held up partly by increasingly effective safeguards against distillation, one of the people said.\n\nZ.AI had hoped to complete training and release the model by year-end, but the new US computing restrictions could push its launch into the first quarter of 2027 or later, the person said."
+        },
+        {
+          "text": "Moonshot预期海外算力若完全中断，主要模型发布间隔可能由六个月延长至一年或更久。",
+          "sourceId": "s-14",
+          "quote": "The AI developer internally expects its usual six-month interval between major releases could stretch to 12 months or longer if its overseas computing access is cut off entirely, the person said, adding that computing capacity available in China could not make up the shortfall.\n\nIts next flagship model, Kimi K4, could be delayed until around the middle of 2027, the person estimated."
+        }
+      ],
+      "sections": [
+        {
+          "title": "模型进度与算力依赖",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "报道描述的是匿名信源对公司内部计划的说法：GLM-5.5尚未按11月计划推出；Moonshot估计海外算力断供可能拉长发布周期。The Independent转载并复述相同说法，作为交叉读取而非独立确证。"
+          ],
+          "sourceIds": [
+            "s-14",
+            "s-15"
+          ]
+        },
+        {
+          "title": "管制传导机制",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "Reuters将潜在延期归因于两类瓶颈：海外数据中心使用先进芯片新增许可要求，以及OpenAI、Anthropic等加强模型输出蒸馏防护后可用训练数据减少。两家公司的回应尚未取得，具体进度和因果权重仍依据匿名受访者描述，不能据此断言中国AI研发整体放缓。"
+          ],
+          "sourceIds": [
+            "s-14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cairo-tanker-fire",
+      "category": "社会",
+      "title": "开罗环路油罐车火灾致31死26伤，警方拘留疑似肇事司机",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-25",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "开罗环路油罐车倾覆起火事故造成至少31人死亡、26人受伤；检方称已拘留一名疑似肇事司机，但调查仍在继续，拘留并不等于司法定责。",
+      "facts": "AP报道称，埃及开罗环路一辆油罐车周三晚倾覆并起火，造成至少31人死亡、26人受伤，27辆车被烧毁。检方称已拘留一名疑似肇事驾驶人；其供述称变道时撞上油罐车，随后失控，油罐车轮胎爆裂并撞上隔离墙。DNA鉴定仍用于确认部分遇难者身份。",
+      "affected": "开罗环路通勤者、伤者与遇难者家属及当地道路使用者",
+      "sourceIds": [
+        "s-16"
+      ],
+      "claims": [
+        {
+          "text": "事故造成至少31人死亡、26人受伤，27辆车辆烧毁。",
+          "sourceId": "s-16",
+          "quote": "The fire left 27 vehicles charred and injured 26 people, according to authorities. The public prosecutor’s office said DNA investigations were underway to identify the victims."
+        },
+        {
+          "text": "检方称已拘留一名疑似肇事司机，调查描述其车辆撞上油罐车后导致翻覆起火。",
+          "sourceId": "s-16",
+          "quote": "The prosecutors said in a statement on Facebook that authorities had detained the driver of the vehicle suspected of causing the fuel tanker to overturn. It said the driver told investigators he was speeding between lanes when he hit the oil tanker in the rear right. He then lost control of his car and veered far to the right while one of the fuel truck’s tires burst. That caused the fuel tanker to hit the concrete wall of the highway and overturn, leading to the spill of fuel and the fire, according to the prosecutors' statement."
+        }
+      ],
+      "sections": [
+        {
+          "title": "事故与调查进展",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "AP报道，火灾致至少31人死亡、26人受伤，27辆车烧毁；检方拘留一名疑似肇事司机，并称DNA鉴定仍在确认遇难者身份。事故成因目前依据检方说明和嫌疑人供述，司法调查未结束。"
+          ],
+          "sourceIds": [
+            "s-16",
+            "s-17"
+          ]
+        },
+        {
+          "title": "道路安全风险",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "事故发生在高峰时段的城市环路，油罐车倾覆后燃料外泄并引发连片车辆起火，显示重型危险品运输与拥堵道路叠加时会放大人员疏散难度。AP指出埃及交通事故致死长期严重，但本案责任认定仍须等待调查与司法程序。"
+          ],
+          "sourceIds": [
+            "s-16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "glp1-vision-warning-labels",
+      "category": "社会",
+      "title": "诺和诺德、礼来将为GLP-1药物增加罕见视力风险警示",
+      "published": "2026-11-25",
+      "eventDate": "2026-11-25",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "FDA要求GLP-1药品标签加入NAION潜在风险提示；《海峡时报》报道礼来已更新处方信息、诺和诺德准备调整。警示不等于确认药物导致视神经损伤，也不代表企业承认诉讼主张。",
+      "facts": "FDA要求GLP-1受理持有人在药品说明书中补充非动脉炎性前部缺血性视神经病变（NAION）的潜在风险提示。《海峡时报》报道礼来已更新部分处方信息，诺和诺德也准备添加警示；两家公司仍表示会继续应诉。FDA称风险可能增加但罕见，标签变化本身不证明因果关系。",
+      "affected": "使用Ozempic、Wegovy、Mounjaro及Zepbound等药物的患者与处方医护人员",
+      "sourceIds": [
+        "s-18"
+      ],
+      "claims": [
+        {
+          "text": "FDA要求GLP-1药品补充NAION潜在风险警示，礼来已更新处方信息。",
+          "sourceId": "s-18",
+          "quote": "The US Food and Drug Administration (FDA) said in November it will require safety labelling changes for GLP-1s because of “potential increased risk” of non-arteritic anterior ischaemic optic neuropathy, or NAION.\n\nSometimes called an “eye stroke”, it can cause sudden vision loss without pain, usually in one eye.\n\nAdding the label will not mean the drugmakers are admitting to a causal link – that is up to the plaintiffs and their experts to try to prove.\n\nLilly has already updated the prescribing information for its drugs to include a warning about NAION, according to labelling published in a federal government database."
+        },
+        {
+          "text": "诺和诺德称现有数据不能证明因果关系，并表示将继续应诉。",
+          "sourceId": "s-18",
+          "quote": "Both companies say that patient safety is a top priority and that they will continue to defend themselves in court.\n\nOn the NAION claims, a Lilly spokesperson said the company “appreciates the court’s careful consideration of the scientific evidence and its impact on important threshold issues, including causation”.\n\n“Novo continues to believe the data do not establish a cause-and-effect relationship and we remain confident in the benefit-risk profile of our GLP-1 medicines,” according to a company statement after the FDA’s announcement."
+        }
+      ],
+      "sections": [
+        {
+          "title": "标签变化与因果边界",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "FDA于11月9日要求此类药物补充NAION潜在风险提示。窗口内报道显示礼来已更新处方信息，诺和诺德准备添加标签；公司抗辩并未因标签调整而消失，FDA也未宣布已确认药物与NAION存在因果关系。"
+          ],
+          "sourceIds": [
+            "s-18",
+            "s-19"
+          ]
+        },
+        {
+          "title": "患者信息意义",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "新增说明使处方沟通需要覆盖突发、无痛性单眼视力下降等风险信号，但不意味着所有使用者都会发病，亦不能替代医生对个体获益与风险的评估。FDA把NAION描述为罕见但可能造成永久视力损失的状况。"
+          ],
+          "sourceIds": [
+            "s-18",
+            "s-19"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china-eu-hybrid-safeguard-response",
+      "category": "经济",
+      "title": "中方称将跟进欧盟混动车保障调查，临时进口配额12月1日生效",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "商务部称将密切关注欧盟后续调查并维护中国产业权益；欧委会措施自12月1日起对所有来源地的部分混动车设进口配额，临时期限最多200天。此次中方表态是窗口内新进展，欧盟初裁本身于11月24日发布。",
+      "facts": "新华社报道，商务部发言人何亚东表示中方将跟进欧盟混动车保障调查，并要求欧方遵守中欧磋商共识、按世贸规则公正调查。欧委会11月24日原文显示，配额措施12月1日生效，适用于所有来源地，临时措施最长200天；进口超出配额不获准入。",
+      "affected": "中国混动车出口商、欧盟汽车进口商及相关供应链",
+      "sourceIds": [
+        "s-20"
+      ],
+      "claims": [
+        {
+          "text": "商务部称将跟进欧盟后续调查并维护中国产业权益。",
+          "sourceId": "s-20",
+          "quote": "China will keep a close watch on any follow-up developments in the European Union's (EU) safeguard investigation into hybrid vehicles, and firmly protect the legitimate rights and interests of Chinese industries, the Ministry of Commerce said Thursday."
+        },
+        {
+          "text": "欧盟临时混动车配额措施12月1日生效，适用于所有来源地，最长200天。",
+          "sourceId": "s-21",
+          "quote": "The European Commission today published provisional safeguard measures setting import quotas for certain hybrid vehicles. These restrictions are needed to protect EU industry against a sharp recent increase in imports of such vehicles. The measures will enter into force on 1 December and follow an investigation that showed imports of hybrid vehicles into the EU have increased significantly since 2023.\n\nWhile the safeguard measures implement the understanding reached at the second meeting of the EU-China Trade and Investment Consultations on 9 October 2026, to moderate China's exports of hybrids to the EU, they will apply to all hybrid imports regardless of their origin.\n\nThe Commission is imposing a quantitative restriction in the form of import quotas per exporting country, setting a maximum quantity of hybrid vehicles that may be imported into the EU for the duration of the provisional safeguard measures. Imports outside these quotas are not allowed.\n\nThe provisional safeguard measure will be in place for a maximum of 200 days."
+        }
+      ],
+      "sections": [
+        {
+          "title": "中方回应与措施时间表",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "中方称将跟进调查并维护产业权益。欧盟措施来自临时保障调查，所有来源地适用，12月1日生效，期限最多200天，配额外进口不准进入。欧委会称调查认定进口增长对欧盟产业构成迫近严重损害威胁；这属于欧委会的调查结论。"
+          ],
+          "sourceIds": [
+            "s-20",
+            "s-21"
+          ]
+        },
+        {
+          "title": "贸易影响的边界",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "临时配额直接限制的是超过分配数量的进口，而不是只针对中国的单一国别惩罚；欧委会文件明确措施适用于所有来源地。中国出口商受到的实际约束取决于国别配额与后续正式调查，现有材料未提供逐国配额数，不能据此量化中国企业损失。"
+          ],
+          "sourceIds": [
+            "s-20",
+            "s-21"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china-nextgen-communications-plan",
+      "category": "政治",
+      "title": "三部门发布新一代通信网建设方案：2030年前适时推进6G并建成低轨卫星互联网",
+      "published": "2026-11-26",
+      "eventDate": "2026-11-26",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "工信部等三部门发布经国务院同意的建设方案，目标到2030年形成覆盖完善的新一代通信网，适时开展6G网络建设，并基本建成低轨卫星互联网系统。文件设定规划目标，不表示相关网络已经建成或6G商业服务已启动。",
+      "facts": "新华社报道，工信部、国家网信办和国家发展改革委发布新一代通信网建设实施方案，提出2030年前完善基础、空间、国际和融合网络，适时开展6G网络建设，并基本建成低轨卫星互联网系统。工信部页面确认三部门联合印发且经国务院同意；文件成文日期为11月17日，页面发布日期为11月26日。",
+      "affected": "通信设备与网络建设企业、卫星互联网运营商及依赖数字基础设施的行业",
+      "sourceIds": [
+        "s-23"
+      ],
+      "claims": [
+        {
+          "text": "方案提出到2030年推进6G网络建设并基本建成低轨卫星互联网系统。",
+          "sourceId": "s-23",
+          "quote": "The plan targets advancing 6G network development at an appropriate time and basically completing the construction of a low-Earth-orbit satellite internet system by 2030.\n\nChina also expects to promote the large-scale development of integrated networks like the Industrial Internet and the Internet of Vehicles, significantly improve smart development, and further strengthen the industrial ecosystem, according to the plan."
+        },
+        {
+          "text": "该方案由工信部、国家网信办、国家发展改革委联合印发并经国务院同意。",
+          "sourceId": "s-22",
+          "quote": "《新一代通信网建设实施方案》已经国务院同意，现印发给你们，请认真贯彻执行。\n\n工业和信息化部\n\n国家网信办\n\n国家发展改革委"
+        }
+      ],
+      "sections": [
+        {
+          "title": "2030年网络建设目标",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "方案涵盖基础、空间、国际和融合网络，提出适时开展6G网络建设，2030年前基本建成低轨卫星互联网系统，并推动工业互联网、车联网规模化发展。文件是建设规划，并非6G商用落地公告。"
+          ],
+          "sourceIds": [
+            "s-22",
+            "s-23"
+          ]
+        },
+        {
+          "title": "规划目标与已建成能力的区别",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "方案同时强调网络安全、绿色低碳和资源保障，说明6G推进与卫星网络、算力及现有通信网升级同步布局。文本给出2030年目标而没有在报道中提供预算执行、工程进度或商业服务节点，故不能由政策发布推断投资已完成或运营能力已经形成。"
+          ],
+          "sourceIds": [
+            "s-22",
+            "s-23"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vance-huang-pardon-comments",
+      "category": "政治",
+      "title": "美国副总统万斯称黄仁勋无需赦免，并称其未受司法部调查",
+      "published": "2026-11-25",
+      "eventDate": "2026-11-25",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "JD Vance在俄亥俄公开表示，司法部及国家安全官员告知他Nvidia CEO Jensen Huang未受调查，且不需要总统赦免。报道记录的是副总统转述的政府说法，不等于独立确认调查范围或作出司法结论。",
+      "facts": "AP与CNBC报道，美国副总统JD Vance周三称司法部和国家安全部门官员告知他，Nvidia CEO Jensen Huang未受调查；在特朗普称赦免“始终是一种选择”后，Vance表示黄仁勋不需要赦免，并称未看到其犯罪证据。报道未取得司法部、白宫或英伟达对该说法的即时回应。",
+      "affected": "Nvidia、公司股东与员工、美国国会审查人员及关注芯片出口管制的公众",
+      "sourceIds": [
+        "s-24"
+      ],
+      "claims": [
+        {
+          "text": "Vance称司法部及国家安全官员告知他黄仁勋未受调查，并表示黄仁勋不需要赦免。",
+          "sourceId": "s-24",
+          "quote": "Vance told reporters that Justice Department officials and “multiple officials in our national security apparatus” have confirmed that Huang is “under no investigation.” The vice president made the remarks after having a Thanksgiving Eve meal with troops at Wright-Patterson Air Force Base.\n\n“I don’t think he needs a pardon at all,” Vance said. “I haven’t seen any evidence again that he committed a crime. And if there is evidence that he committed a crime, then that’s up to relevant authorities to actually bring a prosecution against him.”"
+        },
+        {
+          "text": "特朗普前一日称赦免仍是一种选择，司法部、白宫和英伟达未立即回应CNBC关于相关说法的询问。",
+          "sourceId": "s-25",
+          "quote": "On Tuesday, Trump left the door open to pardon Huang in an interview with the New York Post, but Vance said on Wednesday that the CEO doesn't need one.\n\n“I don't think he needs a pardon at all,” Vance said. “I haven't seen any evidence again that he committed a crime.”"
+        }
+      ],
+      "sections": [
+        {
+          "title": "副总统公开表态",
+          "tag": "事实",
+          "kind": "facts",
+          "paragraphs": [
+            "Vance称司法部及国家安全官员告诉他黄仁勋未受调查，并称未见其犯罪证据，因此不需要总统赦免。AP与CNBC均记录了在俄亥俄的发言；发言属于行政部门官员对调查状态的表述，不是法院判决。"
+          ],
+          "sourceIds": [
+            "s-24",
+            "s-25"
+          ]
+        },
+        {
+          "title": "调查状态仍需精确表述",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "这番话涉及政府对英伟达领导人国家安全与合规风险的公开说明，且黄仁勋此前复任引发国会审视。现有报道只证明Vance这样转述，并未提供司法部正式文件界定调查对象、调查范围或终结状态，故不能把“未受调查”扩写为全部相关客户或出口事项均已结案。"
+          ],
+          "sourceIds": [
+            "s-24",
+            "s-25"
+          ]
+        }
+      ]
+    }
+  ]
+}

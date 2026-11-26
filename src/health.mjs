@@ -73,6 +73,9 @@ export async function inspectHealth(root, now = new Date()) {
     const date = shiftDate(today, -n);
     const record = await readJson(path.join(root, 'data/delivery-ledger', `${date}-daily.json`), null);
     if (record) deliveries.push({ date, status: record.status, kind: record.kind, editionDate: record.editionDate || null, sentAt: record.sentAt });
+    if (date === today && record?.status === 'sent' && (record.kind !== 'file' || record.editionDate !== today)) {
+      findings.push({ severity: 'error', code: 'delivery-edition-mismatch', date, editionDate: record.editionDate || null, message: `今日投递未包含当期日报：${record.editionDate || '缺刊提示'}，不能视为当期投递成功` });
+    }
   }
   return { checkedAt: now.toISOString(), status: findings.some(f => f.severity === 'error') ? 'unhealthy' : 'healthy', model: config.model, thinkingLevel: config.thinkingLevel || null, latestEdition: published.at(-1) || null, dueThrough, publishedCount: published.length, missing, failures, findings, locks, deliveries, git: await readJson(path.join(root, 'data/runtime/git-sync.json'), null), scope: '本地状态与产物检查；不代表外部模型、Exa、飞书实时可用。联网验证使用pi:probe和pi:smoke。' };
 }

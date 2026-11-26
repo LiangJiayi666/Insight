@@ -19,6 +19,13 @@ test('health distinguishes overdue gaps from today before deadline, and notices 
   for (const file of ['index.html', 'styles.css', 'app.js']) await writeFile(path.join(archive, file), file === 'index.html' ? renderIssue(issue) : 'fixture');
   await writeFile(path.join(root, 'public/index.html'), renderIssue(issue));
   assert.equal((await inspectHealth(root, new Date('2026-11-12T08:00:00Z'))).status, 'healthy');
+  await saveJson(path.join(root, 'data/delivery-ledger/2026-11-12-daily.json'), { status: 'sent', kind: 'file', editionDate: '2026-11-11' });
+  const fallback = await inspectHealth(root, new Date('2026-11-12T12:30:00Z'));
+  assert.equal(fallback.status, 'unhealthy');
+  assert.deepEqual(fallback.missing, []); // Still before the production timeout.
+  assert.ok(fallback.findings.some(f => f.code === 'delivery-edition-mismatch'));
+  await saveJson(path.join(root, 'data/delivery-ledger/2026-11-12-daily.json'), { status: 'sent', kind: 'file', editionDate: '2026-11-12' });
+  assert.equal((await inspectHealth(root, new Date('2026-11-12T12:30:00Z'))).status, 'healthy');
   let result = await inspectHealth(root, new Date('2026-11-12T14:00:00Z'));
   assert.deepEqual(result.missing, ['2026-11-12']);
   assert.equal(result.status, 'unhealthy');
