@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-27",
+  "cutoff": "2026-11-27T11:50:02.027Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-26T11:50:02.150Z 至 2026-11-27T11:50:02.027Z；实际 1/12 条。",
+  "notice": "本期仅完成1条可核读稿件，未达到12条目标。检索发现多项重要候选（包括印尼矿难、乌克兰遇袭、美国卫星政策及中国载人航天等），但尚未逐条读取独立原文，不能作为已核实新闻纳入；市场稿的政策细节亦依据媒体转述，未单独读取国务院/Xinhua原文。主稿发布时间按Reuters转载页面所列2026-11-27 5:16 AM EST换算为10:16:00Z，处于窗口内。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-1",
+      "publisher": "Reuters（Yahoo Finance转载）",
+      "title": "China stocks surge most in two years as Beijing vows stronger market support",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/china-stocks-surge-most-two-081045333.html",
+      "published": "2026-11-27T10:16:00Z",
+      "accessed": "2026-11-27T11:50:48.001Z",
+      "method": "Pi搜索+原文读取（mcp__exa__web_search_exa、mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "HONG KONG/SINGAPORE, Nov 27 (Reuters) - Chinese stocks roared up from 17-month lows on Friday, notching their largest gains in more than two years after Beijing flagged a bigger role for state-backed investors in a move to stabilise a struggling market.",
+      "limits": "转载页仅显示发布日期及作者署名行时间（5:16 AM EST）；未单独取得国务院或Xinhua原公告，政策内容依Reuters报道归因。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "china-market-support-rally-2026-11-27",
+      "category": "金融",
+      "title": "国务院释放稳市信号后中国股市大幅反弹，沪深300涨4.2%",
+      "published": "2026-11-27",
+      "eventDate": "2026-11-27",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "国家队稳定市场的政策信号推动股指出现两年多来最大单日涨幅，但政策承诺本身尚无资金规模和执行期限，不能据此认定基本面已经反转。",
+      "facts": "Reuters报道，中国国务院会议提出增强国家队投资者稳定市场的作用，中央汇金将加强准稳定基金职能。沪深300收涨4.2%、上证综指涨3.7%，均创2024年10月以来最大单日涨幅；STAR 50涨15%。报道同时指出，市场此前受需求疲弱、房地产低迷及贸易风险压制，政策公告没有给出具体资金规模或期限。",
+      "affected": "中国股票投资者、上市公司及依赖股权融资的企业",
+      "sourceIds": [
+        "s-1"
+      ],
+      "claims": [
+        {
+          "text": "国务院会议释放扩大国家队稳定市场作用的信号，中央汇金将加强准稳定基金职能。",
+          "sourceId": "s-1",
+          "quote": "Investors took it as a strong signal of support when state media Xinhua reported that Central Huijin, a lead player in the team, would enhance its role as a quasi-stabilisation fund after a meeting of China's cabinet — the State Council."
+        },
+        {
+          "text": "沪深300收涨4.2%，上证综指收涨3.7%，为2024年10月以来最大单日涨幅。",
+          "sourceId": "s-1",
+          "quote": "The benchmark Shanghai Composite Index ended 3.7% up and the blue-chip CSI300 index was 4.2% higher at the close, both notching their biggest daily gains since October 2024 when China rolled out massive stimulus to revive the market."
+        },
+        {
+          "text": "报道所述政策信号未明确承诺资金规模；此前市场受需求、房地产及贸易担忧影响。",
+          "sourceId": "s-1",
+          "quote": "The move could put a floor under prices, which have been sliding relentlessly since July on worries about weak consumer demand, the prolonged property downturn and the risk that trade tensions threaten the economy's one bright spot in exports."
+        }
+      ],
+      "sections": [
+        {
+          "title": "政策信号推动风险偏好回升",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "单日大涨反映市场对国家队可能加强托底的预期；Reuters引述的指数涨幅显示反应广泛，但公告尚无资金规模和期限，政策决心改善并不等同于需求或房地产基本面已扭转。"
+          ],
+          "sourceIds": [
+            "s-1"
+          ]
+        },
+        {
+          "title": "反弹能否延续取决于基本面",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "若后续政策给出可执行的稳定机制，同时消费需求及房地产压力出现可观察改善，才更支持反弹由政策驱动转向基本面驱动；Reuters引述分析人士也提醒，单靠国家队支持不足以确认市场见底。"
+          ],
+          "sourceIds": [
+            "s-1"
+          ]
+        }
+      ]
+    }
+  ]
+}
