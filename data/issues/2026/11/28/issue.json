@@ -1,0 +1,279 @@
+{
+  "date": "2026-11-28",
+  "cutoff": "2026-11-28T11:50:02.254Z",
+  "edition": "Pi日报",
+  "scope": "2026-11-27T11:50:02.027Z 至 2026-11-28T11:50:02.254Z；实际 4/12 条。",
+  "notice": "本期仅纳入4条具备窗口内独立正文和精确发布时间的事件，未达12条目标；未用汇编拆分补数。中国工业利润数据发布于窗口开始前，排除；美股周五收盘报道亦早于窗口。美团三季报为重要中国企业候选，但媒体页面显示首发时间在窗口前，且Exa元数据时间戳与原文时区时间不符，按原文时间排除。重要选题覆盖仍有限，尤其中国政策与市场、企业科技及更多独立社会政治报道；加沙诊所事件中MSF与以军陈述相反，责任及死者身份尚无独立裁定。 自动化检查不等于独立事实核验。",
+  "sources": [
+    {
+      "id": "s-serbia-ap",
+      "publisher": "Associated Press / Reading Eagle",
+      "title": "Movimiento estudiantil de Serbia anuncia a profesor de química como su candidato presidencial",
+      "url": "https://www.readingeagle.com/2026/11/27/movimiento-estudiantil-de-serbia-anuncia-a-profesor-de-qumica-como-su-candidato-presidencial/",
+      "published": "2026-11-27T14:41:44.000Z",
+      "accessed": "2026-11-28T11:51:12.681Z",
+      "method": "Pi搜索+原文读取（mcp__exa__web_search_exa、mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "BELGRADO, Serbia (AP) — El movimiento estudiantil de Serbia anunció el viernes la candidatura del profesor de química Radomir Saicic para las próximas elecciones presidenciales anticipadas, que se celebrarán el 27 de diciembre.\n\nLa votación presidencial llega luego que el movimiento estudiantil derrotara al Partido Progresista Serbio (SNS, por sus siglas en serbio), de derecha, del expresidente Aleksandar Vucic, en unas elecciones parlamentarias anticipadas el 25 de octubre.\n\nVucic renunció a la presidencia en septiembre para perseguir lo que terminó siendo un intento fallido de convertirse en el próximo primer ministro, después que él y su partido gobernaran prácticamente sin oposición durante 14 años.",
+      "limits": "AP原文由Reading Eagle刊载西班牙语译文；发布时间由搜索结果给出，文章页面显示11月27日09:41 EDT（14:41Z），不将更新时刻当作首发时刻。"
+    },
+    {
+      "id": "s-brazil-ap",
+      "publisher": "Associated Press",
+      "title": "Lula’s choice of Bradesco banker as Brazil’s finance minister lifts markets",
+      "url": "https://apnews.com/article/brazil-markets-finance-minister-economy-5836b2ca098190540ff6669ebef01669",
+      "published": "2026-11-27T15:15:51.000Z",
+      "accessed": "2026-11-28T11:51:33.258Z",
+      "method": "Pi搜索+原文读取（mcp__exa__web_search_exa、mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "RIO DE JANEIRO (AP) — Brazilian markets rallied on Friday after President Luiz Inácio Lula da Silva confirmed that he had chosen a veteran banker to lead the finance ministry in 2027, a move seen as a sign of his commitment to fiscal discipline.\n\nBrazil’s currency, the real, and its stock market had tumbled after Lula’s surprise victory over Flávio Bolsonaro in last month’s presidential election. Investors had been counting on a win by Bolsonaro, who had pledged to slash spending.\n\nBut the announcement late Thursday that Bradesco's Luiz Carlos Trabuco, chairman of the board, had accepted Lula’s invitation to oversee the country’s finances during his upcoming fourth term, which begins Jan. 5, triggered a sharp rebound.",
+      "limits": "市场价格变动及任命信息据AP报道；未另行取得政府任命公告或交易所原始行情序列。"
+    },
+    {
+      "id": "s-eu-ap",
+      "publisher": "Associated Press",
+      "title": "A Ukraine loan is in limbo after EU budget talks stall. Leaders will try again in 3 weeks",
+      "url": "https://apnews.com/article/europe-budget-ukraine-2028-summit-costa-fd025046850b824b2e62def18408c6b6",
+      "published": "2026-11-27T12:23:02.000Z",
+      "accessed": "2026-11-28T11:51:33.258Z",
+      "method": "Pi搜索+原文读取（mcp__exa__web_search_exa、mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "BRUSSELS (AP) — After struggling to chaperone Europe’s leaders through more than 12 hours of high-stakes budget negotiations, European Council President António Costa faced reporters early Friday with a stark assessment. “We didn’t reach an agreement,” he said.\n\nGovernment leaders of the 27-nation European Union failed to narrow down the size of the 2028-2034 budget — let alone how it might be used. An important loan for Ukraine was caught up in the wrangling.\n\nIn three weeks, they will try again.",
+      "limits": "仅据AP对峰会及谈判的报道；未读取欧盟会议纪要或预算正式文件。"
+    },
+    {
+      "id": "s-gaza-bbc",
+      "publisher": "BBC News",
+      "title": "Two staff killed in Israeli strike on Gaza medical clinic, MSF says",
+      "url": "https://www.bbc.com/news/articles/cm5y10yydln3o",
+      "published": "2026-11-28T06:52:05.000Z",
+      "accessed": "2026-11-28T11:53:44.959Z",
+      "method": "Pi搜索+原文读取（mcp__exa__web_search_exa、mcp__exa__web_fetch_exa）",
+      "kind": "媒体报道",
+      "excerpt": "Two workers for the medical charity Médecins Sans Frontières (MSF) have been killed in an Israeli strike in Gaza, according to the organisation.\n\nMSF said the strike was a direct hit on one of the charity's clinics, the location of which was known by the Israeli military.\n\nIn a statement, the Israel Defense Forces (IDF) said the two people were Hamas operatives \"acting as security guards at a clinic operated by MSF\". The IDF added the strike was \"not directed at a hospital\" and caused no damage to medical infrastructure.\n\nThe head of the World Health Organization (WHO) said that attacks on health facilities and health workers in Gaza were \"outrageous and unacceptable\".",
+      "limits": "报道中MSF与以军对死者身份及事件性质的说法相反；本文均明确归因，未将任何一方指控视为独立证实。"
+    }
+  ],
+  "stories": [
+    {
+      "id": "serbia-students-saicic-nomination",
+      "category": "政治",
+      "title": "塞尔维亚学生运动提名化学教授拉多米尔·赛契奇竞选总统",
+      "published": "2026-11-27",
+      "eventDate": "2026-11-27",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "学生运动选择曾参与其抗议的大学教授赛契奇为12月27日提前总统选举候选人，延续其从议会胜选向总统竞选扩展的政治行动；总统职位权力有限，但承担任命总理和统帅军队等职责。",
+      "facts": "美联社报道，塞尔维亚学生运动11月27日提名贝尔格莱德大学化学教授拉多米尔·赛契奇，参加12月27日提前总统选举。赛契奇曾支持学生抗议并称将遵守总统职权范围、公开解释决定。该运动在10月议会选举获胜；总统职位总体偏礼仪性，但可提名总理并担任武装部队统帅。",
+      "affected": "塞尔维亚选民、学生运动及总统选举中的竞争政党",
+      "sourceIds": [
+        "s-serbia-ap"
+      ],
+      "claims": [
+        {
+          "text": "学生运动提名化学教授拉多米尔·赛契奇参加12月27日提前总统选举。",
+          "sourceId": "s-serbia-ap",
+          "quote": "El movimiento estudiantil de Serbia anunció el viernes la candidatura del profesor de química Radomir Saicic para las próximas elecciones presidenciales anticipadas, que se celebrarán el 27 de diciembre."
+        },
+        {
+          "text": "赛契奇称将遵守总统权限并公开解释决定。",
+          "sourceId": "s-serbia-ap",
+          "quote": "Saicic prometió que “me ceñiré al mandato y explicaré públicamente mis decisiones”."
+        },
+        {
+          "text": "塞尔维亚总统负责提名总理并担任武装部队统帅。",
+          "sourceId": "s-serbia-ap",
+          "quote": "Según la Constitución, el presidente comanda el ejército y tiene voz en política exterior, pero no cuenta con poderes ejecutivos."
+        }
+      ],
+      "sections": [
+        {
+          "title": "提名把议会胜势带入总统竞选",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "提名的政治意义在于学生运动继续推动权力交接，而非总统职位本身拥有广泛行政权。AP称该运动在10月议会选举击败前总统武契奇所属政党；赛契奇承诺遵守职权并公开说明决定。此承诺与前任被指扩大总统权力的争议形成对照，但能否落实取决于后续选举结果及制度运行。"
+          ],
+          "sourceIds": [
+            "s-serbia-ap"
+          ]
+        },
+        {
+          "title": "竞选仍待其他候选人与选举进程检验",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "可检验的后续节点是其他政党是否提名或抵制候选人，以及12月27日投票结果。AP报道提名当时其他候选人尚未确定；总统在宪法上的职责边界也将影响竞选承诺的可执行性。"
+          ],
+          "sourceIds": [
+            "s-serbia-ap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brazil-lula-trabuco-finance-minister",
+      "category": "金融",
+      "title": "卢拉选定布拉德斯科董事长特拉布科出任巴西财长，市场反弹",
+      "published": "2026-11-27",
+      "eventDate": "2026-11-27",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "巴西总统卢拉确认邀请布拉德斯科董事长路易斯·卡洛斯·特拉布科在2027年新任期领导财政部，市场将其视为财政审慎信号；雷亚尔与股市回升，但这只是报道所述的短期市场反应。",
+      "facts": "美联社报道，卢拉确认邀请布拉德斯科董事长路易斯·卡洛斯·特拉布科在其2027年1月5日开始的新任期领导财政部。消息公布后，雷亚尔从周三每美元5.88升至周五晚5.54，股市亦在周四晚至周五早上涨。此前国会通过的控支增收方案也已推动雷亚尔走强；左翼支持者批评财政调整可能挤压民生支出。",
+      "affected": "巴西金融市场、财政支出相关群体及新一届政府",
+      "sourceIds": [
+        "s-brazil-ap"
+      ],
+      "claims": [
+        {
+          "text": "卢拉确认邀请布拉德斯科董事长特拉布科于2027年领导财政部。",
+          "sourceId": "s-brazil-ap",
+          "quote": "But the announcement late Thursday that Bradesco's Luiz Carlos Trabuco, chairman of the board, had accepted Lula’s invitation to oversee the country’s finances during his upcoming fourth term, which begins Jan. 5, triggered a sharp rebound."
+        },
+        {
+          "text": "雷亚尔从周三的5.88升至周五晚的5.54雷亚尔兑美元。",
+          "sourceId": "s-brazil-ap",
+          "quote": "The real strengthened from 5.88 to the dollar on Wednesday to 5.54 by Friday evening, while stocks surged between Thursday evening and Friday morning."
+        },
+        {
+          "text": "财政方案遭到部分卢拉支持者批评，认为其威胁健康、教育及福利支出。",
+          "sourceId": "s-brazil-ap",
+          "quote": "The package has drawn criticism from some of Lula’s supporters, who accuse his government of bowing to market pressure. They see the measures as a threat to health, education and welfare spending, as well as to his campaign promises."
+        }
+      ],
+      "sections": [
+        {
+          "title": "任命信号与市场反弹应分开看",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "AP将雷亚尔走强和股市上涨与特拉布科接受邀请联系起来，并指出此前国会控支增收方案也已推动雷亚尔升值。因此，短线反弹不能单独归因于人事消息；它反映投资者对财政路线的重新定价，不等于财政结果已改善。"
+          ],
+          "sourceIds": [
+            "s-brazil-ap"
+          ]
+        },
+        {
+          "title": "财政路线面临分配争议",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "下一步要看政府如何落实控支增收方案，以及健康、教育和福利预算是否受影响。AP记录了卢拉支持者对民生支出的担忧；若政策设计或预算执行与承诺冲突，市场对财政审慎的正面解读将面临政治阻力。"
+          ],
+          "sourceIds": [
+            "s-brazil-ap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eu-budget-ukraine-loan-stalemate",
+      "category": "政治",
+      "title": "欧盟预算峰会未能达成共识，乌克兰450亿欧元贷款方案受阻",
+      "published": "2026-11-27",
+      "eventDate": "2026-11-27",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "欧盟27国领导人未能就2028—2034年长期预算缩小分歧，乌克兰拟获的450亿欧元贷款也未解锁；理事会主席称三周后再谈，贷款能否推进取决于成员国如何分摊利息及争取反对国家支持。",
+      "facts": "美联社报道，欧盟领导人经过逾12小时谈判，未能就2028—2034年预算规模达成一致，乌克兰下一年度450亿欧元贷款方案也陷入僵局。欧洲理事会主席科斯塔称24个成员国支持贷款计划，保加利亚要求其份额只用于经济需要，捷克、匈牙利和斯洛伐克仍待争取；峰会定于三周后重谈。",
+      "affected": "乌克兰政府与受援群体、欧盟成员国财政及欧盟共同预算",
+      "sourceIds": [
+        "s-eu-ap"
+      ],
+      "claims": [
+        {
+          "text": "欧盟领导人经过逾12小时谈判，未能就2028—2034年预算规模达成一致，乌克兰贷款议题亦受影响。",
+          "sourceId": "s-eu-ap",
+          "quote": "After struggling to chaperone Europe’s leaders through more than 12 hours of high-stakes budget negotiations, European Council President António Costa faced reporters early Friday with a stark assessment. “We didn’t reach an agreement,” he said.\n\nGovernment leaders of the 27-nation European Union failed to narrow down the size of the 2028-2034 budget — let alone how it might be used. An important loan for Ukraine was caught up in the wrangling."
+        },
+        {
+          "text": "欧盟拟议的乌克兰新贷款为450亿欧元，24国支持方案。",
+          "sourceId": "s-eu-ap",
+          "quote": "The leaders must also decide on a new 45 billion-euro ($49.4 billion) loan to help meet Kyiv’s economic and military needs next year.\n\nCosta said 24 of the 27 member countries support the loan plan, with Bulgaria insisting that its share should only pay for economic needs."
+        },
+        {
+          "text": "欧盟领导人将在三周后再次讨论预算。",
+          "sourceId": "s-eu-ap",
+          "quote": "In three weeks, they will try again."
+        }
+      ],
+      "sections": [
+        {
+          "title": "预算分歧具体卡在资金规模与成本分担",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "这次僵局不只是预算总额谈不拢，还牵涉乌克兰贷款利息由谁承担。AP报道，欧盟委员会提议的多年期乌克兰预算安排与明年450亿欧元贷款并存，成员国需决定利息是否从预算额度扣除或另行筹资；因此，贷款政治支持虽有24国，资金安排仍未闭合。"
+          ],
+          "sourceIds": [
+            "s-eu-ap"
+          ]
+        },
+        {
+          "title": "三周后的谈判检验反对方能否被说服",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "科斯塔须在下月争取捷克、匈牙利和斯洛伐克支持，保加利亚则要求其出资份额仅用于经济需要。后续若利息分担及用途限制仍未解决，24国支持未必足以让贷款方案通过。"
+          ],
+          "sourceIds": [
+            "s-eu-ap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gaza-msf-clinic-strike-staff-killed",
+      "category": "社会",
+      "title": "加沙诊所遇袭致两名无国界医生工作人员死亡，以军与组织说法相左",
+      "published": "2026-11-28",
+      "eventDate": "2026-11-27",
+      "status": "Pi自动生成 · 未经人工逐条核验",
+      "takeaway": "无国界医生称以军空袭击中其加沙城诊所并造成两名守卫死亡；以军称两人是哈马斯成员并表示目标并非医院。双方对人员身份及袭击性质说法相反，现有报道无法独立裁定。",
+      "facts": "BBC报道，无国界医生称两名在加沙城诊所工作的守卫在以军空袭中死亡，并称该处有组织标识且坐标已告知以军。以军则称两人是哈马斯武装人员、打击目标不是医院且未损坏医疗设施。世卫组织总干事谴责对医疗设施及医护人员的袭击；死者身份指控尚无独立证据裁定。",
+      "affected": "加沙平民、医疗与人道救援人员及冲突各方",
+      "sourceIds": [
+        "s-gaza-bbc"
+      ],
+      "claims": [
+        {
+          "text": "无国界医生称两名工作人员在以军袭击其加沙诊所时死亡。",
+          "sourceId": "s-gaza-bbc",
+          "quote": "Two workers for the medical charity Médecins Sans Frontières (MSF) have been killed in an Israeli strike in Gaza, according to the organisation.\n\nMSF said the strike was a direct hit on one of the charity's clinics, the location of which was known by the Israeli military."
+        },
+        {
+          "text": "以军称两人是哈马斯人员，并称打击未针对医院且未损坏医疗设施。",
+          "sourceId": "s-gaza-bbc",
+          "quote": "In a statement, the Israel Defense Forces (IDF) said the two people were Hamas operatives \"acting as security guards at a clinic operated by MSF\". The IDF added the strike was \"not directed at a hospital\" and caused no damage to medical infrastructure."
+        },
+        {
+          "text": "世卫组织总干事谴责对医疗设施及医护人员的袭击。",
+          "sourceId": "s-gaza-bbc",
+          "quote": "The head of the World Health Organization (WHO) said that attacks on health facilities and health workers in Gaza were \"outrageous and unacceptable\"."
+        }
+      ],
+      "sections": [
+        {
+          "title": "现场归属与死者身份存在相反说法",
+          "tag": "分析",
+          "kind": "analysis",
+          "paragraphs": [
+            "目前可确认的是两人死亡及双方公开表态，但对诊所是否被直接击中、死者是否为武装人员，各方叙述冲突。BBC引述MSF称设施标识清晰、坐标已通报；以军则称两名死者是哈马斯人员。报道没有提供独立证据足以裁定身份，编辑不将任一方说法写成已证实事实。"
+          ],
+          "sourceIds": [
+            "s-gaza-bbc"
+          ]
+        },
+        {
+          "title": "独立调查与医疗点保护是后续关键",
+          "tag": "观察",
+          "kind": "watch",
+          "paragraphs": [
+            "可检验的后续信息包括是否公布独立调查结果、设施坐标通报记录及袭击目标证据。世卫组织总干事已公开谴责针对医疗设施和医护人员的攻击；调查证据将决定责任认定，而非单方声明。"
+          ],
+          "sourceIds": [
+            "s-gaza-bbc"
+          ]
+        }
+      ]
+    }
+  ]
+}
